@@ -1,7 +1,9 @@
 # Moreno Seguros Project
 ## Backend - Architecture and Configuration
 
-This document describes the structure of the backend and the guidelines for creating and maintaining models, as well as how migrations are handled in the database. It is based on the **Ardalis Clean Architecture** template.
+This document describes the structure of the backend and the guidelines for creating and maintaining models,
+as well as how migrations are handled in the database. It is based on the **Ardalis Clean Architecture** template.
+https://localhost:57679/swagger/index.html
 
 ---
 - [Introduction to Ardalis Clean Architecture](#introduction-to-ardalis-clean-architecture)
@@ -47,35 +49,15 @@ _The main entity of each aggregate (e.g., `User`) should implement this interfac
   For the `UserRole`, instead of a traditional enum, it is defined as follows:
 
   ```csharp
-  using Ardalis.SmartEnum;
-
-  namespace MorenoSeguros.Core.UserAggregate
-  {
-      public class UserRole : SmartEnum<UserRole>
-      {
-          public static readonly UserRole Admin = new(nameof(Admin), 1);
-          public static readonly UserRole Collaborator = new(nameof(Collaborator), 2);
-
-          protected UserRole(string name, int value) : base(name, value) { }
-
-          /// <summary>
-          /// Example of using a marker for permission checks.
-          /// </summary>
-          public void CheckPermissionFor<T>()
-          {
-              string featureName = typeof(T).Name;
-              if (this == Collaborator && featureName == nameof(ManageUsersFeature))
-              {
-                  throw new UnauthorizedAccessException("Collaborators do not have permission to manage users.");
-              }
-          }
-
-          // Marker class example for a feature
-          public class ManageUsersFeature { }
-      }
-  }
+  namespace MorenoSeguros.Core.UserAggregate;
+    public class UserRole : SmartEnum<UserRole>
+    {
+      public static readonly UserRole Admin = new(nameof(Admin), 1);
+      public static readonly UserRole Collaborator = new(nameof(Collaborator), 2);
+      protected UserRole(string name, int value) : base(name, value) { }
+    }
   ```
-- In this example, UserRole extends SmartEnum, allowing you to add logic (such as permission validation) associated with each role.
+- In this example, UserRole extends SmartEnum
 
 ## 2. UseCases
 
@@ -116,50 +98,14 @@ namespace MorenoSeguros.Infrastructure.Data
 
         public DbSet<Contributor> Contributors => Set<Contributor>();
         public DbSet<User> Users => Set<User>();
+        // Add new Entities to DB
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
         }
-
-        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            UpdateEntityTimestamps();
-            int result = await base.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
-
-            if (_dispatcher != null)
-            {
-                var entitiesWithEvents = ChangeTracker.Entries<HasDomainEventsBase>()
-                    .Select(e => e.Entity)
-                    .Where(e => e.DomainEvents.Any())
-                    .ToArray();
-
-                await _dispatcher.DispatchAndClearEvents(entitiesWithEvents);
-            }
-
-            return result;
-        }
-
-        public override int SaveChanges() => SaveChangesAsync().GetAwaiter().GetResult();
-
-        private void UpdateEntityTimestamps()
-        {
-            foreach (EntityEntry<BaseEntity> entry in ChangeTracker.Entries<BaseEntity>())
-            {
-                if (entry.State == EntityState.Added)
-                {
-                    entry.Entity.CreatedAt = DateTime.UtcNow;
-                    entry.Entity.UpdatedAt = DateTime.UtcNow;
-                    entry.Entity.IsActive = true;
-                }
-                else if (entry.State == EntityState.Modified)
-                {
-                    entry.Property(x => x.CreatedAt).IsModified = false;
-                    entry.Entity.UpdatedAt = DateTime.UtcNow;
-                }
-            }
-        }
+        // More code...
     }
 }
 ```
@@ -179,26 +125,11 @@ namespace MorenoSeguros.Infrastructure.Data
 }
 ```
 ### 3.3. Connection and Service Configuration
+
 In the Infrastructure project, configure the DbContext and other necessary services.
 
-Example of a DbContext extension for registering the DbContext:
+Additional extension for registering other infrastructure services in the file `InfrastructureServiceExtensions.cs`
 
-```csharp
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace MorenoSeguros.Infrastructure.Data
-{
-    public static class AppDbContextExtensions
-    {
-        public static void AddApplicationDbContext(this IServiceCollection services, string connectionString) =>
-            services.AddDbContext<AppDbContext>(options =>
-                options.UseNpgsql(connectionString));
-    }
-}
-```
-
-And an additional extension for registering other infrastructure services:
 ```csharp
 using MorenoSeguros.Core.Interfaces;
 using MorenoSeguros.Core.Services;
@@ -206,30 +137,31 @@ using MorenoSeguros.Infrastructure.Data;
 using MorenoSeguros.Infrastructure.Data.Queries;
 using MorenoSeguros.UseCases.Contributors.List;
 
-namespace MorenoSeguros.Infrastructure
+
+namespace MorenoSeguros.Infrastructure;
+public static class InfrastructureServiceExtensions
 {
-    public static class InfrastructureServiceExtensions
-    {
-        public static IServiceCollection AddInfrastructureServices(
-            this IServiceCollection services,
-            ConfigurationManager config,
-            ILogger logger)
-        {
-            string? connectionString = config.GetConnectionString("DefaultConnection");
-            Guard.Against.Null(connectionString);
-            services.AddDbContext<AppDbContext>(options =>
-                options.UseNpgsql(connectionString));
+  public static IServiceCollection AddInfrastructureServices(
+    this IServiceCollection services,
+    ConfigurationManager config,
+    ILogger logger)
+  {
+    string? connectionString = config.GetConnectionString("DefaultConnection");
+    Guard.Against.Null(connectionString);
+    services.AddDbContext<AppDbContext>(options =>
+     options.UseNpgsql(connectionString));
 
-            services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>))
-                    .AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>))
-                    .AddScoped<IListContributorsQueryService, ListContributorsQueryService>()
-                    .AddScoped<IDeleteContributorService, DeleteContributorService>();
+    services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>))
+           .AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>))
+           .AddScoped<IListContributorsQueryService, ListContributorsQueryService>()
+           .AddScoped<IDeleteContributorService, DeleteContributorService>();
+           // Inject Dependencies for future services
 
-            logger.LogInformation("{Project} services registered", "Infrastructure");
 
-            return services;
-        }
-    }
+    logger.LogInformation("{Project} services registered", "Infrastructure");
+
+    return services;
+  }
 }
 ```
 
@@ -255,12 +187,15 @@ To add a new entity, follow these steps:
 
 ### Create New Migration command in MorenoSeguros.Infrastructure
 
+> [!CAUTION]  
+> You must be located in the route __*..\src\MorenoSeguros.Infrastructure*__
+
 > [!WARNING]  
 > Crucial information: Change the name to migrations `[[NAME_MIGRATION]]` according to your changes in database
-> Examples: CreateUsersTable  / AddBirthDateFieldInUsersTable  /  UpdateCompaniesTable
+> - Examples: **CreateUsersTable**  / **AddBirthDateFieldInUsersTable**  /  **UpdateCompaniesTable**
 
 ```bash
-dotnet ef migrations add [[NAME_MIGRATION]] -c AppDbContext -p ..\MorenoSeguros.Infrastructure\ --startup-project ..\MorenoSeguros.Web -o .\Data\Migrations\
+dotnet ef migrations add NAME_MIGRATION -c AppDbContext -p ..\MorenoSeguros.Infrastructure\ --startup-project ..\MorenoSeguros.Web -o .\Data\Migrations\
 ```
 
 ### Update Database

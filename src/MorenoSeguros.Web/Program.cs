@@ -15,6 +15,9 @@ var appLogger = new SerilogLoggerFactory(logger)
     .CreateLogger<Program>();
 
 builder.Services.AddOptionConfigs(builder.Configuration, appLogger, builder);
+
+
+// Include the Infrastructure Configs in AddServiceConfigs
 builder.Services.AddServiceConfigs(appLogger, builder);
 
 builder.Services.AddFastEndpoints()
