@@ -1,0 +1,7 @@
+2025-03-05 01:26:11.911 -04:00 [ERR] Failed executing DbCommand (28ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-03-05 01:26:12.095 -04:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-03-05 01:26:12.109 -04:00 [INF] Applying migration '20231218143922_PhoneNumber'.
+2025-03-05 01:26:12.121 -04:00 [INF] Applying migration '20250305052402_CreateUserTable'.
