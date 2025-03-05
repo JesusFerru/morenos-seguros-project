@@ -254,8 +254,13 @@ To add a new entity, follow these steps:
 **Create New Migration command in .Infra:**
 
 ### Create New Migration command in MorenoSeguros.Infrastructure
+
+> [!WARNING]  
+> Crucial information: Change the name to migrations `[[NAME_MIGRATION]]` according to your changes in database
+> Examples: CreateUsersTable  / AddBirthDateFieldInUsersTable  /  UpdateCompaniesTable
+
 ```bash
-dotnet ef migrations add CreateUserTable -c AppDbContext -p ..\MorenoSeguros.Infrastructure\ --startup-project ..\MorenoSeguros.Web -o .\Data\Migrations\
+dotnet ef migrations add [[NAME_MIGRATION]] -c AppDbContext -p ..\MorenoSeguros.Infrastructure\ --startup-project ..\MorenoSeguros.Web -o .\Data\Migrations\
 ```
 
 ### Update Database
