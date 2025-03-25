@@ -11,3 +11,13 @@ Cuando se suba a producción se debe usar uno variable controlado por Azure y/o a
 ```bash
 node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 ```
+
+### Create New Migration
+```
+dotnet ef --startup-project ..\MorenoSeguros.Api\ -v migrations add "Initial migration"
+```
+### Update Db migrations
+```
+dotnet ef --startup-project ../MorenoSeguros.Migration migrations add UpdateDateColumnFromDateTimeToDateOnly
+
+```
