@@ -2,6 +2,6 @@
 {
     public static class RouteConstants
     {
-        public const string Route = "moreno-seguros/v1";
+        public const string Route_V1 = "moreno-seguros/v1";
     }
 }

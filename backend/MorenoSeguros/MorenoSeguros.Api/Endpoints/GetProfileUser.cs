@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using MorenoSeguros.Core.Exceptions;
 using MorenoSeguros.Core.SharedKernel.Constants;
 using MorenoSeguros.Core.UserAggregate;
+using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
 using System.Net.Mime;
 
@@ -15,9 +16,12 @@ namespace MorenoSeguros.Api.Endpoints
     {
         public GetProfileUser() { }
 
-        [HttpGet($"{RouteConstants.Route}/get-user/{{Ci}}")]
+        [HttpGet($"{RouteConstants.Route_V1}/get-user/{{Ci}}")]
         [AllowAnonymous]
-        //     [SwaggerOperation(OperationId = "Get User", Tags = ["User"])]
+        [SwaggerOperation(
+            OperationId = nameof(GetProfileUser),
+            Tags = [SwaggerConstants.UserTagSwagger]
+        )]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(GetUserResult), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
@@ -31,7 +35,7 @@ namespace MorenoSeguros.Api.Endpoints
             // Simula búsqueda de usuario por AuthUserId
             if (request.Ci != mockUser.Ci)
             {
-                throw new NotFoundException("Usuario no encontrado");
+                throw new NotFoundException(ErrorMessages.GetMessage(nameof(NotFoundException), nameof(User)));
             }
 
             var result = new GetUserResult(mockUser.Ci, $"{mockUser.FirstName} {mockUser.LastName}", mockUser.Email);
