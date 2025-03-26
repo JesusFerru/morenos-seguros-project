@@ -31,8 +31,4 @@
     <ProjectReference Include="..\MorenoSeguros.Migration\MorenoSeguros.Migration.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Endpoints\User\" />
-  </ItemGroup>
-
 </Project>
