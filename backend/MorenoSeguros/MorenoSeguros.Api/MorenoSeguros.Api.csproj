@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
@@ -29,6 +29,10 @@
   <ItemGroup>
     <ProjectReference Include="..\MorenoSeguros.Infrastructure\MorenoSeguros.Infrastructure.csproj" />
     <ProjectReference Include="..\MorenoSeguros.Migration\MorenoSeguros.Migration.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Endpoints\User\" />
   </ItemGroup>
 
 </Project>

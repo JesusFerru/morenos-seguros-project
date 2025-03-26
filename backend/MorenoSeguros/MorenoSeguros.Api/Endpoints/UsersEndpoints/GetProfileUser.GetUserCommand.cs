@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace MorenoSeguros.Api.Endpoints
+namespace MorenoSeguros.Api.Endpoints.UsersEndpoints
 {
     public class GetUserCommand
     {

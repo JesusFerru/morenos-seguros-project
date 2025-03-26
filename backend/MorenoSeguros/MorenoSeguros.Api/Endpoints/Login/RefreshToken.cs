@@ -26,7 +26,7 @@ namespace MorenoSeguros.Api.Endpoints.Login
         [HttpPost($"{RouteConstants.Route_V1}/refresh-token")]
         [SwaggerOperation(
             OperationId = nameof(RefreshToken),
-            Tags = new[] { SwaggerConstants.UserTagSwagger }
+            Tags = [SwaggerConstants.UserTagSwagger]
         )]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(LoginResult), (int)HttpStatusCode.OK)]

@@ -21,12 +21,15 @@ public class User : BaseEntity, IAggregateRoot
         Password = string.Empty;
     }
 
-    public User(string firstName, string lastName, string ci, string email)
+    public User(string firstName, string lastName, string ci, string phoneNumber, string username, string email, string role)
     {
         FirstName = firstName;
         LastName = lastName;
         Ci = ci;
+        PhoneNumber = phoneNumber;
+        Username = username;
         Email = email;
+        Role = UserRole.FromName(role);
     }
 
     public User(string username, string password) : this()

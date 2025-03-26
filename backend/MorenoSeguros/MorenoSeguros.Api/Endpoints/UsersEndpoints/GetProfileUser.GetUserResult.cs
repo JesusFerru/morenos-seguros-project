@@ -1,4 +1,4 @@
-﻿namespace MorenoSeguros.Api.Endpoints
+﻿namespace MorenoSeguros.Api.Endpoints.UsersEndpoints
 {
     public class GetUserResult
     {

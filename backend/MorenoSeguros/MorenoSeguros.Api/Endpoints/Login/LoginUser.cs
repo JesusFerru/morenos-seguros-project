@@ -26,7 +26,7 @@ namespace MorenoSeguros.Api.Endpoints.Login
         [HttpPost($"{RouteConstants.Route_V1}/login")]
         [SwaggerOperation(
             OperationId = nameof(LoginUser),
-            Tags = new[] { SwaggerConstants.UserTagSwagger }
+            Tags = [SwaggerConstants.UserTagSwagger]
         )]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(LoginResult), (int)HttpStatusCode.OK)]

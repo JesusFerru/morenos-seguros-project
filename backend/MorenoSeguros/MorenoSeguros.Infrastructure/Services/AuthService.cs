@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 using MorenoSeguros.Core.Auth;
 using MorenoSeguros.Core.Exceptions;
 using MorenoSeguros.Core.Interfaces;
@@ -17,19 +18,24 @@ namespace MorenoSeguros.Infrastructure.Services
     {
         private readonly IConfiguration _configuration;
         private readonly IRepository<User> _repository;
+        private readonly IPasswordHasher<User> _hasher;
 
         public AuthService(IConfiguration configuration, IRepository<User> repository)
         {
             _configuration = configuration;
             _repository = repository;
+            _hasher = new PasswordHasher<User>();
         }
 
         public async Task<LoginResult?> AuthenticateAsync(string username, string password)
         {
-            var spec = new GetUserByAuthSpec(username, password);
-            var user = await _repository.SingleOrDefaultAsync(spec);
-            if (user == null) return null;
+            var spec = new GetUserByUsernameSpec(username);
+            var user = await _repository.SingleOrDefaultAsync(spec)
+                ?? throw new NotFoundException(GetMessage(nameof(NotFoundException), nameof(username)));
 
+            if (!VerifyPassword(user, password)) throw new UnauthorizedException(GetMessage(nameof(UnauthorizedException), nameof(password)));
+
+            // VerifyPassword is succesfull
             var token = GenerateJwtToken(user);
             var refreshToken = GenerateRefreshToken();
 
@@ -87,6 +93,17 @@ namespace MorenoSeguros.Infrastructure.Services
             {
                 return null;
             }
+        }
+
+        public string HashPassword(User user, string password)
+        {
+            return _hasher.HashPassword(user, password);
+        }
+
+        public bool VerifyPassword(User user, string password)
+        {
+            var result = _hasher.VerifyHashedPassword(user, user.Password, password);
+            return result == PasswordVerificationResult.Success;
         }
 
         private string GenerateJwtToken(User user)

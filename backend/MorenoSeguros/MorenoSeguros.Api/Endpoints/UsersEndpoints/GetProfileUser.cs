@@ -8,7 +8,7 @@ using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
 using System.Net.Mime;
 
-namespace MorenoSeguros.Api.Endpoints
+namespace MorenoSeguros.Api.Endpoints.UsersEndpoints
 {
     public class GetProfileUser : EndpointBaseAsync
        .WithRequest<GetUserCommand>
@@ -30,7 +30,7 @@ namespace MorenoSeguros.Api.Endpoints
             // Simulación de un usuario estático para prueba en Swagger
             await Task.Delay(1, cancellationToken);
             // public User( string firstName, string lastName, string ci, string email)
-            var mockUser = new User("Juan", "Perez", "12345", "johndoe@example.com");
+            var mockUser = new User("Juan", "Perez", "12345", "70000000", "jperez", "johndoe@example.com", "Admin");
 
             // Simula búsqueda de usuario por AuthUserId
             if (request.Ci != mockUser.Ci)
