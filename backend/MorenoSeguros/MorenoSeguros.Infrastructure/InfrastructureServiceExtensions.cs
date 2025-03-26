@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MorenoSeguros.Core.Interfaces;
 using MorenoSeguros.Core.SharedKernel.Interfaces;
 using MorenoSeguros.Infrastructure.Data;
+using MorenoSeguros.Infrastructure.Services;
 
 namespace MorenoSeguros.Infrastructure
 {
@@ -15,7 +17,7 @@ namespace MorenoSeguros.Infrastructure
                     .AddScoped(typeof(IReadRepository<>), typeof(EFRepository<>));
 
             //Services
-            //    services.AddScoped<IDebmediaService, DebmediaService>();
+            services.AddScoped<IAuthService, AuthService>();
 
             // Get ConnectionString
             var connectionString = configuration.GetConnectionString("DefaultConnection")

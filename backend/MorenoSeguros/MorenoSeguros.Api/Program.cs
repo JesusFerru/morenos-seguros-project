@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using MorenoSeguros.Api.Common;
 using MorenoSeguros.Api.Middleware;
 using MorenoSeguros.Infrastructure;
@@ -14,6 +15,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add Aspire service defaults .
 builder.AddServiceDefaults();
 
+// Add Swagger generation for API documentation.
+
+
 builder.Services.AddInfrastructureServices(builder.Configuration);
 
 builder.Services.AddProblemDetails(option =>
@@ -25,9 +29,6 @@ builder.Services.AddExceptionHandler<HandleException>();
 
 // Enable endpoint API explorer for Swagger/OpenAPI documentation.
 builder.Services.AddEndpointsApiExplorer();
-
-// Add Swagger generation for API documentation.
-builder.Services.AddSwaggerGen();
 
 builder.Services.AddControllers();
 
@@ -90,19 +91,68 @@ builder.Services.AddAuthorization();
 
 #endregion
 
+#region Swagger Configuration
+
+var securitySchema = new OpenApiSecurityScheme
+{
+    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+    Name = "Authorization",
+    In = ParameterLocation.Header,
+    Type = SecuritySchemeType.Http,
+    Scheme = "bearer",
+    Reference = new OpenApiReference
+    {
+        Type = ReferenceType.SecurityScheme,
+        Id = "Bearer"
+    }
+};
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = "v1",
+        Title = "Moreno Seguros API",
+        Description = "Services Moreno Seguros",
+        TermsOfService = new Uri("https://example.com/terms"),
+        Contact = new OpenApiContact
+        {
+            Name = "Moreno Seguros",
+            Url = new Uri("https://example.com/contact")
+        },
+        License = new OpenApiLicense
+        {
+            Name = "Moreno Seguros",
+            Url = new Uri("https://example.com/license")
+        }
+    });
+
+    options.AddSecurityDefinition("Bearer", securitySchema);
+
+    var securityRequirement = new OpenApiSecurityRequirement
+                {
+                    { securitySchema, new[] { "Bearer" } }
+                };
+
+    options.AddSecurityRequirement(securityRequirement);
+    options.EnableAnnotations();
+});
+#endregion
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
 app.UseHttpLogging();
+app.UseExceptionHandler();
 
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
+//if (!app.Environment.IsDevelopment())
+//{
+//    app.UseExceptionHandler("/Error");
+//    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+//    app.UseHsts();
+//}
 
 app.UseSwagger();
 app.UseSwaggerUI(c =>
