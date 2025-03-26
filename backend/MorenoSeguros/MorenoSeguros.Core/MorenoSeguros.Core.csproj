@@ -16,4 +16,8 @@
     <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" Version="9.0.1" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.0" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="SharedKernel\Extensions\" />
+  </ItemGroup>
 </Project>

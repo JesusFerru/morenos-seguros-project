@@ -21,3 +21,18 @@ dotnet ef --startup-project ..\MorenoSeguros.Api\ -v migrations add "Initial mig
 dotnet ef --startup-project ../MorenoSeguros.Migration migrations add UpdateDateColumnFromDateTimeToDateOnly
 
 ```
+
+### Ejemplo Store User 
+Para role solo esta permitido "Admin" o "Collaborator", por el momento
+```json
+{
+  "firstName": "Luis",
+  "lastName": "Ferrufino",
+  "ci": "12345",
+  "phoneNumber": "70000000",
+  "username": "lferrufino",
+  "email": "easyway.scz@gmail.com",
+  "password": "Pirata123",
+  "role": "Admin"
+}
+```
