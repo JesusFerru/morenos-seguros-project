@@ -9,7 +9,7 @@
 log202*.txt
 
 
-# Carpetas de compilación y resultados
+# Carpetas de compilaciÃ³n y resultados
 [Bb]in/
 [Oo]bj/
 **/bin/
@@ -19,7 +19,7 @@ log202*.txt
 *.log
 *.tmp
 
-# Archivos de configuración local
+# Archivos de configuraciÃ³n local
 appsettings.Local.json
 appsettings.Development.json
 appsettings.json
