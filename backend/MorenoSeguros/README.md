@@ -14,7 +14,7 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 
 ### Create New Migration
 ```
-dotnet ef --startup-project ..\MorenoSeguros.Api\ -v migrations add "Initial migration"
+dotnet ef --startup-project ..\MorenoSeguros.Api\ -v migrations add "Update_Dni_User_Table"
 ```
 ### Update Db migrations
 ```
