@@ -1,0 +1,129 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table roles {
+  role_id bigint [pk]
+  name varchar(100)
+  description varchar(100)
+  permissions json
+  status boolean
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table users {
+  user_id bigint [pk]
+  role_id bigint
+  first_name varchar(100)
+  last_name varchar(100)
+  email varchar(255)
+  password_hash text
+  status boolean
+  created_at timestamp
+  updated_at timestamp
+}
+
+Ref: users.role_id > roles.role_id
+
+Table companies {
+  company_id bigint [pk]
+  name varchar(100)
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table plans {
+  plan_id bigint [pk]
+  company_id bigint
+  name varchar(100)
+  created_at timestamp
+  updated_at timestamp
+}
+
+Ref: plans.company_id > companies.company_id
+
+Table deductibles {
+  deductible_id bigint [pk]
+  plan_id bigint
+  deductible varchar(100)
+  created_at timestamp
+  updated_at timestamp
+}
+
+Ref: deductibles.plan_id > plans.plan_id
+
+Table clients {
+  client_id bigint [pk]
+  full_name varchar(255)
+  business_name varchar(255)
+  nit varchar(50)
+  birth_date date
+  email varchar(255)
+  phoneNumber varchar(50)
+  documentType varchar
+  documentNumber varchar
+  city varchar(100)
+  address text
+  employment_status bool 
+  fund_origin varchar(100)
+  income_range varchar(50)
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table policies {
+  policy_number bigint [pk]
+  policy_holder_id bigint
+  deductible_id bigint
+  coverage_start_date date
+  reimbursement_type varchar(100)
+  is_active boolean
+  is_reviewed boolean
+  exclusions text
+  current_premium_amount decimal
+  policy_type varchar(100)
+  created_at timestamp
+  updated_at timestamp
+}
+
+Ref: policies.policy_holder_id > clients.client_id
+Ref: policies.deductible_id > deductibles.deductible_id
+
+Table policy_financial_info {
+  policy_id bigint [pk]
+  currency varchar(100)
+  payment_periodicity varchar(50)
+  premium_amount decimal
+  created_at timestamp
+  updated_at timestamp
+}
+
+Ref: policy_financial_info.policy_id > policies.policy_number
+
+Table policy_members {
+  policy_member_id bigint [pk]
+  policy_number bigint
+  client_id bigint
+  entry_date date
+  status varchar(50)
+  exclusions text
+  member_type varchar(50)
+  created_at timestamp
+  updated_at timestamp
+}
+
+Ref: policy_members.policy_number > policies.policy_number
+Ref: policy_members.client_id > clients.client_id
+
+Table payments {
+  payment_id bigint [pk]
+  policy_number bigint
+  payment_date timestamp
+  payment_method varchar(100)
+  amount_paid decimal
+  quota_amount decimal
+  created_at timestamp
+  updated_at timestamp
+}
+
+Ref: payments.policy_number > policies.policy_number

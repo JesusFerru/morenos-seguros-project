@@ -7,6 +7,7 @@ using MorenoSeguros.Core.SharedKernel.Constants;
 using MorenoSeguros.Core.SharedKernel.Interfaces;
 using MorenoSeguros.Core.UserAggregate;
 using MorenoSeguros.Core.UserAggregate.Specification;
+using MorenoSeguros.Core.UserAggregate.ValueObjects;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
 using System.Net.Mime;
@@ -38,7 +39,7 @@ namespace MorenoSeguros.Api.Endpoints.UsersEndpoints
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
         public override async Task<ActionResult<StoreUserResult>> HandleAsync(StoreUserCommand request, CancellationToken cancellationToken = default)
         {
-            var spec = new GetUserByCiSpec(request.Ci);
+            var spec = new GetUserByDniSpec(request.Dni);
             var existingUser = await _repository.FirstOrDefaultAsync(spec, cancellationToken);
             if (existingUser != null)
             {
@@ -53,7 +54,7 @@ namespace MorenoSeguros.Api.Endpoints.UsersEndpoints
             {
                 FirstName = request.FirstName,
                 LastName = request.LastName,
-                Ci = request.Ci,
+                Dni = request.Dni,
                 PhoneNumber = request.PhoneNumber,
                 Username = request.Username,
                 Email = request.Email,
@@ -69,7 +70,7 @@ namespace MorenoSeguros.Api.Endpoints.UsersEndpoints
             var result = new StoreUserResult
             {
                 FullName = $"{user.FirstName} {user.LastName}",
-                Ci = request.Ci,
+                Dni = request.Dni,
                 PhoneNumber = request.PhoneNumber,
                 Username = request.Username,
                 Email = request.Email,
