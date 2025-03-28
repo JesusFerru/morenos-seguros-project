@@ -23,7 +23,7 @@ namespace MorenoSeguros.Api.Endpoints.UsersEndpoints
             _repository = repository;
         }
 
-        [HttpGet($"{RouteConstants.Route_V1}/get-user/{{Ci}}")]
+        [HttpGet($"{RouteConstants.Route_V1}/get-user/{{Dni}}")]
         [AllowAnonymous]
         [SwaggerOperation(
             OperationId = nameof(GetProfileUser),
@@ -34,11 +34,11 @@ namespace MorenoSeguros.Api.Endpoints.UsersEndpoints
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
         public async override Task<ActionResult<GetUserResult>> HandleAsync(GetUserCommand request, CancellationToken cancellationToken = default)
         {
-            var spec = new GetUserByCiSpec(request.Ci);
+            var spec = new GetUserByDniSpec(request.Dni);
             var user = await _repository.FirstOrDefaultAsync(spec, cancellationToken)
                 ?? throw new NotFoundException(ErrorMessages.GetMessage(nameof(NotFoundException), nameof(User)));
 
-            var result = new GetUserResult(user.Ci, $"{user.FirstName} {user.LastName}", user.Email, user.PhoneNumber, user.Role.Name);
+            var result = new GetUserResult(user.Dni, $"{user.FirstName} {user.LastName}", user.Email, user.PhoneNumber, user.Role.Name);
             return Ok(result);
         }
     }

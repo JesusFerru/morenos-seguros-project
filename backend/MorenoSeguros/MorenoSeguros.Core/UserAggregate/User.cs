@@ -1,5 +1,6 @@
 ﻿using MorenoSeguros.Core.SharedKernel;
 using MorenoSeguros.Core.SharedKernel.Interfaces;
+using MorenoSeguros.Core.UserAggregate.ValueObjects;
 
 namespace MorenoSeguros.Core.UserAggregate;
 
@@ -7,7 +8,7 @@ public class User : BaseEntity, IAggregateRoot
 {
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
-    public string Ci { get; set; } = string.Empty;
+    public string Dni { get; set; } = string.Empty;
     public string PhoneNumber { get; set; } = string.Empty;
     public string Username { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
@@ -21,11 +22,11 @@ public class User : BaseEntity, IAggregateRoot
         Password = string.Empty;
     }
 
-    public User(string firstName, string lastName, string ci, string phoneNumber, string username, string email, string role)
+    public User(string firstName, string lastName, string dni, string phoneNumber, string username, string email, string role)
     {
         FirstName = firstName;
         LastName = lastName;
-        Ci = ci;
+        Dni = dni;
         PhoneNumber = phoneNumber;
         Username = username;
         Email = email;

@@ -5,6 +5,6 @@ namespace MorenoSeguros.Api.Endpoints.UsersEndpoints
     public class GetUserCommand
     {
         [FromRoute]
-        public string Ci { get; set; } = string.Empty;
+        public string Dni { get; set; } = string.Empty;
     }
 }
