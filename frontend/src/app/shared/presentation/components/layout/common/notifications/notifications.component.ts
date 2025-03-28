@@ -5,7 +5,6 @@ import { ChangeDetectorRef, Component, OnDestroy, OnInit, TemplateRef, ViewChild
 import { MatButton, MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { RouterLink } from '@angular/router';
 import { NotificationsService } from 'app/shared/infrastructure/services/notifications.service';
 import { Subject, takeUntil } from 'rxjs';
 import { NotificationResult } from './notifications-result';
@@ -15,7 +14,7 @@ import { Notification } from './notifications.types';
     selector: 'tt-notifications',
     standalone: true,
     imports: [MatButtonModule, NgIf, MatIconModule, MatTooltipModule,
-        NgFor, NgClass, NgTemplateOutlet, RouterLink, DatePipe],
+        NgFor, NgClass, NgTemplateOutlet, DatePipe],
 
     templateUrl: './notifications.component.html'
 })

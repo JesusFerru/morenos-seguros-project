@@ -20,7 +20,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertComponent, FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from '../../../../../shared/infrastructure/services/auth.service';
@@ -33,18 +33,17 @@ import { WhiteListService } from '../../infrastructure/models/white-list.service
     animations: fuseAnimations,
     standalone: true,
     imports: [
-        RouterLink,
-        FuseAlertComponent,
-        NgIf,
-        FormsModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        MatIconModule,
-        MatCheckboxModule,
-        MatProgressSpinnerModule,
-    ],
+    FuseAlertComponent,
+    NgIf,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCheckboxModule,
+    MatProgressSpinnerModule
+],
 })
 export class LoginComponent implements OnInit {
     //Inject
@@ -69,7 +68,7 @@ export class LoginComponent implements OnInit {
         this._authService.cleanLocalStorage();
         // Create the form
         this.signInForm = this._formBuilder.group({
-            user: ['', [Validators.required]],
+            username: ['', [Validators.required]],
             password: ['', Validators.required]
         });
 
@@ -126,18 +125,21 @@ export class LoginComponent implements OnInit {
             },
             error: (error) => {
                 this.signInForm.enable();
-
-                // Reset the form
                 this.signInNgForm.resetForm();
-                // Set the alert
+
+                const message =
+                    error?.error?.message ||
+                    error?.message ||
+                    'Ocurrió un error inesperado. Por favor, intente de nuevo.';
+
                 this.alert = {
                     type: 'error',
-                    message: error.message,
+                    message,
                 };
 
-                // Show the alert
                 this.showAlert = true;
-            },
+            }
+
         });
     }
 

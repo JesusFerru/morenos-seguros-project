@@ -51,13 +51,11 @@ else if (SystemEnvironment.IsProduction())
 // Add CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowSpecificOrigin", policy =>
-    {
-        policy.WithOrigins(landingPageDomain)
-              .AllowAnyHeader()
-              .AllowAnyMethod()
-              .AllowCredentials();
-    });
+    options.AddPolicy("AllowLocalhost4200",
+        builder => builder
+            .WithOrigins("http://localhost:4200")
+            .AllowAnyMethod()
+            .AllowAnyHeader());
 });
 
 using var loggerFactory = LoggerFactory.Create(b => b.SetMinimumLevel(LogLevel.Error).AddConsole());
@@ -145,6 +143,7 @@ builder.Services.AddRazorPages();
 var app = builder.Build();
 app.UseHttpLogging();
 app.UseExceptionHandler();
+app.UseCors("AllowLocalhost4200");
 
 // Configure the HTTP request pipeline.
 //if (!app.Environment.IsDevelopment())

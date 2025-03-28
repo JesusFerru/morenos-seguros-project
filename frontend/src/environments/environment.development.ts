@@ -1,10 +1,8 @@
+const baseApi = 'https://localhost:7045';
+
 export const environment = {
-    production: false,
-    apiNextBaseUrl: '/next-api',
-    apiUniversalAssistaUrl: '/next-universal-api',
-    apiNdcUrl: '/next-ndc-api',
-    apiBoaUrl: '/next-boa-api',
-    apiNetbaseUrl: '/next-netbase-api',
-    apiWeTravelUrl: '/next-we-travel-api',
-    apiAmadeusAirUrl: '/next-amadeus-air-api'
+  production: true,
+  apiNextBaseUrl: `${baseApi}/next-api`,
+  apiNetbaseUrl: `${baseApi}/moreno-seguros/v1`,
+  apiMorenoUrl: `${baseApi}/moreno-seguros/v1`,
 };

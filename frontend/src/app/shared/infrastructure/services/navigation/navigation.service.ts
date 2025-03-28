@@ -36,7 +36,7 @@ export class NavigationService {
         menu.push({
             id: '444',
             title: 'Eventos',
-            role: 'Admin',
+            role: 'All',
             meta: [''],
             type: 'basic',
             icon: 'heroicons_outline:calendar-days',
@@ -46,7 +46,7 @@ export class NavigationService {
         menu.push({
             id: '444',
             title: 'Orígenes',
-            role: 'Admin',
+            role: 'All',
             meta: [''],
             type: 'basic',
             icon: 'heroicons_outline:link',
@@ -56,26 +56,16 @@ export class NavigationService {
         menu.push({
             id: '444',
             title: 'Stands',
-            role: 'Admin',
+            role: 'All',
             meta: [''],
             type: 'basic',
             icon: 'heroicons_outline:building-storefront',
             link: 'stand',
         });
 
-        // menu.push({
-        //     id: '444',
-        //     title: 'Reportería',
-        //     role: 'Admin',
-        //     meta: ['aosinaga', 'vmoog', 'jtorrez'],
-        //     type: 'basic',
-        //     icon: 'heroicons_outline:presentation-chart-bar',
-        //     link: 'netbase-form',
-        // });
-
         menu.push({
             id: '555',
-            role: 'Admin',
+            role: 'All',
             title: 'Reportería',
             type: 'collapsable',
             meta: [''],
@@ -83,7 +73,7 @@ export class NavigationService {
             children: [
                 {
                     id: 'apps..netbase-form',
-                    role: 'Admin',
+                    role: 'All',
                     title: 'BD Madre',
                     type: 'basic',
                     meta: [],
@@ -92,7 +82,7 @@ export class NavigationService {
                 },
                 {
                     id: 'apps..customer-event',
-                    role: 'Admin',
+                    role: 'All',
                     title: 'Clientes por Evento',
                     type: 'basic',
                     meta: [],
@@ -105,66 +95,18 @@ export class NavigationService {
         menu.push({
             id: '444',
             title: 'Usuarios',
-            role: 'Admin',
+            role: 'All',
             meta: [''],
             type: 'basic',
             icon: 'heroicons_outline:user',
             link: 'user',
         });
 
-
-
-
-        // menu.push({
-        //     id: '555',
-        //     role: '',
-        //     title: 'Integraciones',
-        //     type: 'collapsable',
-        //     meta: this.authorizedNdcUsers,
-        //     icon: 'heroicons_outline:cog-6-tooth',
-        //     children: [
-        //         {
-        //             id: 'apps..we-unviersal-assistance',
-        //             role: '',
-        //             title: 'Universal Assistance',
-        //             type: 'basic',
-        //             meta: ['aosinaga'],
-        //             icon: 'heroicons_outline:clipboard-document-list',
-        //             link: '/integraciones/universal-assistance',
-        //         },
-        //         {
-        //             id: 'apps..ndc-ticket',
-        //             role: '',
-        //             title: 'Boletos NDC',
-        //             type : 'basic',
-        //             meta: this.authorizedNdcUsers,
-        //             icon : 'heroicons_outline:ticket',
-        //             link : '/integraciones/ndc-ticket',
-        //         },
-        //         {
-        //             id: 'apps..we-travel',
-        //             role: 'BACK.ADM.',
-        //             title: 'Pagos WeTravel',
-        //             type : 'basic',
-        //             meta: [''],
-        //             icon : 'heroicons_outline:currency-dollar',
-        //             link : '/integraciones/we-travel',
-        //         },
-        //         {
-        //             id: 'apps..amadeus-air',
-        //             title: 'Archivos AIR',
-        //             meta: ['aosinaga'],
-        //             type : 'basic',
-        //             icon : 'heroicons_outline:document-text',
-        //             link : '/integraciones/amadeus-air',
-        //         },
-        //     ],
-        // });
-
         this._navigation.compact = menu;
         this._navigation.default = menu;
         this._navigation.futuristic = menu;
         this._navigation.horizontal = menu;
+
         return this._navigation;
     }
 }

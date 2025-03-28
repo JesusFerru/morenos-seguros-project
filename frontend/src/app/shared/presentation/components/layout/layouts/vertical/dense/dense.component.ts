@@ -119,13 +119,14 @@ export class DenseLayoutComponent implements OnInit, OnDestroy {
     private filterNavigationItem(item: FuseNavigationItem, role: string, user: string): FuseNavigationItem | null {
         const navRoles = item.role?.split(',').map(r => r.trim()) || [];
         const hasRolePermission = navRoles.includes(role) || navRoles.includes('All');
-        const hasUserPermission = !item.meta || item.meta.includes(user.toLowerCase());
+
+        const userLower = user ? user.toLowerCase() : '';
+        const hasUserPermission = !item.meta || item.meta.some(meta => meta.toLowerCase() === userLower);
 
         if (item.children && item.children.length > 0) {
             const filteredChildren = item.children
                 .map(child => this.filterNavigationItem(child, role, user))
                 .filter(child => child !== null) as FuseNavigationItem[];
-
             if (filteredChildren.length > 0) {
                 return {
                     ...item,
@@ -136,6 +137,7 @@ export class DenseLayoutComponent implements OnInit, OnDestroy {
 
         return hasRolePermission || hasUserPermission ? item : null;
     }
+
 
 
 

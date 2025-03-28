@@ -49,16 +49,16 @@
             <form class="mt-6" [formGroup]="signInForm" #signInNgForm="ngForm">
                 <!-- Email field -->
                 <mat-form-field class="w-full pb-2" floatLabel="always">
-                    <mat-label class="text-xl">CI (con complemento)</mat-label>
+                    <mat-label class="text-xl">Usuario</mat-label>
                     <input
-                        id="user"
+                        id="username"
                         matInput
-                        [formControlName]="'user'"
+                        [formControlName]="'username'"
                         placeholder="10348529-1A"
                         class="text-lg"
                     />
                     <mat-error
-                        *ngIf="signInForm.get('user').hasError('required')"
+                        *ngIf="signInForm.get('username').hasError('required')"
                     >
                         El CI es requerido
                     </mat-error>
@@ -67,7 +67,7 @@
                 <!-- Password field -->
                 <mat-form-field class="w-full" floatLabel="always">
                     <mat-label class="text-xl"
-                        >Celular (con código país)</mat-label
+                        >Contraseña</mat-label
                     >
                     <input
                         id="password"
