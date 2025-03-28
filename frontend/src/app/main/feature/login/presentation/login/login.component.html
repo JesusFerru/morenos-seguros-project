@@ -1,0 +1,148 @@
+<div
+    class="flex flex-col sm:flex-row items-center md:items-start sm:justify-center max600: justify-center md:justify-start flex-auto min-w-0"
+    style="
+        background-color: #06285f;
+        background-image: url(&quot;assets/images/background/Tramado.png&quot;);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    "
+>
+    <div
+        class="md:flex md:items-center md:justify-end w-full max600:w-auto sm:w-auto md:h-full md:w-3/10 py-8 px-4 max600:p-10 sm:p-12 md:p-16 max600:rounded-2xl sm:rounded-2xl md:rounded-none max600:shadow sm:shadow md:shadow-none max600:bg-card sm:bg-card"
+    >
+        <div class="w-full max-w-80 sm:w-80 mx-auto sm:mx-0">
+            <div
+                *ngIf="isSandboxEnvironment"
+                class="text-center mb-5 transform text-red-600 text-3xl font-bold"
+            >
+                <span *ngIf="isSandboxEnvironment" class="font-bold"
+                    >ENTORNO DE PRUEBAS</span
+                >
+            </div>
+
+            <!-- Logo -->
+            <div class="max-w-60 mx-auto">
+                <img src="assets/images/logo/LogoNetbase.png" />
+            </div>
+
+            <!-- Title -->
+            <div
+                class="mt-2 text-xl font-medium text-center tracking-tight leading-tight"
+            >
+                Ingresa tus datos de acceso:
+            </div>
+
+            <!-- Alert -->
+            <fuse-alert
+                class="mt-8"
+                *ngIf="showAlert"
+                [appearance]="'outline'"
+                [showIcon]="false"
+                [type]="alert.type"
+                [@shake]="alert.type === 'error'"
+            >
+                {{ alert.message }}
+            </fuse-alert>
+
+            <!-- Sign in form -->
+            <form class="mt-6" [formGroup]="signInForm" #signInNgForm="ngForm">
+                <!-- Email field -->
+                <mat-form-field class="w-full pb-2" floatLabel="always">
+                    <mat-label class="text-xl">CI (con complemento)</mat-label>
+                    <input
+                        id="user"
+                        matInput
+                        [formControlName]="'user'"
+                        placeholder="10348529-1A"
+                        class="text-lg"
+                    />
+                    <mat-error
+                        *ngIf="signInForm.get('user').hasError('required')"
+                    >
+                        El CI es requerido
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- Password field -->
+                <mat-form-field class="w-full" floatLabel="always">
+                    <mat-label class="text-xl"
+                        >Celular (con código país)</mat-label
+                    >
+                    <input
+                        id="password"
+                        matInput
+                        type="password"
+                        [formControlName]="'password'"
+                        placeholder="59169201462"
+                        class="text-lg"
+                        #passwordField
+                    />
+                    <button
+                        mat-icon-button
+                        type="button"
+                        (click)="
+                            passwordField.type === 'password'
+                                ? (passwordField.type = 'text')
+                                : (passwordField.type = 'password')
+                        "
+                        matSuffix
+                    >
+                        <mat-icon
+                            class="icon-size-5"
+                            *ngIf="passwordField.type === 'password'"
+                            [svgIcon]="'heroicons_solid:eye'"
+                        ></mat-icon>
+                        <mat-icon
+                            class="icon-size-5"
+                            *ngIf="passwordField.type === 'text'"
+                            [svgIcon]="'heroicons_solid:eye-slash'"
+                        ></mat-icon>
+                    </button>
+                    <mat-error> El celular es requerido </mat-error>
+                </mat-form-field>
+
+                <!-- Submit button -->
+                <button
+                    class="fuse-mat-button-large w-full mt-4 text-xl bg-blue-900"
+                    mat-flat-button
+                    [color]="'primary'"
+                    [disabled]="signInForm.disabled"
+                    (click)="signIn()"
+                >
+                    <span *ngIf="!signInForm.disabled"> Iniciar sesión </span>
+                    <mat-progress-spinner
+                        *ngIf="signInForm.disabled"
+                        [diameter]="24"
+                        [mode]="'indeterminate'"
+                    ></mat-progress-spinner>
+                </button>
+            </form>
+        </div>
+    </div>
+    <!-- Background div -->
+    <div
+        class="relative hidden md:flex flex-auto items-center justify-center w-7/10 h-full p-16 lg:px-28 overflow-hidden dark:border-l"
+        style="background-color: #06285f"
+    >
+        <!-- Background - @formatter:off -->
+        <div
+            class="absolute inset-0 bg-cover bg-center opacity-25"
+            style="
+                background-image: url(&quot;assets/images/background/Tramado.png&quot;);
+            "
+        ></div>
+        <!-- @formatter:on -->
+        <!-- Content -->
+        <div class="z-10 relative w-full max-w-2xl">
+            <div
+                class="text-7xl font-bold leading-none text-gray-100"
+                style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8)"
+            >
+                <div>Bienvenido a</div>
+                <span>Net</span>
+                <span class="text-[#ff0032]">Base</span>
+            </div>
+        </div>
+    </div>
+</div>
