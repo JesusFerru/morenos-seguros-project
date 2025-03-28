@@ -5,7 +5,11 @@
 *.userosscache
 *.sln.docstates
 
-# Carpetas de compilación y resultados
+#logs 
+log202*.txt
+
+
+# Carpetas de compilaciÃ³n y resultados
 [Bb]in/
 [Oo]bj/
 **/bin/
@@ -15,9 +19,10 @@
 *.log
 *.tmp
 
-# Archivos de configuración local
+# Archivos de configuraciÃ³n local
 appsettings.Local.json
 appsettings.Development.json
+appsettings.json
 
 # Archivos de NuGet
 *.nupkg
