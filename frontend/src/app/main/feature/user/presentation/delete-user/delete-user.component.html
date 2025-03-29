@@ -1,0 +1,38 @@
+<h2
+    mat-dialog-title
+    class="text-xl font-semibold text-gray-800 border-b pb-2 mb-4 text-center"
+>
+    Confirmar Eliminación
+</h2>
+
+<fuse-alert *ngIf="alert" [type]="alert.type" class="mb-4 text-center">
+    {{ alert.message }}
+</fuse-alert>
+
+<div mat-dialog-content class="space-y-4 text-center">
+    <p class="text-gray-700 text-lg">
+        ¿Estás seguro de que deseas eliminar este usuario?
+    </p>
+</div>
+
+<div mat-dialog-actions class="mt-6 flex justify-center space-x-4">
+    <button
+        mat-raised-button
+        color="warn"
+        (click)="onCancel()"
+        class="px-6 py-2 font-semibold rounded-lg shadow-md"
+        [disabled]="isDeleting"
+    >
+        Cancelar
+    </button>
+
+    <button
+        mat-raised-button
+        color="primary"
+        (click)="onConfirm()"
+        class="px-6 py-2 font-semibold rounded-lg shadow-md"
+        [disabled]="isDeleting"
+    >
+        Eliminar
+    </button>
+</div>

@@ -1,0 +1,192 @@
+.table-container {
+  height: 100%;
+  box-shadow: none !important;
+}
+
+table {
+  width: 100%;
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: #f5f5f5;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.example-element-diagram {
+  min-width: 80px;
+  border: 2px solid black;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: 104px;
+}
+
+.example-element-symbol {
+  font-weight: bold;
+  font-size: 40px;
+  line-height: normal;
+}
+
+.example-element-description {
+  padding: 16px;
+}
+
+.example-element-description-attribution {
+  opacity: 0.5;
+}
+
+.mat-elevation-z8 {
+  width: 100%;
+}
+
+.mat-row:hover {
+  background-color: whitesmoke;
+}
+
+.example-icon {
+  padding: 0 14px;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.mat-paginator
+{
+  display: block;
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  background-color: #fff !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.07) !important;
+}
+.mat-column-company{
+  max-width: 150px !important;
+  min-width: 100px !important;
+  font-weight: bold;
+}
+.mat-column-service{
+  max-width: 120px !important;
+  min-width: 100px !important;
+}
+.mat-column-amount{
+  max-width: 100px !important;
+  min-width: 60px !important;
+}
+.mat-column-currency{
+  max-width: 100px !important;
+  min-width: 50px !important;
+}
+.mat-column-paymentMode{
+  max-width: 150px !important;
+  min-width: 110px !important;
+}
+.mat-column-createdDate{
+  max-width: 100px !important;
+  min-width: 90px !important;
+}
+.mat-column-createdTime{
+  max-width: 100px !important;
+  min-width: 70px !important;
+}
+.mat-column-criteria{
+  max-width: 100px !important;
+  min-width: 100px !important;
+}
+.mat-column-txCode{
+  max-width: 278px !important;
+  min-width: 278px !important;
+}
+.mat-column-providerTxCode{
+  max-width: 200px !important;
+  min-width: 200px !important;
+}
+.mat-column-account{
+  max-width: 220px !important;
+  min-width: 200px !important;
+}
+.mat-column-idOperative{
+  max-width: 245px !important;
+  min-width: 245px !important;
+}
+.mat-column-bcpStatus{
+  max-width: 50px !important;
+  min-width: 50px !important;
+}
+.mat-column-clientStatus{
+  max-width: 95px !important;
+  min-width: 95px !important;
+}
+.mat-column-status{
+  max-width: 95px !important;
+  min-width: 95px !important;
+}
+.mat-column-detail{
+  max-width: 150px !important;
+  min-width: 150px !important;
+}
+
+.mat-mdc-header-row {
+  position: sticky;  /* ya lo hace Angular, pero reforzamos */
+  top: 0;
+  z-index: 10;       /* mayor que el resto de filas */
+  background-color: #fff !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.07) !important;
+}
+
+/* Si tu encabezado usa la clase mat-header-row en lugar de la anterior */
+.mat-header-row {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: #fff !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.07) !important;
+}
+
+.mat-mdc-paginator{
+  display: block;
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  background-color: #fff !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.07) !important;
+}
+
+.table-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.mat-table {
+  overflow-y: auto;
+  flex: 1;
+}
+
+.mat-header-row, .mat-row {
+  display: block;
+}
+
+.mat-header-row {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
