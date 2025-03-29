@@ -1,0 +1,43 @@
+<div
+    class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent bg-customgray"
+>
+    <div
+        class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8"
+    >
+        <tt-view-header [title]="'EVENTOS'"></tt-view-header>
+
+        <div class="flex items-center justify-end gap-4">
+            <div
+                class="shadow-lg rounded-lg px-4 py-2 flex items-center space-x-2 bg-blue-900 bg-opacity-90 cursor-pointer"
+                matTooltip="Nuevo Evento"
+            >
+                <button
+                    mat-button
+                    (click)="createEvent()"
+                    class="text-white flex items-center"
+                >
+                    <mat-icon
+                        class="icon-size-5 text-white"
+                        [svgIcon]="'heroicons_solid:calendar-days'"
+                    ></mat-icon>
+                    <span class="ml-1">Crear Evento</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex flex-auto overflow-hidden">
+        <div
+            class="flex flex-col flex-auto sm:mb-18 overflow-hidden overflow-x-auto sm:overflow-y-auto"
+        >
+            <tt-table
+                [data]="data$ | async"
+                [columns]="columns"
+                [total]="responsePagination?.totalRecords"
+                (edit)="editEvent($event)"
+                (assign)="assignStandsToEvent($event)"
+                (delete)="deleteEvent($event)"
+            ></tt-table>
+        </div>
+    </div>
+</div>
