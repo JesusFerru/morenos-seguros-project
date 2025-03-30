@@ -18,7 +18,7 @@
     <div
         class="relative flex flex-col sm:flex-row sm:items-center sm:justify-between py-8 px-6 md:px-8"
     >
-        <tt-view-header [title]="'CLIENTES POR EVENTO'"></tt-view-header>
+        <ms-view-header [title]="'CLIENTES POR EVENTO'"></ms-view-header>
 
         <!-- Acciones -->
         <div
@@ -71,10 +71,10 @@
                 </button>
             </div>
 
-            <tt-filter-customer-event
+            <ms-filter-customer-event
                 class="ml-4 lg:ml-4"
                 [valuesPagination]="filter$ | async"
-            ></tt-filter-customer-event>
+            ></ms-filter-customer-event>
         </div>
     </div>
 
@@ -107,13 +107,13 @@
         <div
             class="flex flex-col flex-auto sm:mb-18 overflow-hidden overflow-x-auto sm:overflow-y-auto"
         >
-            <tt-table
+            <ms-table
                 [data]="data$ | async"
                 [columns]="columns"
                 [total]="responsePagination?.totalRecords"
                 (changePaginator)="changePaginator($event)"
             >
-            </tt-table>
+            </ms-table>
         </div>
     </div>
 </div>

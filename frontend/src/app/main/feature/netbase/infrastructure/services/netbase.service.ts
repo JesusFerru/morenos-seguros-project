@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { PaginationResponseModel } from 'app/shared/domain/models/PaginationResponseModel';
 import { QueryParamsUtils } from 'app/shared/infrastructure/helpers/query-params.utils';
-import { HttpServiceNetbase } from 'app/shared/infrastructure/helpers/services/httpNetbase.service';
+import { HttpServiceMoreno } from 'app/shared/infrastructure/helpers/services/httpMoreno.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { IExportNetbase } from '../../presentation/logs-netbase/filter-netbase/export-form.model';
 import { IReportNetbase } from '../../presentation/logs-netbase/filter-netbase/report-form.model';
@@ -10,7 +10,7 @@ import { CustomerModel } from '../models/CustomerModel';
 @Injectable({
     providedIn: 'root',
 })
-export class LogsNetbaseService extends HttpServiceNetbase {
+export class LogsNetbaseService extends HttpServiceMoreno {
     private filter$ = new BehaviorSubject<IReportNetbase>(
         new IReportNetbase(),
     );

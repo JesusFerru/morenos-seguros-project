@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'tt-no-found',
+  selector: 'ms-no-found',
   standalone: true,
   imports: [
     CommonModule,

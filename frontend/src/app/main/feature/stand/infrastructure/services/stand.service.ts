@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpServiceNetbase } from 'app/shared/infrastructure/helpers/services/httpNetbase.service';
+import { HttpServiceMoreno } from 'app/shared/infrastructure/helpers/services/httpMoreno.service';
 import { Observable } from 'rxjs';
 import { StandModel } from '../models/StandModel';
 
 @Injectable({
     providedIn: 'root',
 })
-export class StandService extends HttpServiceNetbase {
+export class StandService extends HttpServiceMoreno {
     private readonly endpoint = '/stands';
 
     getAll(): Observable<StandModel[]> {
@@ -20,7 +20,7 @@ export class StandService extends HttpServiceNetbase {
     create(stand: StandModel): Observable<StandModel> {
         return this.post<StandModel>(this.endpoint, stand);
     }
-    
+
     update(id: string, stand: StandModel): Observable<void> {
         return this.put<void>(`${this.endpoint}/${id}`, stand);
     }

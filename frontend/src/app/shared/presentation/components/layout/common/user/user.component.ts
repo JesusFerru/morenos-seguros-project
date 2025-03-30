@@ -16,7 +16,7 @@
 // import { Subject } from 'rxjs';
 
 // @Component({
-//     selector: 'tt-user',
+//     selector: 'ms-user',
 //     standalone: true,
 //     imports: [
 //         MatButtonModule,

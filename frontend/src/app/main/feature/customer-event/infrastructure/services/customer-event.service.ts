@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { PaginationResponseModel } from 'app/shared/domain/models/PaginationResponseModel';
 import { QueryParamsUtils } from 'app/shared/infrastructure/helpers/query-params.utils';
-import { HttpServiceNetbase } from 'app/shared/infrastructure/helpers/services/httpNetbase.service';
+import { HttpServiceMoreno } from 'app/shared/infrastructure/helpers/services/httpMoreno.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { IReportCustomerEvent } from '../../presentation/filter-customer-event/report-form.model';
 import { CustomerEventModel } from '../models/CustomerEventModel';
@@ -9,7 +9,7 @@ import { CustomerEventModel } from '../models/CustomerEventModel';
 @Injectable({
     providedIn: 'root',
 })
-export class CustomerEventService extends HttpServiceNetbase {
+export class CustomerEventService extends HttpServiceMoreno {
     private readonly endpoint = '/customerevents';
     private filter$ = new BehaviorSubject<IReportCustomerEvent>(
         new IReportCustomerEvent(),

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'tt-view-header',
+  selector: 'ms-view-header',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './view-header.component.html',

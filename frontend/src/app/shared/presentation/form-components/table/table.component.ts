@@ -21,7 +21,7 @@ import { ChangePaginationModel } from 'app/shared/domain/models/ChangePagination
 import { DateTime } from 'luxon';
 
 @Component({
-    selector: 'tt-table',
+    selector: 'ms-table',
     standalone: true,
     imports: [
         MatPaginatorModule,

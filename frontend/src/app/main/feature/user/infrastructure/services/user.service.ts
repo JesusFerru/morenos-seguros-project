@@ -1,13 +1,13 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpServiceNetbase } from 'app/shared/infrastructure/helpers/services/httpNetbase.service';
+import { HttpServiceMoreno } from 'app/shared/infrastructure/helpers/services/httpMoreno.service';
 import { Observable } from 'rxjs';
 import { UserModel } from '../models/UserModel';
 
 @Injectable({
     providedIn: 'root',
 })
-export class UserService extends HttpServiceNetbase {
+export class UserService extends HttpServiceMoreno {
     private readonly endpoint = '/users';
 
     getAll(): Observable<UserModel[]> {
@@ -19,9 +19,9 @@ export class UserService extends HttpServiceNetbase {
     }
 
     create(user: UserModel): Observable<UserModel> {
-        return this.post<UserModel>(this.endpoint, user); 
+        return this.post<UserModel>(this.endpoint, user);
     }
-    
+
     update(id: string, user: UserModel): Observable<void> {
         return this.put<void>(`${this.endpoint}/${id}`, user);
     }
@@ -35,7 +35,7 @@ export class UserService extends HttpServiceNetbase {
     }
 
     downloadUsersExcel(): Observable<Blob> {
-        return this.getDownload(`${this.endpoint}/export`, new HttpParams()); 
+        return this.getDownload(`${this.endpoint}/export`, new HttpParams());
     }
-    
+
 }

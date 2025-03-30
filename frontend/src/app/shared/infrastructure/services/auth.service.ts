@@ -5,14 +5,13 @@ import { Observable, catchError, map, of } from 'rxjs';
 import { LoginModel } from '../../../main/feature/login/infrastructure/models/LoginRequest.model';
 import { ResponseToken } from '../../domain/models/ResponseToken.model';
 import { AuthUtils } from '../helpers/auth.utils';
-// import { HttpServiceNext } from '../helpers/services/httpNext.service';
-import { HttpServiceNetbase } from '../helpers/services/httpNetbase.service';
+import { HttpServiceMoreno } from '../helpers/services/httpMoreno.service';
 import { UserService } from './user.service';
 
 @Injectable({
     providedIn: 'root',
 })
-export class AuthService extends HttpServiceNetbase {
+export class AuthService extends HttpServiceMoreno {
     private _authenticated: boolean = false;
     private _userService = inject(UserService);
 
@@ -38,11 +37,8 @@ export class AuthService extends HttpServiceNetbase {
     login(login: LoginModel): Observable<ResponseToken> {
         return this.post<ResponseToken>('/login', login, true).pipe(
             map((response: ResponseToken) => {
-                // Store the access token in the local storage
                 this.authenticateSuccess(response.accessToken);
-                // Store the user on the user service
                 this._userService.user = response;
-                // Return a new observable with the response
                 return response;
             })
         );

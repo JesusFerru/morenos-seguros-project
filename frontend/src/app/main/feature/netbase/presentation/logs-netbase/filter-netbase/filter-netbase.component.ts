@@ -19,7 +19,7 @@ import { LogsNetbaseService } from '../../../infrastructure/services/netbase.ser
 import { IReportNetbase } from './report-form.model';
 
 @Component({
-    selector: 'tt-filter-netbase',
+    selector: 'ms-filter-netbase',
     standalone: true,
     imports: [MatFormFieldModule,
         MatSelectModule,

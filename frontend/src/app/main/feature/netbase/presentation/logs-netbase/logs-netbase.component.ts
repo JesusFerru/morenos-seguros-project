@@ -19,7 +19,7 @@ import { IReportNetbase } from './filter-netbase/report-form.model';
 import { logsNetbaseTable } from './logs-netbase.config';
 
 @Component({
-    selector: 'tt-logs-netbase',
+    selector: 'ms-logs-netbase',
     standalone: true,
     imports: [
         FuseAlertComponent,

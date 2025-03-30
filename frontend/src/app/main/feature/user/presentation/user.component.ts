@@ -18,7 +18,7 @@ import { UpdateUserModalComponent } from './update-user/update-user.component';
 import { userTableConfig } from './user.config';
 
 @Component({
-    selector: 'tt-users',
+    selector: 'ms-users',
     standalone: true,
     imports: [
         ViewHeaderComponent,
@@ -96,19 +96,19 @@ export class UserComponent implements OnInit, OnDestroy {
 
     downloadUsersExcel(): void {
         this.isDownloading = true;
-    
+
         this.userService.downloadUsersExcel().subscribe({
             next: (blob) => {
                 const url = window.URL.createObjectURL(blob);
                 const anchor = document.createElement('a');
                 anchor.href = url;
                 anchor.download = 'Usuarios.xlsx';
-    
+
                 document.body.appendChild(anchor);
                 anchor.click();
                 window.URL.revokeObjectURL(url);
                 anchor.remove();
-    
+
                 this.isDownloading = false;
             },
             error: (error) => {
@@ -117,7 +117,7 @@ export class UserComponent implements OnInit, OnDestroy {
             },
         });
     }
-    
+
     createUser(): void {
         const dialogRef = this.matDialog.open(CreateUserModalComponent, {
             width: '90vw',
@@ -159,11 +159,11 @@ export class UserComponent implements OnInit, OnDestroy {
             }
         });
     }
-    
+
     toggleUserStatus(user: UserModel): void {
         const statusMap = { Activo: 1, Inactivo: 0 };
         const newStatus = statusMap[user.status];
-    
+
         this.userService.updateStatus(user.id, newStatus).subscribe({
             next: () => {
                 this.showTemporaryAlert('success', `Estado cambiado a ${newStatus === 0 ? 'Activo' : 'Inactivo'}.`);
@@ -180,7 +180,7 @@ export class UserComponent implements OnInit, OnDestroy {
         const roles = { 'Administrador': 1, 'Personal de Ingreso': 2, 'Concierge': 3 };
         return roles[role] || 0;
     }
-    
+
 
     mapStatus(status: string): number {
         const statusMap = { Activo: 0, Inactivo: 1 };
@@ -190,9 +190,9 @@ export class UserComponent implements OnInit, OnDestroy {
     private showTemporaryAlert(type: 'success' | 'error', message: string): void {
         this.alert = { type, message };
         this.showAlert = true;
-    
+
         setTimeout(() => {
             this.showAlert = false;
-        }, 5000); 
+        }, 5000);
     }
 }
