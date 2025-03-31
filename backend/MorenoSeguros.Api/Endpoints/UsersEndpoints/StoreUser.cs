@@ -2,12 +2,12 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MorenoSeguros.Core.Entities.UserAggregate;
+using MorenoSeguros.Core.Entities.UserAggregate.Specification;
 using MorenoSeguros.Core.Entities.UserAggregate.ValueObjects;
 using MorenoSeguros.Core.Exceptions;
 using MorenoSeguros.Core.Interfaces;
 using MorenoSeguros.Core.SharedKernel.Constants;
 using MorenoSeguros.Core.SharedKernel.Interfaces;
-using MorenoSeguros.Core.UserAggregate.Specification;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
 using System.Net.Mime;
