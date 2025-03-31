@@ -1,6 +1,6 @@
 ﻿using Ardalis.SmartEnum;
 
-namespace MorenoSeguros.Core.UserAggregate.ValueObjects;
+namespace MorenoSeguros.Core.Entities.UserAggregate.ValueObjects;
 
 public class UserRole : SmartEnum<UserRole>
 {

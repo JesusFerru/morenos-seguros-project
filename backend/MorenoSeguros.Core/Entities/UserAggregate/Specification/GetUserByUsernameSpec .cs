@@ -1,6 +1,7 @@
 ﻿using Ardalis.Specification;
+using MorenoSeguros.Core.Entities.UserAggregate;
 
-namespace MorenoSeguros.Core.UserAggregate.Specification
+namespace MorenoSeguros.Core.Entities.UserAggregate.Specification
 {
     public class GetUserByUsernameSpec : Specification<User>, ISingleResultSpecification<User>
     {
