@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using MorenoSeguros.Core.Entities.UserAggregate;
 using MorenoSeguros.Core.SharedKernel;
-using MorenoSeguros.Core.UserAggregate;
 
 namespace MorenoSeguros.Infrastructure.Data;
 

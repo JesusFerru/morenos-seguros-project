@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using MorenoSeguros.Core.Auth;
+using MorenoSeguros.Core.Entities.UserAggregate;
 using MorenoSeguros.Core.Exceptions;
 using MorenoSeguros.Core.Interfaces;
 using MorenoSeguros.Core.SharedKernel.Constants;
 using MorenoSeguros.Core.SharedKernel.Interfaces;
-using MorenoSeguros.Core.UserAggregate;
 using MorenoSeguros.Core.UserAggregate.Specification;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;

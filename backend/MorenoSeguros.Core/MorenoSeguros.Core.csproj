@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Entities\CompanyAggregate\" />
     <Folder Include="SharedKernel\Extensions\" />
   </ItemGroup>
 </Project>
