@@ -14,7 +14,7 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 
 ### Create New Migration
 ```
-dotnet ef --startup-project ..\MorenoSeguros.Api\ -v migrations add "Add_description_in_Company_table"
+dotnet ef --startup-project ..\MorenoSeguros.Api\ -v migrations add "Add_business_domain_logic_complete"
 ```
 ### Update Db migrations
 ```
