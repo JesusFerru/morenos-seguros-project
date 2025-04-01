@@ -40,7 +40,10 @@ public class GetAllUsers : EndpointBaseAsync
             u.Email,
             u.PhoneNumber,
             u.Role.Name,
-            u.Username
+            u.Username,
+            u.IsActive,
+            u.CreatedAt,
+            u.UpdatedAt
         )).ToList();
 
         return Ok(result);

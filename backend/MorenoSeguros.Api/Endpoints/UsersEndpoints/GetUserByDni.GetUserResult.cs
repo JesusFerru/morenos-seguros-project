@@ -8,7 +8,10 @@
         public string PhoneNumber { get; set; }
         public string Role { get; set; }
         public string Username { get; set; }
-        public GetUserResult(string dni, string fullName, string email, string phoneNumber, string role, string username)
+        public bool IsActive { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
+        public GetUserResult(string dni, string fullName, string email, string phoneNumber, string role, string username, bool isActive, DateTime createdAt, DateTime? updatedAt)
         {
             Dni = dni;
             FullName = fullName;
@@ -16,6 +19,9 @@
             PhoneNumber = phoneNumber;
             Role = role;
             Username = username;
+            IsActive = isActive;
+            CreatedAt = createdAt;
+            UpdatedAt = updatedAt;
         }
     }
 }
