@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MorenoSeguros.Core.UserAggregate;
-using MorenoSeguros.Core.UserAggregate.ValueObjects;
+using MorenoSeguros.Core.Entities.UserAggregate;
+using MorenoSeguros.Core.Entities.UserAggregate.ValueObjects;
 
 namespace MorenoSeguros.Infrastructure.Data.Configuration
 {

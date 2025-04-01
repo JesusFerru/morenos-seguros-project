@@ -1,8 +1,8 @@
-﻿using MorenoSeguros.Core.SharedKernel;
+﻿using MorenoSeguros.Core.Entities.UserAggregate.ValueObjects;
+using MorenoSeguros.Core.SharedKernel;
 using MorenoSeguros.Core.SharedKernel.Interfaces;
-using MorenoSeguros.Core.UserAggregate.ValueObjects;
 
-namespace MorenoSeguros.Core.UserAggregate;
+namespace MorenoSeguros.Core.Entities.UserAggregate;
 
 public class User : BaseEntity, IAggregateRoot
 {

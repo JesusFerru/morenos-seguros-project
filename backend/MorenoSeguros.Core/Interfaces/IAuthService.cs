@@ -1,5 +1,5 @@
 ﻿using MorenoSeguros.Core.Auth;
-using MorenoSeguros.Core.UserAggregate;
+using MorenoSeguros.Core.Entities.UserAggregate;
 
 namespace MorenoSeguros.Core.Interfaces;
 public interface IAuthService
