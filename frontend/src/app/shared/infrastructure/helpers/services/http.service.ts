@@ -78,7 +78,7 @@ export class HttpService {
         );
     }
 
-    protected getByFilet<T>(url: string, sendParams: Params, cancel$?: Observable<boolean>): Observable<T> {
+    protected getByFilter<T>(url: string, sendParams: Params, cancel$?: Observable<boolean>): Observable<T> {
         return this._executeApi(
             this.http.get(this.DOMAIN + url, {
                 params: sendParams,

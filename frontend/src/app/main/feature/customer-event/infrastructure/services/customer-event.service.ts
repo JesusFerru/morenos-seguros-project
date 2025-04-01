@@ -20,7 +20,7 @@ export class CustomerEventService extends HttpServiceMoreno {
         cancel$?: Observable<boolean>,
     ): Observable<PaginationResponseModel<CustomerEventModel>> {
         const params = QueryParamsUtils.buildQueryString(filter);
-        return this.getByFilet<PaginationResponseModel<CustomerEventModel>>(
+        return this.getByFilter<PaginationResponseModel<CustomerEventModel>>(
             `${this.endpoint}/logs`,
             params,
             cancel$,

@@ -13,20 +13,20 @@ using System.Net.Mime;
 
 namespace MorenoSeguros.Api.Endpoints.UsersEndpoints
 {
-    public class GetProfileUser : EndpointBaseAsync
+    public class GetUserByDni : EndpointBaseAsync
        .WithRequest<GetUserCommand>
        .WithActionResult<GetUserResult>
     {
         private readonly IRepository<User> _repository;
-        public GetProfileUser(IRepository<User> repository, IAuthService authService)
+        public GetUserByDni(IRepository<User> repository, IAuthService authService)
         {
             _repository = repository;
         }
 
-        [HttpGet($"{RouteConstants.Route_V1}/get-user/{{Dni}}")]
+        [HttpGet($"{RouteConstants.Route_V1}/users/{{Dni}}")]
         [AllowAnonymous]
         [SwaggerOperation(
-            OperationId = nameof(GetProfileUser),
+            OperationId = nameof(GetUserByDni),
             Tags = [SwaggerConstants.UserTagSwagger]
         )]
         [Produces(MediaTypeNames.Application.Json)]
@@ -38,7 +38,7 @@ namespace MorenoSeguros.Api.Endpoints.UsersEndpoints
             var user = await _repository.FirstOrDefaultAsync(spec, cancellationToken)
                 ?? throw new NotFoundException(ErrorMessages.GetMessage(nameof(NotFoundException), nameof(User)));
 
-            var result = new GetUserResult(user.Dni, $"{user.FirstName} {user.LastName}", user.Email, user.PhoneNumber, user.Role.Name);
+            var result = new GetUserResult(user.Dni, $"{user.FirstName} {user.LastName}", user.Email, user.PhoneNumber, user.Role.Name, user.Username);
             return Ok(result);
         }
     }

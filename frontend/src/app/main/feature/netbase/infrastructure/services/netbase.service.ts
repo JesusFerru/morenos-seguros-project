@@ -24,7 +24,7 @@ export class LogsNetbaseService extends HttpServiceMoreno {
         cancel$?: Observable<boolean>,
     ): Observable<PaginationResponseModel<CustomerModel>> {
         const params = QueryParamsUtils.buildQueryString(filter);
-        return this.getByFilet<PaginationResponseModel<CustomerModel>>(
+        return this.getByFilter<PaginationResponseModel<CustomerModel>>(
             '/customers/logs',
             params,
             cancel$,
