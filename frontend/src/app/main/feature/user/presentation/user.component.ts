@@ -16,6 +16,16 @@ import { CreateUserModalComponent } from './create-user/create-user.component';
 import { UpdateUserModalComponent } from './update-user/update-user.component';
 import { userTableConfig } from './user.config';
 
+enum UserStatus {
+    Inactive = 0,
+    Active = 1,
+}
+
+interface Alert {
+    type: 'success' | 'error';
+    message: string;
+}
+
 @Component({
     selector: 'ms-users',
     standalone: true,
@@ -31,27 +41,26 @@ import { userTableConfig } from './user.config';
     templateUrl: './user.component.html',
 })
 export class UserComponent implements OnInit, OnDestroy {
-    _router = inject(Router);
-
+    private router = inject(Router);
     private userService = inject(UserService);
     private matDialog = inject(MatDialog);
 
-    columns = userTableConfig;
-    data$ = new BehaviorSubject<UserModel[]>([]);
-    showAlert: boolean = false;
-    alert = { type: 'success', message: '' };
-    isDownloading: boolean = false;
-    responsePagination: PaginationResponseModel<UserModel>;
-    destroy$: Subject<boolean> = new Subject<boolean>();
+    public columns = userTableConfig;
+    public data$ = new BehaviorSubject<UserModel[]>([]);
+    public showAlert = false;
+    public alert: Alert = { type: 'success', message: '' };
+    public isDownloading = false;
+    public responsePagination: PaginationResponseModel<UserModel>;
+    private destroy$ = new Subject<boolean>();
 
-    private statusMap: { [key: boolean]: string } = {
-        false: 'Inactivo',
-        true: 'Activo',
+    private readonly statusDisplayMap: { [key: string]: string } = {
+        'false': 'Inactivo',
+        'true': 'Activo',
     };
 
-    private rolemap: { [key: number]: string } = {
-        1: 'Admin',
-        2: 'Collaborator'
+    private readonly roleDisplayMap: { [key: string]: string } = {
+        'Admin': 'Administrador',
+        'Collaborator': 'Colaborador',
     };
 
     ngOnInit(): void {
@@ -63,49 +72,51 @@ export class UserComponent implements OnInit, OnDestroy {
         this.destroy$.complete();
     }
 
-    loadData(): void {
+    private loadData(): void {
         this.userService.getAll().subscribe({
-            next: (res) => {
-                const transformedData = res.map(user => ({
-                    ...user,
-                    status: this.statusMap[user.status] || 'Desconocido',
-                    role: this.rolemap[user.role] || 'Desconocido',
-                }));
+          next: (res: UserModel[]) => {
+            const transformedData = res.map(user => ({
+              ...user,
+              status: this.statusDisplayMap[String(user.isActive)] || 'Desconocido',
+              role: this.roleDisplayMap[user.role] || user.role || 'Desconocido',
+            }));
 
-                this.responsePagination = {
-                    totalRecords: transformedData.length,
-                    data: transformedData,
-                    pageNumber: 1,
-                    pageSize: transformedData.length,
-                    totalPages: 1,
-                };
-                this.data$.next(transformedData);
-            },
-            error: () => {
-                this.alert = {
-                    type: 'error',
-                    message: 'Error al cargar los usuarios.',
-                };
-                this.showAlert = true;
-            },
+            this.responsePagination = {
+              totalRecords: transformedData.length,
+              data: transformedData as unknown as UserModel[],
+              pageNumber: 1,
+              pageSize: transformedData.length,
+              totalPages: 1,
+            };
+
+            this.data$.next(transformedData as unknown as UserModel[]);
+          },
+          error: () => {
+            this.alert = {
+              type: 'error',
+              message: 'Error al cargar los usuarios.',
+            };
+            this.showAlert = true;
+          },
         });
-    }
+      }
 
-    createUser(): void {
+
+    public createUser(): void {
         const dialogRef = this.matDialog.open(CreateUserModalComponent, {
             width: '90vw',
             maxWidth: '500px',
             height: 'auto',
         });
 
-        dialogRef.afterClosed().subscribe((result) => {
+        dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 this.loadData();
             }
         });
     }
 
-    editUser(user: UserModel): void {
+    public editUser(user: UserModel): void {
         const dialogRef = this.matDialog.open(UpdateUserModalComponent, {
             data: { user },
             width: '90vw',
@@ -113,40 +124,10 @@ export class UserComponent implements OnInit, OnDestroy {
             height: 'auto',
         });
 
-        dialogRef.afterClosed().subscribe((updatedUser) => {
+        dialogRef.afterClosed().subscribe(updatedUser => {
             if (updatedUser) {
                 this.loadData();
             }
         });
-    }
-
-    toggleUserStatus(user: UserModel): void {
-        const statusMap = { Activo: 1, Inactivo: 0 };
-        const newStatus = statusMap[user.status];
-
-        this.userService.updateStatus(user.id, newStatus).subscribe({
-            next: () => {
-                this.showTemporaryAlert('success', `Estado cambiado a ${newStatus === 0 ? 'Activo' : 'Inactivo'}.`);
-                this.loadData();
-            },
-            error: (err) => {
-                const errorMessage = err?.message || 'Error al cambiar el estado del usuario.';
-                this.showTemporaryAlert('error', errorMessage);
-            },
-        });
-    }
-
-    mapStatus(status: string): number {
-        const statusMap = { Activo: 0, Inactivo: 1 };
-        return statusMap[status] ?? 0;
-    }
-
-    private showTemporaryAlert(type: 'success' | 'error', message: string): void {
-        this.alert = { type, message };
-        this.showAlert = true;
-
-        setTimeout(() => {
-            this.showAlert = false;
-        }, 5000);
     }
 }

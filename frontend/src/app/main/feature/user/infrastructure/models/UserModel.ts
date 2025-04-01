@@ -4,5 +4,7 @@ export class UserModel {
     email?: string;
     phoneNumber?: string;
     username?: string;
+    isActive?: boolean;
     role?: string;
+    createdAt?: Date;
 }

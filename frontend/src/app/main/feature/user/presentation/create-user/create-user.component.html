@@ -9,22 +9,52 @@
 
     <form [formGroup]="form" class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <mat-form-field appearance="outline" class="w-full">
-            <mat-label>CI (con complemento)</mat-label>
+            <mat-label>Usuario</mat-label>
             <input
                 matInput
                 type="text"
                 formControlName="username"
-                placeholder="1034907-1A"
+                placeholder="juan"
             />
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="w-full">
-            <mat-label>Nombre Completo</mat-label>
+            <mat-label>Nro. de Carnet</mat-label>
             <input
                 matInput
                 type="text"
-                formControlName="fullName"
-                placeholder="Jorge Perez"
+                formControlName="dni"
+                placeholder="123ABC"
+            />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Nombre(s)</mat-label>
+            <input
+                matInput
+                type="text"
+                formControlName="firstName"
+                placeholder="Juan"
+            />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Apellido(s)</mat-label>
+            <input
+                matInput
+                type="text"
+                formControlName="lastName"
+                placeholder="Perez"
+            />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Contraseña</mat-label>
+            <input
+                matInput
+                type="text"
+                formControlName="password"
+                placeholder="12345678"
             />
         </mat-form-field>
 
@@ -37,24 +67,6 @@
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="w-full">
-            <mat-label>Celular (con código país)</mat-label>
-            <input
-                matInput
-                type="text"
-                formControlName="password"
-                placeholder="59179204141"
-            />
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="w-full">
-            <mat-label>Estado</mat-label>
-            <mat-select formControlName="status">
-                <mat-option *ngFor="let st of status" [value]="st.value">
-                    {{ st.label }}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
     </form>
 
     <div class="flex justify-end mt-4 space-x-4">

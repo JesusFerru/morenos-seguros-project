@@ -27,7 +27,7 @@ import { UserService } from '../../infrastructure/services/user.service';
         NgFor,
         NgIf,
         NgClass,
-        FuseAlertComponent, 
+        FuseAlertComponent,
     ],
     templateUrl: './update-user.component.html',
 })
@@ -35,9 +35,8 @@ export class UpdateUserModalComponent {
     form: FormGroup;
 
     roles = [
-        { value: 'Administrador', label: 'Administrador' },
-        { value: 'Personal de Ingreso', label: 'Personal de Ingreso' },
-        { value: 'Concierge', label: 'Concierge' },
+        { value: 1, label: 'Administrador' },
+        { value: 2, label: 'Colaborador' }
     ];
 
     status = [

@@ -27,18 +27,17 @@ import { UserService } from '../../infrastructure/services/user.service';
         NgFor,
         NgIf,
         NgClass,
-        FuseAlertComponent, 
+        FuseAlertComponent,
     ],
     templateUrl: './create-user.component.html',
 })
 export class CreateUserModalComponent {
     form: FormGroup;
     roles = [
-        { value: 1, label: 'Administrador' },
-        { value: 2, label: 'Personal de Ingreso' },
-        { value: 3, label: 'Concierge' },
+        { value: 'Administrador', label: 'Administrador' },
+        { value: 'Collaborator', label: 'Colaborador' }
     ];
-    status = [
+    isActive = [
         { value: 0, label: 'Activo' },
         { value: 1, label: 'Inactivo' },
     ];
@@ -52,11 +51,12 @@ export class CreateUserModalComponent {
         private userService: UserService,
     ) {
         this.form = this.fb.group({
+            firstName: ['', Validators.required],
+            lastName: ['', Validators.required],
+            dni: ['', Validators.required],
             username: ['', Validators.required],
-            fullName: ['', Validators.required],
             role: ['', Validators.required],
-            password: ['', [Validators.required, Validators.minLength(6)]],
-            status: [0, Validators.required],
+            password: ['', Validators.required],
         });
     }
 
