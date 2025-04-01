@@ -5,7 +5,7 @@ const generatePalette = require(path.resolve(__dirname, 'src/@fuse/tailwind/util
 
 // Paleta personalizada con el color primario deseado
 const customPalettes = {
-    brand: generatePalette('#0047BA') //azul estropical
+    brand: generatePalette('#162837')
 };
 
 // Definición de los temas
@@ -89,8 +89,8 @@ const config = {
                 '0': '0 0 auto'
             },
             fontFamily: {
-                sans: `"Urbanist", ${defaultTheme.fontFamily.sans.join(',')}`,
-                mono: `"Urbanist", ${defaultTheme.fontFamily.mono.join(',')}`
+                sans: `"Montserrat", ${defaultTheme.fontFamily.sans.join(',')}`,
+                mono: `"Montserrat", ${defaultTheme.fontFamily.mono.join(',')}`
             },
             opacity: {
                 12: '0.12',

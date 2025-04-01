@@ -16,13 +16,12 @@
         <div class="flex flex-col items-center p-4 text-10xl fuse-nav-header">
             <!-- Logo -->
             <div class="flex flex-col items-center justify-center mt-1">
-                <img class="w-20" src="assets/images/logo/white-heart.png" alt="Logo" />
+                <img class="w-20" src="assets/images/logo/logo-moreno-seguros.png" alt="Logo" />
             </div>
-    
+
             <div class="text-center nav-header-text">
                 <div class="flex items-center mt-1">
-                    <span class="text-white text-5xl font-bold">net</span>
-                    <span class="text-[#ff0032] text-5xl font-bold">base</span>
+                    <span class="text-white text-5xl font-bold">MORENO SEGUROS</span>
                 </div>
             </div>
         </div>
@@ -42,19 +41,10 @@
             </button>
         </div>
 
-        <div
-            *ngIf="isSandboxEnvironment"
-            class="absolute left-1/2 transform -translate-x-1/2 text-red-600 text-3xl font-bold"
-        >
-            <span *ngIf="isSandboxEnvironment" class="font-bold"
-                >ENTORNO DE PRUEBAS</span
-            >
-        </div>
-
         <!-- Components -->
 
         <div class="flex items-center pl-2 ml-auto space-x-0.5 sm:space-x-2">
-            <!-- <tt-notifications></tt-notifications> -->
+            <!-- <ms-notifications></ms-notifications> -->
             <div
                 class="group flex items-center justify-center p-2 ml-auto bg-white hover:bg-gray-100 text-blue-900 rounded cursor-pointer w-auto"
                 (click)="signOut()"
@@ -80,7 +70,7 @@
         class="relative flex flex-0 items-center justify-start w-full h-14 px-4 md:px-6 z-49 border-t bg-card dark:bg-transparent print:hidden"
     >
         <span class="font-medium text-secondary"
-            >estropical.com &copy; {{ currentYear }}</span
+            >morenoseguros &copy; {{ currentYear }}</span
         >
     </div>
 </div>

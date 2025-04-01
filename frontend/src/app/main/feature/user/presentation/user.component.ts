@@ -13,12 +13,11 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { UserModel } from '../infrastructure/models/UserModel';
 import { UserService } from '../infrastructure/services/user.service';
 import { CreateUserModalComponent } from './create-user/create-user.component';
-import { ConfirmDeleteUserModalComponent } from './delete-user/delete-user.component';
 import { UpdateUserModalComponent } from './update-user/update-user.component';
 import { userTableConfig } from './user.config';
 
 @Component({
-    selector: 'tt-users',
+    selector: 'ms-users',
     standalone: true,
     imports: [
         ViewHeaderComponent,
@@ -45,16 +44,14 @@ export class UserComponent implements OnInit, OnDestroy {
     responsePagination: PaginationResponseModel<UserModel>;
     destroy$: Subject<boolean> = new Subject<boolean>();
 
-    private statusMap: { [key: number]: string } = {
-        0: 'Activo',
-        1: 'Inactivo',
+    private statusMap: { [key: boolean]: string } = {
+        false: 'Inactivo',
+        true: 'Activo',
     };
 
     private rolemap: { [key: number]: string } = {
-        0: 'SuperAdmin',
-        1: 'Administrador',
-        2: 'Personal de Ingreso',
-        3: 'Concierge',
+        1: 'Admin',
+        2: 'Collaborator'
     };
 
     ngOnInit(): void {
@@ -94,30 +91,6 @@ export class UserComponent implements OnInit, OnDestroy {
         });
     }
 
-    downloadUsersExcel(): void {
-        this.isDownloading = true;
-    
-        this.userService.downloadUsersExcel().subscribe({
-            next: (blob) => {
-                const url = window.URL.createObjectURL(blob);
-                const anchor = document.createElement('a');
-                anchor.href = url;
-                anchor.download = 'Usuarios.xlsx';
-    
-                document.body.appendChild(anchor);
-                anchor.click();
-                window.URL.revokeObjectURL(url);
-                anchor.remove();
-    
-                this.isDownloading = false;
-            },
-            error: (error) => {
-                console.error('Error al descargar el archivo:', error);
-                this.isDownloading = false;
-            },
-        });
-    }
-    
     createUser(): void {
         const dialogRef = this.matDialog.open(CreateUserModalComponent, {
             width: '90vw',
@@ -147,23 +120,10 @@ export class UserComponent implements OnInit, OnDestroy {
         });
     }
 
-    deleteUser(user: UserModel): void {
-        const dialogRef = this.matDialog.open(ConfirmDeleteUserModalComponent, {
-            data: { id: user.id },
-            autoFocus: false,
-        });
-
-        dialogRef.afterClosed().subscribe((confirmed) => {
-            if (confirmed) {
-                this.loadData();
-            }
-        });
-    }
-    
     toggleUserStatus(user: UserModel): void {
         const statusMap = { Activo: 1, Inactivo: 0 };
         const newStatus = statusMap[user.status];
-    
+
         this.userService.updateStatus(user.id, newStatus).subscribe({
             next: () => {
                 this.showTemporaryAlert('success', `Estado cambiado a ${newStatus === 0 ? 'Activo' : 'Inactivo'}.`);
@@ -176,12 +136,6 @@ export class UserComponent implements OnInit, OnDestroy {
         });
     }
 
-    mapRole(role: string): number {
-        const roles = { 'Administrador': 1, 'Personal de Ingreso': 2, 'Concierge': 3 };
-        return roles[role] || 0;
-    }
-    
-
     mapStatus(status: string): number {
         const statusMap = { Activo: 0, Inactivo: 1 };
         return statusMap[status] ?? 0;
@@ -190,9 +144,9 @@ export class UserComponent implements OnInit, OnDestroy {
     private showTemporaryAlert(type: 'success' | 'error', message: string): void {
         this.alert = { type, message };
         this.showAlert = true;
-    
+
         setTimeout(() => {
             this.showAlert = false;
-        }, 5000); 
+        }, 5000);
     }
 }

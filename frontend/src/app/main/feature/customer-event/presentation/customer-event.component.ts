@@ -21,7 +21,7 @@ import { CustomerEventTable } from './customer-event.config';
 import { FilterCustomerEventComponent } from './filter-customer-event/filter-customer-event.component';
 
 @Component({
-    selector: 'tt-customer-event',
+    selector: 'ms-customer-event',
     templateUrl: './customer-event.component.html',
     standalone: true,
     imports: [
@@ -67,7 +67,7 @@ export class CustomerEventComponent implements OnInit, OnDestroy {
         2: 'No Binario',
         3: 'Desconocido',
     };
-    
+
     private customerTypeMap: { [key: number]: string } = {
         0: 'Explorador',
         1: 'Investigador',

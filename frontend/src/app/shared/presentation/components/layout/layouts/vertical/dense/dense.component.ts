@@ -1,8 +1,8 @@
-import { NgClass, NgIf } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { FuseLoadingBarComponent } from '@fuse/components/loading-bar';
 import {
     FuseNavigationItem,
@@ -15,9 +15,6 @@ import { NavigationService } from 'app/shared/infrastructure/services/navigation
 import { Navigation } from 'app/shared/infrastructure/services/navigation/navigation.types';
 import { UserService } from 'app/shared/infrastructure/services/user.service';
 import { Subject, takeUntil } from 'rxjs';
-import { LanguagesComponent } from '../../../common/languages/languages.component';
-import { NotificationsComponent } from '../../../common/notifications/notifications.component';
-import { SearchComponent } from '../../../common/search/search.component';
 
 @Component({
     selector: 'dense-layout',
@@ -26,16 +23,12 @@ import { SearchComponent } from '../../../common/search/search.component';
     encapsulation: ViewEncapsulation.None,
     standalone: true,
     imports: [
-        NgClass,
         FuseLoadingBarComponent,
         FuseVerticalNavigationComponent,
         MatButtonModule,
         MatIconModule,
-        LanguagesComponent,
-        SearchComponent,
         NgIf,
-        RouterOutlet,
-        NotificationsComponent,
+        RouterOutlet
     ],
 })
 export class DenseLayoutComponent implements OnInit, OnDestroy {
@@ -45,13 +38,11 @@ export class DenseLayoutComponent implements OnInit, OnDestroy {
     imgOpen = false;
     user: User;
     private _unsubscribeAll: Subject<boolean> = new Subject<boolean>();
-    isSandboxEnvironment: boolean = false;
 
     /**
      * Constructor
      */
     constructor(
-        private _activatedRoute: ActivatedRoute,
         private _router: Router,
         private _navigationService: NavigationService,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
@@ -79,8 +70,6 @@ export class DenseLayoutComponent implements OnInit, OnDestroy {
      */
     ngOnInit(): void {
 
-        this.checkEnvironment();
-
         // Subscribe to media changes
         this._fuseMediaWatcherService.onMediaChange$
             .pipe(takeUntil(this._unsubscribeAll))
@@ -104,11 +93,6 @@ export class DenseLayoutComponent implements OnInit, OnDestroy {
                 this._changeDetectorRef.markForCheck();
             });
     }
-
-    checkEnvironment(): void {
-        const currentDomain = window.location.hostname;
-        this.isSandboxEnvironment = currentDomain.includes('sandbox-estropical.com');
-      }
 
     hasPermissionTransaction(navigation: Navigation, role: string, user: string): void {
         this.navigation = navigation.default

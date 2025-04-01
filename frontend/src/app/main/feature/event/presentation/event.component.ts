@@ -18,7 +18,7 @@ import { eventTableConfig } from './event.config';
 import { UpdateEventModalComponent } from './update-event/update-event.component';
 
 @Component({
-    selector: 'tt-events',
+    selector: 'ms-events',
     standalone: true,
     imports: [
         ViewHeaderComponent,

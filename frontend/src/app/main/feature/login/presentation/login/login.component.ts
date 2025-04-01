@@ -27,7 +27,7 @@ import { AuthService } from '../../../../../shared/infrastructure/services/auth.
 import { WhiteListService } from '../../infrastructure/models/white-list.service';
 
 @Component({
-    selector: 'tt-login',
+    selector: 'ms-login',
     templateUrl: './login.component.html',
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations,
@@ -64,7 +64,6 @@ export class LoginComponent implements OnInit {
     showAlert: boolean = false;
 
     ngOnInit(): void {
-        this.checkEnvironment();
         this._authService.cleanLocalStorage();
         // Create the form
         this.signInForm = this._formBuilder.group({
@@ -75,11 +74,6 @@ export class LoginComponent implements OnInit {
 
     }
 
-
-    checkEnvironment(): void {
-        const currentDomain = window.location.hostname;
-        this.isSandboxEnvironment = currentDomain.includes('sandbox-estropical.com');
-      }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
@@ -109,7 +103,7 @@ export class LoginComponent implements OnInit {
             // Set the alert
             this.alert = {
                 type: 'error',
-                message: 'El Usuario no se encuentra habilitado. Contáctese con isoftware@estropical.com',
+                message: 'El Usuario no se encuentra habilitado.',
             };
 
             // Show the alert

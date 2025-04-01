@@ -18,7 +18,7 @@ import { standTableConfig } from './stand.config';
 import { UpdateStandModalComponent } from './update-stand/update-stand.component';
 
 @Component({
-    selector: 'tt-stands',
+    selector: 'ms-stands',
     standalone: true,
     imports: [
         ViewHeaderComponent,
@@ -147,9 +147,9 @@ export class StandComponent implements OnInit, OnDestroy {
     private showTemporaryAlert(type: 'success' | 'error', message: string): void {
         this.alert = { type, message };
         this.showAlert = true;
-    
+
         setTimeout(() => {
             this.showAlert = false;
-        }, 5000); 
+        }, 5000);
     }
 }

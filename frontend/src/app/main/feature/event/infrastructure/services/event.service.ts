@@ -1,6 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpServiceNetbase } from 'app/shared/infrastructure/helpers/services/httpNetbase.service';
+import { HttpServiceMoreno } from 'app/shared/infrastructure/helpers/services/httpMoreno.service';
 import { Observable } from 'rxjs';
 import { UpdateEventDto } from '../dtos/UpdateEventDto';
 import { UpdateEventStandsDto } from '../dtos/UpdateEventStandsDto';
@@ -9,7 +9,7 @@ import { EventModel } from '../models/EventModel';
 @Injectable({
     providedIn: 'root',
 })
-export class EventService extends HttpServiceNetbase {
+export class EventService extends HttpServiceMoreno {
     private readonly endpoint = '/events';
 
     getAll(): Observable<EventModel[]> {

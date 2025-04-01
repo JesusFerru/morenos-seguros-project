@@ -1,7 +1,6 @@
-﻿namespace MorenoSeguros.Api;
+﻿namespace MorenoSeguros.Api.Endpoints.UsersEndpoints;
 
 using Ardalis.ApiEndpoints;
-using global::MorenoSeguros.Api.Endpoints.UsersEndpoints;
 using Microsoft.AspNetCore.Mvc;
 using MorenoSeguros.Core.Entities.UserAggregate;
 using MorenoSeguros.Core.Entities.UserAggregate.Specification;
@@ -10,8 +9,6 @@ using MorenoSeguros.Core.SharedKernel.Interfaces;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
 using System.Net.Mime;
-
-namespace MorenoSeguros.Api.Endpoints.UsersEndpoints;
 
 public class GetAllUsers : EndpointBaseAsync
     .WithoutRequest
@@ -24,7 +21,7 @@ public class GetAllUsers : EndpointBaseAsync
         _repository = repository;
     }
 
-    [HttpGet($"{RouteConstants.Route_V1}/get-all-users")]
+    [HttpGet($"{RouteConstants.Route_V1}/users")]
     [SwaggerOperation(
        OperationId = nameof(GetAllUsers),
        Tags = [SwaggerConstants.UserTagSwagger]
@@ -42,7 +39,8 @@ public class GetAllUsers : EndpointBaseAsync
             $"{u.FirstName} {u.LastName}",
             u.Email,
             u.PhoneNumber,
-            u.Role.Name
+            u.Role.Name,
+            u.Username
         )).ToList();
 
         return Ok(result);

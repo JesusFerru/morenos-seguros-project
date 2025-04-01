@@ -7,17 +7,17 @@
             "projectType": "application",
             "schematics": {
                 "@schematics/angular:component": {
-                    "prefix": "tt",
+                    "prefix": "ms",
                     "style": "none",
                     "skipTests": true
                 },
                 "@schematics/angular:directive": {
-                    "prefix": "tt"
+                    "prefix": "ms"
                 }
             },
             "root": "",
             "sourceRoot": "src",
-            "prefix": "tt",
+            "prefix": "ms",
             "architect": {
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",

@@ -17,7 +17,7 @@ import { originTableConfig } from './origin.config';
 import { UpdateOriginModalComponent } from './update-origin/update-origin.component';
 
 @Component({
-    selector: 'tt-origins',
+    selector: 'ms-origins',
     standalone: true,
     imports: [
         ViewHeaderComponent,

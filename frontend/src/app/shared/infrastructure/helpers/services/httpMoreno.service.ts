@@ -5,9 +5,9 @@ import { HttpService } from './http.service';
 @Injectable({
     providedIn: 'root',
 })
-export class HttpServiceNetbase extends HttpService {
+export class HttpServiceMoreno extends HttpService {
     constructor() {
         super();
-        this.DOMAIN = environment.apiNetbaseUrl;  // Set the specific domain for "Universal"
+        this.DOMAIN = environment.apiMorenoUrl;
     }
 }

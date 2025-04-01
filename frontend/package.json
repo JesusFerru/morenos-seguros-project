@@ -30,7 +30,6 @@
     "@angular/platform-browser": "^17.3.0",
     "@angular/platform-browser-dynamic": "^17.3.0",
     "@angular/router": "^17.3.0",
-    "@fontsource/urbanist": "^5.0.20",
     "@ngneat/transloco": "^6.0.4",
     "apexcharts": "^3.48.0",
     "crypto-js": "^4.2.0",

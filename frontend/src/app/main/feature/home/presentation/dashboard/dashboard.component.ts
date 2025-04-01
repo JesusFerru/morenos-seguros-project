@@ -4,7 +4,7 @@ import { UserService } from 'app/shared/infrastructure/services/user.service';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
-    selector: 'tt-dashboard',
+    selector: 'ms-dashboard',
     standalone: true,
     imports: [],
     templateUrl: './dashboard.component.html',
@@ -21,9 +21,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
         'RegAdmission': 'Personal de Ingreso',
         'Concierge': 'Concierge'
       };
-    
-      
-    
+
+
+
 
     ngOnInit(): void {
         // Subscribe to user changes

@@ -16,7 +16,7 @@ import { CustomerEventService } from '../../infrastructure/services/customer-eve
 import { IReportCustomerEvent } from './report-form.model';
 
 @Component({
-    selector: 'tt-filter-customer-event',
+    selector: 'ms-filter-customer-event',
     templateUrl: './filter-customer-event.component.html',
     standalone: true,
     imports: [

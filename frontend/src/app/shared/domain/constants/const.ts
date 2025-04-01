@@ -1,6 +1,6 @@
 
-export const AUTH_TOKEN = 'authToken'; // Token de TSO
-export const AUTH_NAME = 'authName'; // Token de TSO
+export const AUTH_TOKEN = 'authToken';
+export const AUTH_NAME = 'authName';
 
 
 export const CREATE_SUCCESS = 'Registro creado exitosamente.';

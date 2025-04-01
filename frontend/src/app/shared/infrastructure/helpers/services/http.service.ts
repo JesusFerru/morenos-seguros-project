@@ -55,7 +55,6 @@ export class HttpService {
                 },
             });
             return {
-                // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
                 unsubscribe() { },
             };
         });
@@ -79,7 +78,7 @@ export class HttpService {
         );
     }
 
-    protected getByFilet<T>(url: string, sendParams: Params, cancel$?: Observable<boolean>): Observable<T> {
+    protected getByFilter<T>(url: string, sendParams: Params, cancel$?: Observable<boolean>): Observable<T> {
         return this._executeApi(
             this.http.get(this.DOMAIN + url, {
                 params: sendParams,

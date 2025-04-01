@@ -5,7 +5,7 @@ import { AuthService } from 'app/shared/infrastructure/services/auth.service';
 import { Subject, finalize, takeUntil, takeWhile, tap, timer } from 'rxjs';
 
 @Component({
-    selector: 'tt-sign-out',
+    selector: 'ms-sign-out',
     standalone: true,
     imports: [NgIf, RouterLink, I18nPluralPipe],
     templateUrl: './sign-out.component.html',
