@@ -1,0 +1,149 @@
+<div class="overflow-y-auto max-h-[90vh] p-4" *ngIf="form">
+    <h1 class="text-2xl text-center font-bold mb-6 text-gray-800">
+      Editar Evento
+    </h1>
+  
+    <fuse-alert *ngIf="alert" [type]="alert.type" class="mb-4">
+      {{ alert.message }}
+    </fuse-alert>
+  
+    <form [formGroup]="form">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Nombre</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="name"
+            placeholder="e.g., Outlet Santa Cruz"
+          />
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Tipo</mat-label>
+          <mat-select formControlName="type">
+            <mat-option *ngFor="let type of eventTypes" [value]="type.value">
+              {{ type.label }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Fecha de Inicio</mat-label>
+          <input
+            matInput
+            [matDatepicker]="startPicker"
+            formControlName="start"
+            [max]="form.get('end').value"
+          />
+          <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+          <mat-datepicker #startPicker></mat-datepicker>
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Fecha de Fin</mat-label>
+          <input
+            matInput
+            [matDatepicker]="endPicker"
+            formControlName="end"
+            [min]="form.get('start').value"
+          />
+          <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+          <mat-datepicker #endPicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+  
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+        <div class="w-full flex items-center">
+          <mat-checkbox formControlName="sendQR">Enviar QR</mat-checkbox>
+        </div>
+  
+        <div class="md:col-span-2 mb-2">
+          <div class="mx-3 mb-5 flex justify-between items-center">
+            <h3 class="text-lg font-bold">ORÍGENES</h3>
+            <button
+              mat-raised-button
+              color="accent"
+              (click)="exportSelectedOrigins()"
+              class="flex items-center gap-2"
+            >
+              <mat-icon>table_chart</mat-icon>
+              <span>Exportar a Excel</span>
+            </button>
+          </div>
+          <div class="max-h-[200px] overflow-y-auto">
+            <table
+              mat-table
+              [dataSource]="availableOrigins"
+              class="w-full mb-4"
+              *ngIf="availableOrigins?.length"
+            >
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                <td mat-cell *matCellDef="let origin">{{ origin.name }}</td>
+              </ng-container>
+  
+              <ng-container matColumnDef="category">
+                <th mat-header-cell *matHeaderCellDef>Categoría</th>
+                <td mat-cell *matCellDef="let origin">
+                  {{ mapCategory(origin.category) }}
+                </td>
+              </ng-container>
+  
+              <ng-container matColumnDef="abbreviation">
+                <th mat-header-cell *matHeaderCellDef>Abreviatura</th>
+                <td mat-cell *matCellDef="let origin">{{ origin.abbreviation }}</td>
+              </ng-container>
+  
+              <ng-container matColumnDef="select">
+                <th mat-header-cell *matHeaderCellDef>Seleccionar</th>
+                <td mat-cell *matCellDef="let origin">
+                  <mat-checkbox
+                    (change)="onOriginSelectionChange($event, origin)"
+                    [checked]="isSelected(origin)"
+                  ></mat-checkbox>
+                </td>
+              </ng-container>
+  
+              <ng-container matColumnDef="url">
+                <th mat-header-cell *matHeaderCellDef>URL</th>
+                <td mat-cell *matCellDef="let origin">
+                  <span *ngIf="isSelected(origin)">
+                    www.netbase.com?codigoevento={{ eventCode }}&origen={{ origin.abbreviation }}
+                  </span>
+                </td>
+              </ng-container>
+  
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+          </div>
+          <div *ngIf="!availableOrigins?.length">
+            No hay orígenes disponibles.
+          </div>
+        </div>
+      </div>
+    </form>
+  
+    <div class="flex justify-end mt-4 space-x-4">
+      <button
+        mat-raised-button
+        color="warn"
+        (click)="close()"
+        class="px-6 py-2 font-semibold rounded-lg"
+        [disabled]="isSaving"
+      >
+        Cancelar
+      </button>
+      <button
+        mat-raised-button
+        (click)="save()"
+        [ngClass]="{ 'bg-blue-900 text-white': form.valid && !isSaving }"
+        [disabled]="!form.valid || isSaving"
+        class="px-6 py-2 font-semibold rounded-lg shadow-md transition-shadow duration-300 hover:shadow-lg"
+      >
+        Guardar
+      </button>
+    </div>
+  </div>
+  
