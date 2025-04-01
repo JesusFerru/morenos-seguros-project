@@ -1,9 +1,15 @@
-export const userTableConfig = [
-    { columnDef: 'username', header: 'CI (CON COMPLEMENTO)', type: 'text' },
+export interface TableColumn {
+    columnDef: string;
+    header: string;
+    type: string;
+}
+
+export const userTableConfig: TableColumn[] = [
+    { columnDef: 'dni', header: 'NRO. DE CARNET', type: 'text' },
+    { columnDef: 'username', header: 'USUARIO', type: 'text' },
     { columnDef: 'fullName', header: 'NOMBRE COMPLETO', type: 'text' },
-    { columnDef: 'password', header: 'CELULAR (CON CÓDIGO PAÍS)', type: 'text' },
     { columnDef: 'role', header: 'ROL', type: 'text' },
+    { columnDef: 'createdAt', header: 'FECHA DE CREACIÓN', type: 'datetime' },
     { columnDef: 'status', header: 'ESTADO', type: 'text' },
-    { columnDef: 'toggleUtilStatus', header: 'ACTIVAR/DESACTIVAR', type: 'toggleUtil' },
-    { columnDef: 'edit', header: 'EDITAR', type: 'edit' }
+    { columnDef: 'edit', header: 'EDITAR', type: 'edit' },
 ];

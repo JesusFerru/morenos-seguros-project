@@ -9,8 +9,8 @@
 
     <form [formGroup]="form" class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <mat-form-field appearance="outline" class="w-full">
-            <mat-label>CI (con complemento)</mat-label>
-            <input matInput type="text" formControlName="username" disabled />
+            <mat-label>Usuario</mat-label>
+            <input matInput type="text" formControlName="username" />
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="w-full">
@@ -36,10 +36,6 @@
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="w-full">
-            <mat-label>Celular (con código país)</mat-label>
-            <input matInput type="text" formControlName="password" />
-        </mat-form-field>
     </form>
 
     <div class="flex justify-end mt-4 space-x-4">

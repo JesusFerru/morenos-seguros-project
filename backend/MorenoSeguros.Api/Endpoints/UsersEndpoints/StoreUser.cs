@@ -29,7 +29,7 @@ namespace MorenoSeguros.Api.Endpoints.UsersEndpoints
             _authService = authService;
         }
 
-        [HttpPost($"{RouteConstants.Route_V1}/user")]
+        [HttpPost($"{RouteConstants.Route_V1}/users")]
         [SwaggerOperation(
             OperationId = nameof(StoreUser),
             Tags = [SwaggerConstants.UserTagSwagger]

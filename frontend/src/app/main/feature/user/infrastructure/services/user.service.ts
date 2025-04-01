@@ -18,10 +18,14 @@ export class UserService extends HttpServiceMoreno {
     }
 
     create(user: UserModel): Observable<UserModel> {
-        return this.post<UserModel>(this.endpoint, user);
+        return this.post<UserModel>(`${this.endpoint}`, user);
     }
 
     update(dni: string, user: UserModel): Observable<void> {
         return this.put<void>(`${this.endpoint}/${dni}`, user);
+    }
+
+    updateStatus(dni: string, status: number): Observable<void> {
+        return this.put<void>(`${this.endpoint}/${dni}/status`, status);
     }
 }
