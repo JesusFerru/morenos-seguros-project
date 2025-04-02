@@ -58,11 +58,20 @@ export class UpdateUserModalComponent {
                 { value: data.user.username, disabled: true },
                 Validators.required,
             ],
+            dni: [
+                { value: data.user.dni, disabled: true },
+                Validators.required,
+            ],
             fullName: [data.user.fullName, Validators.required],
-            role: [data.user.role, Validators.required],
+            role: [this.mapRoleLabelToValue(data.user.role), Validators.required],
             status: [data.user.status, Validators.required],
             password: [data.user.password, Validators.required],
         });
+    }
+
+    mapRoleLabelToValue(roleLabel: string): number {
+        const role = this.roles.find(r => r.label === roleLabel);
+        return role?.value ?? null;
     }
 
     close(): void {
@@ -72,13 +81,12 @@ export class UpdateUserModalComponent {
     save(): void {
         if (this.form.valid) {
             this.isSaving = true;
-
             const updatedUser = {
                 ...this.data.user,
-                ...this.form.value,
-                role: this.mapRoles(this.form.value.role),
+                ...this.form.getRawValue(),
                 status: this.mapStatus(this.form.value.status),
             };
+
 
             this.userService.update(this.data.user.id, updatedUser).subscribe({
                 next: () => {
@@ -102,14 +110,6 @@ export class UpdateUserModalComponent {
         }
     }
 
-    mapRoles(role: string): number {
-        const roleMap = {
-            'Administrador': 1,
-            'Personal de Ingreso': 2,
-            'Concierge': 3,
-        };
-        return roleMap[role] ?? 0;
-    }
     mapStatus(status: string): number {
         const statusMap = {
             Activo: 0,
