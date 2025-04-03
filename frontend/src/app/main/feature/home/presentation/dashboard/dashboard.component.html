@@ -1,0 +1,20 @@
+<div class="flex flex-col flex-auto min-w-0 items-center justify-center h-screen bg-white">
+    <!-- Main -->
+    <div class="flex-auto border-t p-4 flex items-center justify-center">
+        <div class="w-full max-w-screen-xl mx-auto text-center">
+            <!-- Logo -->
+            <div class="flex flex-col items-center justify-center">
+                <img src="assets/images/logo/logo-moreno-seguros.png" alt="Logo"
+                    class="w-40 sm:w-56 md:w-64 lg:w-70 h-auto object-contain">
+            </div>
+            <!-- Bienvenida -->
+            <div>
+                <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-primary ont-bold mt-0">
+                    Bienvenido/a</h1>
+                <p class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-secondary">{{user.fullName}}</p>
+                <p class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-secondary">{{user.userName}}</p>
+                <p class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-secondary">{{transform(user.rolUser)}}</p>
+            </div>
+        </div>
+    </div>
+</div>

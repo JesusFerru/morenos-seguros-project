@@ -1,0 +1,26 @@
+/* ----------------------------------------------------------------------------------------------------- */
+/*  @ Import/write your custom styles here.
+/*  @ Styles from this file will override 'vendors.scss' and Fuse's base styles.
+/* ----------------------------------------------------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
+
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.fuse-vertical-navigation-item{
+  font-size: 18px !important;
+}
+
+.fuse-vertical-navigation-item-active{
+  font-size: 18px !important;
+}
+
+.fuse-vertical-navigation-item-arrow{
+  color: white;
+}
+
+.fuse-vertical-navigation-wrapper {
+    box-shadow: inset -1px 0 0 #405d85 !important;
+  }
+
