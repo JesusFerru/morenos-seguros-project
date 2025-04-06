@@ -1,19 +1,25 @@
-﻿namespace MorenoSeguros.Api.Dtos;
+﻿using MorenoSeguros.Core.Entities.InsuranceCompanyAggregate;
+
+namespace MorenoSeguros.Api.Dtos;
 
 public class InsurancePlanResult
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
     public string? Description { get; set; }
-    public bool? IsActive { get; set; } = true;
-    public DateTime? CreatedAt { get; set; }
+    public Guid? InsuranceCompanyId { get; set; }
+    public bool IsActive { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
 
-    public InsurancePlanResult(Guid id, string name, string? description, bool? isActive, DateTime? createdAt)
+    public InsurancePlanResult(InsurancePlan plan)
     {
-        Id = id;
-        Name = name;
-        Description = description;
-        IsActive = isActive;
-        CreatedAt = createdAt;
+        Id = plan.Id;
+        Name = plan.Name;
+        Description = plan.Description;
+        InsuranceCompanyId = plan.InsuranceCompany?.Id;
+        IsActive = plan.IsActive;
+        CreatedAt = plan.CreatedAt;
+        UpdatedAt = plan.UpdatedAt;
     }
 }

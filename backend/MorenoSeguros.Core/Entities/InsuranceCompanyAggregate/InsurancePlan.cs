@@ -10,6 +10,7 @@ public class InsurancePlan : BaseEntity, IAggregateRoot
     public string? Description { get; set; } = string.Empty;
 
     // Navigation
+    public Guid InsuranceCompanyId { get; set; }
     public InsuranceCompany? InsuranceCompany { get; set; }
     public List<DeductibleOption> DeductibleOptions { get; set; } = new();
 
@@ -19,9 +20,10 @@ public class InsurancePlan : BaseEntity, IAggregateRoot
         Description = description;
     }
 
-    public void Update(string name, string? description)
+    public void UpdateInfo(string name, string? description, bool isActive)
     {
         Name = name;
         Description = description;
+        IsActive = isActive;
     }
 }

@@ -23,7 +23,10 @@ builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddProblemDetails(option =>
 {
     option.CustomizeProblemDetails = context =>
-    context.ProblemDetails.Instance = $"{context.HttpContext.Request.Method} {context.HttpContext.Request.Path}";
+    {
+        context.ProblemDetails.Instance = $"{context.HttpContext.Request.Method} {context.HttpContext.Request.Path}";
+        context.ProblemDetails.Extensions["traceId"] = context.HttpContext.TraceIdentifier;
+    };
 });
 builder.Services.AddExceptionHandler<HandleException>();
 

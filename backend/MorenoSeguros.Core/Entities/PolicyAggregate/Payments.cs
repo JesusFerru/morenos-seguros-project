@@ -1,7 +1,8 @@
 ﻿using MorenoSeguros.Core.SharedKernel;
+using MorenoSeguros.Core.SharedKernel.Interfaces;
 
 namespace MorenoSeguros.Core.Entities.PolicyAggregate;
-public class Payments : BaseEntity
+public class Payments : BaseEntity, IAggregateRoot
 {
     public string PolicyNumber { get; set; } = string.Empty;
     public DateTime PaymentDate { get; set; }
