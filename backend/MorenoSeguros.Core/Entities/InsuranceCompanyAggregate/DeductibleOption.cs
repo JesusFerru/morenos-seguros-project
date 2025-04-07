@@ -12,9 +12,10 @@ public class DeductibleOption : BaseEntity, IAggregateRoot
     public string Currency { get; set; } = CurrencyConstants.Bolivians;
 
     // Navigation
+    public Guid InsurancePlanId { get; set; }
     public InsurancePlan? InsurancePlan { get; set; }
 
-    public ICollection<Policy> Policies { get; set; } = new List<Policy>();
+    public ICollection<Policy> Policies { get; set; } = [];
 
     public DeductibleOption(decimal deductibleIndividual, decimal deductibleFamily, string currency)
     {
@@ -23,10 +24,11 @@ public class DeductibleOption : BaseEntity, IAggregateRoot
         Currency = currency;
     }
 
-    public void Update(decimal deductibleIndividual, decimal deductibleFamily, string currency)
+    public void Update(decimal deductibleIndividual, decimal deductibleFamily, string currency, bool isActive)
     {
         DeductibleIndividual = deductibleIndividual;
         DeductibleFamily = deductibleFamily;
         Currency = currency;
+        IsActive = isActive;
     }
 }

@@ -79,10 +79,8 @@ namespace MorenoSeguros.Api.Controllers
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
         public async Task<ActionResult<InsuranceCompanyResult>> Update(Guid id, [FromBody] InsuranceCompanyCommand request)
         {
-            var company = await _repository.FirstOrDefaultAsync(new GetInsuranceCompanyByIdSpec(id));
-            if (company is null)
+            var company = await _repository.FirstOrDefaultAsync(new GetInsuranceCompanyByIdSpec(id)) ?? 
                 throw new NotFoundException(GetMessage(nameof(NotFoundException), nameof(InsuranceCompany)));
-
             company.UpdateInfo(request.Name, request.Description, request.LogoUrl, request.WebsiteUrl, request.IsActive);
             await _repository.UpdateAsync(company);
             await _repository.SaveChangesAsync();
