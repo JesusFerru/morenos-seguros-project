@@ -55,10 +55,8 @@ namespace MorenoSeguros.Api.Controllers
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
         public async Task<ActionResult<List<InsurancePlanResult>>> GetByCompanyId(Guid companyId)
         {
-            var company = await _companyRepository.GetByIdAsync(companyId);
-            if (company is null)
+            var company = await _companyRepository.GetByIdAsync(companyId) ??
                 throw new NotFoundException(ErrorMessages.GetMessage(nameof(NotFoundException), nameof(InsuranceCompany)));
-
             var plans = await _repository.ListAsync(new GetInsurancePlansByCompanyIdSpec(companyId));
             var result = plans.Select(p => new InsurancePlanResult(p)).ToList();
             return Ok(result);
@@ -70,12 +68,8 @@ namespace MorenoSeguros.Api.Controllers
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
         public async Task<ActionResult<InsurancePlanResult>> GetById(Guid id)
         {
-            var plan = await _repository.FirstOrDefaultAsync(new GetInsurancePlanByIdSpec(id));
-
-            if (plan is null)
-            {
+            var plan = await _repository.FirstOrDefaultAsync(new GetInsurancePlanByIdSpec(id)) ?? 
                 throw new NotFoundException(ErrorMessages.GetMessage(nameof(NotFoundException), nameof(InsurancePlan)));
-            }
             var result = new InsurancePlanResult(plan);
             return Ok(result);
         }
@@ -111,10 +105,8 @@ namespace MorenoSeguros.Api.Controllers
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
         public async Task<ActionResult<InsurancePlanResult>> Update(Guid id, [FromBody] InsurancePlanCommand request)
         {
-            var plan = await _repository.FirstOrDefaultAsync(new GetInsurancePlanByIdSpec(id));
-            if (plan is null)
+            var plan = await _repository.FirstOrDefaultAsync(new GetInsurancePlanByIdSpec(id)) ?? 
                 throw new NotFoundException(ErrorMessages.GetMessage(nameof(NotFoundException), nameof(InsurancePlan)));
-
             _validator.ValidateRequiredForeignKeysAsync<InsurancePlan>(new()
             {
                 { nameof(request.InsuranceCompanyId), request.InsuranceCompanyId }

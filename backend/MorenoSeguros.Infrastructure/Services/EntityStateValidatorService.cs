@@ -9,11 +9,8 @@ public class EntityStateValidatorService : IEntityStateValidatorService
 {
     public async Task ValidateIsActiveAsync<T>(Guid entityId, IRepository<T> repository, string entityName) where T : class, IAggregateRoot
     {
-        var entity = await repository.GetByIdAsync(entityId);
-
-        if (entity is null)
-            throw new NotFoundException(ErrorMessages.GetMessage(nameof(NotFoundException), entityName));
-
+        var entity = await repository.GetByIdAsync(entityId)
+            ?? throw new NotFoundException(ErrorMessages.GetMessage(nameof(NotFoundException), entityName));
         var isActiveProp = typeof(T).GetProperty("IsActive");
         if (isActiveProp == null || isActiveProp.PropertyType != typeof(bool))
             throw new BadRequestException($"Entidad {entityName} no contiene propiedad IsActive válida");

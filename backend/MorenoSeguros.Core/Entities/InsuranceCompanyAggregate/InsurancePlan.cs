@@ -12,7 +12,7 @@ public class InsurancePlan : BaseEntity, IAggregateRoot
     // Navigation
     public Guid InsuranceCompanyId { get; set; }
     public InsuranceCompany? InsuranceCompany { get; set; }
-    public List<DeductibleOption> DeductibleOptions { get; set; } = new();
+    public List<DeductibleOption> DeductibleOptions { get; set; } = [];
 
     public InsurancePlan(string name, string? description = null)
     {
