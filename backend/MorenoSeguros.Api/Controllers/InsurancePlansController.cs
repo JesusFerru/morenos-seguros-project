@@ -29,12 +29,6 @@ namespace MorenoSeguros.Api.Controllers
             _validator = validator;
         }
 
-        [HttpGet("test-error")]
-        public IActionResult TestError()
-        {
-            throw new NotFoundException(ErrorMessages.GetMessage(nameof(NotFoundException), nameof(InsurancePlan)));
-        }
-
         [HttpGet]
         [SwaggerOperation(Tags = [SwaggerConstants.InsurancePlanTagSwagger])]
         [ProducesResponseType(typeof(List<InsurancePlanResult>), (int)HttpStatusCode.OK)]
@@ -51,6 +45,21 @@ namespace MorenoSeguros.Api.Controllers
         public async Task<ActionResult<List<InsurancePlanResult>>> GetActive()
         {
             var plans = await _repository.ListAsync(new GetActiveInsurancePlansSpec());
+            var result = plans.Select(p => new InsurancePlanResult(p)).ToList();
+            return Ok(result);
+        }
+
+        [HttpGet("company/{companyId}")]
+        [SwaggerOperation(Tags = [SwaggerConstants.InsurancePlanTagSwagger])]
+        [ProducesResponseType(typeof(List<InsurancePlanResult>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        public async Task<ActionResult<List<InsurancePlanResult>>> GetByCompanyId(Guid companyId)
+        {
+            var company = await _companyRepository.GetByIdAsync(companyId);
+            if (company is null)
+                throw new NotFoundException(ErrorMessages.GetMessage(nameof(NotFoundException), nameof(InsuranceCompany)));
+
+            var plans = await _repository.ListAsync(new GetInsurancePlansByCompanyIdSpec(companyId));
             var result = plans.Select(p => new InsurancePlanResult(p)).ToList();
             return Ok(result);
         }

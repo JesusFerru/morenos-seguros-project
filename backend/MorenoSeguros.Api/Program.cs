@@ -141,7 +141,6 @@ builder.Services.AddSwaggerGen(options =>
 #endregion
 
 // Add services to the container.
-builder.Services.AddRazorPages();
 
 var app = builder.Build();
 app.UseHttpLogging();

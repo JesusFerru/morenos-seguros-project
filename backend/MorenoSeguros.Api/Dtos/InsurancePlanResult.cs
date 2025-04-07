@@ -17,7 +17,7 @@ public class InsurancePlanResult
         Id = plan.Id;
         Name = plan.Name;
         Description = plan.Description;
-        InsuranceCompanyId = plan.InsuranceCompany?.Id;
+        InsuranceCompanyId = plan.InsuranceCompanyId;
         IsActive = plan.IsActive;
         CreatedAt = plan.CreatedAt;
         UpdatedAt = plan.UpdatedAt;
