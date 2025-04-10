@@ -32,13 +32,10 @@ public class PolicyConfiguration : IEntityTypeConfiguration<Policy>
         builder.HasOne(p => p.BankAccount)
                .WithMany();
 
-        // Foreign key: InsurancePlan
-        builder.HasOne(p => p.InsurancePlan)
-               .WithMany();
-
         // Foreign key: DeductibleOption
         builder.HasOne(p => p.DeductibleOption)
-               .WithMany();
+               .WithMany(d => d.Policies)
+               .HasForeignKey(p => p.DeductibleOptionId);
 
         // Relación recursiva con PreviousPolicyNumber
         builder.HasOne<Policy>()

@@ -14,7 +14,7 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 
 ### Create New Migration from Infrastructure
 ```
-dotnet ef --startup-project ..\MorenoSeguros.Api\ -v migrations add "Add_business_domain_logic_complete"
+dotnet ef --startup-project ..\MorenoSeguros.Api\ -v migrations add "Fix_Policy_Table"
 ```
 ### Update Db migrations from Infrastructure
 ```

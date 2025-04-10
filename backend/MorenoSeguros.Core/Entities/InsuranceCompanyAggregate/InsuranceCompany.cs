@@ -1,6 +1,7 @@
 ﻿using MorenoSeguros.Core.Entities.InsuranceCompanyAggregate;
 using MorenoSeguros.Core.SharedKernel;
 using MorenoSeguros.Core.SharedKernel.Interfaces;
+using System.Runtime.CompilerServices;
 
 namespace MorenoSeguros.Core.Entities.CompanyAggregate;
 
@@ -22,11 +23,12 @@ public class InsuranceCompany : BaseEntity, IAggregateRoot
         WebsiteUrl = websiteUrl;
     }
 
-    public void UpdateInfo(string name, string description, string? logoUrl, string? websiteUrl)
+    public void UpdateInfo(string name, string description, string? logoUrl, string? websiteUrl, bool isActive)
     {
         Name = name;
         Description = description;
         LogoUrl = logoUrl;
         WebsiteUrl = websiteUrl;
+        IsActive = isActive;
     }
 }

@@ -18,6 +18,7 @@ namespace MorenoSeguros.Infrastructure
 
             //Services
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IEntityStateValidatorService, EntityStateValidatorService>();
 
             // Get ConnectionString
             var connectionString = configuration.GetConnectionString("DefaultConnection")

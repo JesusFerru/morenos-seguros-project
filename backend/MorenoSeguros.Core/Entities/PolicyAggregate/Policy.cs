@@ -15,8 +15,8 @@ public class Policy : BaseEntity, IAggregateRoot
     public Guid? AgentId { get; set; }
     public DateOnly StartDate { get; set; }
     public DateOnly EndDate { get; set; }
+    public Guid DeductibleOptionId { get; set; }
     public PolicyStatus Status { get; set; } = PolicyStatus.Draft;
-    public InsurancePlan? InsurancePlan { get; set; }
     public DeductibleOption? DeductibleOption { get; set; }
     public Clients? TitularClient { get; set; }
     public User? Agent { get; set; }
