@@ -6,7 +6,7 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { LuxonDateAdapter } from '@angular/material-luxon-adapter';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { provideFuse } from '@fuse';
-import { provideTransloco, TranslocoService } from '@ngneat/transloco';
+import { provideTransloco, TranslocoService } from '@jsverse/transloco';
 import { firstValueFrom } from 'rxjs';
 import { TranslocoHttpLoader } from './shared/infrastructure/helpers/transloco/transloco.http-loader';
 import { provideIcons } from './shared/infrastructure/helpers/icons/icons.provider';

@@ -1,9 +1,4 @@
-import {
-    HttpErrorResponse,
-    HttpEvent,
-    HttpHandlerFn,
-    HttpRequest,
-} from '@angular/common/http';
+import { HttpErrorResponse, HttpEvent, HttpHandlerFn, HttpRequest } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { ErrorModelResponse } from 'app/shared/domain/models/ErrorModelResponse';
 import { RefreshToken } from 'app/shared/domain/models/RefreshTokenModel';
