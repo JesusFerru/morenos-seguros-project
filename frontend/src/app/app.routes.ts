@@ -73,6 +73,14 @@ export const appRoutes: Route[] = [
             },
 
             {
+                path: 'company-insurance',
+                loadChildren: () =>
+                    import(
+                        'app/main/feature/insurance-company/insurance-company.routes'
+                    ).then(m => m.CONTENT_ROUTES),
+            },
+
+            {
                 path: 'origin',
                 loadChildren: () =>
                     import(

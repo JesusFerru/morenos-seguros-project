@@ -35,6 +35,16 @@ export class NavigationService {
 
         menu.push({
             id: '444',
+            title: 'Compañías de Seguro',
+            role: 'All',
+            meta: [''],
+            type: 'basic',
+            icon: 'heroicons_outline:calendar-days',
+            link: 'event',
+        });
+
+        menu.push({
+            id: '444',
             title: 'Eventos',
             role: 'All',
             meta: [''],
