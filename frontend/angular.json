@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "tso-plus": {
+        "moreno-seguros": {
             "projectType": "application",
             "schematics": {
                 "@schematics/angular:component": {
@@ -23,7 +23,7 @@
                     "builder": "@angular-devkit/build-angular:application",
                     "options": {
                         "outputPath": {
-                          "base": "dist/tso"
+                          "base": "dist/moreno-seguros"
                         },
                         "index": "src/index.html",
                         "inlineStyleLanguage": "scss",
@@ -104,10 +104,10 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "production": {
-                            "buildTarget": "tso-plus:build:production"
+                            "buildTarget": "moreno-seguros:build:production"
                         },
                         "development": {
-                            "buildTarget": "tso-plus:build:development"
+                            "buildTarget": "moreno-seguros:build:development"
                         }
                     },
                     "defaultConfiguration": "development",
@@ -117,7 +117,7 @@
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "buildTarget": "tso-plus:build"
+                        "buildTarget": "moreno-seguros:build"
                     }
                 },
                 "test": {
