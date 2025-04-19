@@ -40,66 +40,7 @@ export class NavigationService {
             meta: [''],
             type: 'basic',
             icon: 'heroicons_outline:calendar-days',
-            link: 'event',
-        });
-
-        menu.push({
-            id: '444',
-            title: 'Eventos',
-            role: 'All',
-            meta: [''],
-            type: 'basic',
-            icon: 'heroicons_outline:calendar-days',
-            link: 'event',
-        });
-
-        menu.push({
-            id: '444',
-            title: 'Orígenes',
-            role: 'All',
-            meta: [''],
-            type: 'basic',
-            icon: 'heroicons_outline:link',
-            link: 'origin',
-        });
-
-        menu.push({
-            id: '444',
-            title: 'Stands',
-            role: 'All',
-            meta: [''],
-            type: 'basic',
-            icon: 'heroicons_outline:building-storefront',
-            link: 'stand',
-        });
-
-        menu.push({
-            id: '555',
-            role: 'All',
-            title: 'Reportería',
-            type: 'collapsable',
-            meta: [''],
-            icon: 'heroicons_outline:presentation-chart-bar',
-            children: [
-                {
-                    id: 'apps..netbase-form',
-                    role: 'All',
-                    title: 'BD Madre',
-                    type: 'basic',
-                    meta: [],
-                    icon: 'heroicons_outline:circle-stack',
-                    link: '/reportery/netbase-form',
-                },
-                {
-                    id: 'apps..customer-event',
-                    role: 'All',
-                    title: 'Clientes por Evento',
-                    type: 'basic',
-                    meta: [],
-                    icon: 'heroicons_outline:chart-pie',
-                    link: '/reportery/customer-event',
-                },
-            ],
+            link: 'insurance-company',
         });
 
         menu.push({

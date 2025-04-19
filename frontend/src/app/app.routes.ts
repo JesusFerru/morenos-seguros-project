@@ -73,63 +73,11 @@ export const appRoutes: Route[] = [
             },
 
             {
-                path: 'company-insurance',
+                path: 'insurance-company',
                 loadChildren: () =>
                     import(
                         'app/main/feature/insurance-company/insurance-company.routes'
                     ).then(m => m.CONTENT_ROUTES),
-            },
-
-            {
-                path: 'origin',
-                loadChildren: () =>
-                    import(
-                        'app/main/feature/origin/origin.routes'
-                    ).then(m => m.CONTENT_ROUTES),
-            },
-
-            {
-                path: 'stand',
-                loadChildren: () =>
-                    import(
-                        'app/main/feature/stand/stand.routes'
-                    ).then(m => m.CONTENT_ROUTES),
-            },
-
-            {
-                path: 'event',
-                loadChildren: () =>
-                    import(
-                        'app/main/feature/event/event.routes'
-                    ).then(m => m.CONTENT_ROUTES),
-            },
-
-            {
-                path: 'netbase-form',
-                loadChildren: () =>
-                    import('app/main/feature/netbase/netbase.routes').then(
-                        m => m.CONTENT_ROUTES,
-                    ),
-            },
-
-            {
-                path: 'reportery',
-                children: [
-                    {
-                        path: 'netbase-form',
-                        loadChildren: () =>
-                            import(
-                                'app/main/feature/netbase/netbase.routes'
-                            ).then(m => m.CONTENT_ROUTES),
-                    },
-                    {
-                        path: 'customer-event',
-                        loadChildren: () =>
-                            import(
-                                'app/main/feature/customer-event/customer-event.routes'
-                            ).then(m => m.CONTENT_ROUTES),
-                    },
-                ],
             },
         ],
     },
