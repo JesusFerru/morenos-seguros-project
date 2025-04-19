@@ -30,10 +30,10 @@
     "@angular/platform-browser": "^17.3.0",
     "@angular/platform-browser-dynamic": "^17.3.0",
     "@angular/router": "^17.3.0",
-    "@ngneat/transloco": "^6.0.4",
+    "@jsverse/transloco": "^7.6.1",
+    "@jsverse/transloco-utils": "^7.0.2",
     "apexcharts": "^3.48.0",
     "crypto-js": "^4.2.0",
-    "highlight.js": "^11.9.0",
     "lodash-es": "^4.17.21",
     "luxon": "^3.4.4",
     "ng-apexcharts": "^1.9.0",
@@ -43,7 +43,6 @@
     "run-script-os": "^1.1.6",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "xlsx": "^0.18.5",
     "zone.js": "~0.14.3"
   },
   "devDependencies": {
@@ -58,7 +57,6 @@
     "@tailwindcss/typography": "^0.5.12",
     "@types/chroma-js": "^2.4.4",
     "@types/crypto-js": "^4.2.2",
-    "@types/highlight.js": "^10.1.0",
     "@types/jasmine": "~5.1.2",
     "@types/lodash": "^4.17.0",
     "@types/lodash-es": "^4.17.12",
