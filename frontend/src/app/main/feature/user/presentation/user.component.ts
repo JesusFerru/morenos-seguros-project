@@ -16,6 +16,7 @@ import { CreateUserModalComponent } from './create-user/create-user.component';
 import { UpdateUserModalComponent } from './update-user/update-user.component';
 import { userTableConfig } from './user.config';
 import { ChangePaginationModel } from 'app/shared/domain/models/ChangePaginationModel';
+import { UserRoleEnum, UserStatusEnum } from 'app/shared/domain/enums/user.enum';
 
 enum UserStatus {
     Inactive = 0,
@@ -42,7 +43,6 @@ interface Alert {
     templateUrl: './user.component.html',
 })
 export class UserComponent implements OnInit, OnDestroy {
-    private router = inject(Router);
     private userService = inject(UserService);
     private matDialog = inject(MatDialog);
 
@@ -53,16 +53,6 @@ export class UserComponent implements OnInit, OnDestroy {
     public isDownloading = false;
     public responsePagination: PaginationResponseModel<UserModel>;
     private destroy$ = new Subject<boolean>();
-
-    private readonly statusDisplayMap: { [key: string]: string } = {
-        'false': 'Inactivo',
-        'true': 'Activo',
-    };
-
-    private readonly roleDisplayMap: { [key: string]: string } = {
-        'Admin': 'Administrador',
-        'Collaborator': 'Colaborador',
-    };
 
     ngOnInit(): void {
         this.loadData();
@@ -79,8 +69,8 @@ export class UserComponent implements OnInit, OnDestroy {
                 const sortedData = res.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
                 const transformedData = sortedData.map(user => ({
                     ...user,
-                    statusLabel: this.statusDisplayMap[String(user.isActive)] || 'Desconocido',
-                    roleLabel: this.roleDisplayMap[user.role] || user.role || 'Desconocido',
+                    role: UserRoleEnum[user.role as keyof typeof UserRoleEnum] ?? user.role,
+                    status: user.isActive ? UserStatusEnum.Active : UserStatusEnum.Inactive
                 }));
 
                 this.responsePagination = {
