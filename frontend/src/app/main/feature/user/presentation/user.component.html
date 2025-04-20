@@ -52,6 +52,7 @@
                 [columns]="columns"
                 [total]="responsePagination?.totalRecords"
                 (edit)="editUser($event)"
+                (changePaginator)="onPageChanged($event)"
             ></ms-table>
         </div>
     </div>

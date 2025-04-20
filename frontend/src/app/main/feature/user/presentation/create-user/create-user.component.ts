@@ -34,7 +34,7 @@ import { UserService } from '../../infrastructure/services/user.service';
 export class CreateUserModalComponent {
     form: FormGroup;
     roles = [
-        { value: 'Administrador', label: 'Administrador' },
+        { value: 'Admin', label: 'Administrador' },
         { value: 'Collaborator', label: 'Colaborador' }
     ];
     isActive = [

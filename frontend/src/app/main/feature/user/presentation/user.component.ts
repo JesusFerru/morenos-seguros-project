@@ -15,6 +15,7 @@ import { UserService } from '../infrastructure/services/user.service';
 import { CreateUserModalComponent } from './create-user/create-user.component';
 import { UpdateUserModalComponent } from './update-user/update-user.component';
 import { userTableConfig } from './user.config';
+import { ChangePaginationModel } from 'app/shared/domain/models/ChangePaginationModel';
 
 enum UserStatus {
     Inactive = 0,
@@ -74,32 +75,34 @@ export class UserComponent implements OnInit, OnDestroy {
 
     private loadData(): void {
         this.userService.getAll().subscribe({
-          next: (res: UserModel[]) => {
-            const transformedData = res.map(user => ({
-              ...user,
-              status: this.statusDisplayMap[String(user.isActive)] || 'Desconocido',
-              role: this.roleDisplayMap[user.role] || user.role || 'Desconocido',
-            }));
+            next: (res: UserModel[]) => {
+                const sortedData = res.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+                const transformedData = sortedData.map(user => ({
+                    ...user,
+                    statusLabel: this.statusDisplayMap[String(user.isActive)] || 'Desconocido',
+                    roleLabel: this.roleDisplayMap[user.role] || user.role || 'Desconocido',
+                }));
 
-            this.responsePagination = {
-              totalRecords: transformedData.length,
-              data: transformedData as unknown as UserModel[],
-              pageNumber: 1,
-              pageSize: transformedData.length,
-              totalPages: 1,
-            };
+                this.responsePagination = {
+                    totalRecords: transformedData.length,
+                    data: transformedData as unknown as UserModel[],
+                    pageNumber: 1,
+                    pageSize: transformedData.length,
+                    totalPages: 1,
+                };
 
-            this.data$.next(transformedData as unknown as UserModel[]);
-          },
-          error: () => {
-            this.alert = {
-              type: 'error',
-              message: 'Error al cargar los usuarios.',
-            };
-            this.showAlert = true;
-          },
+                this.data$.next(transformedData as unknown as UserModel[]);
+            },
+            error: () => {
+                this.alert = {
+                    type: 'error',
+                    message: 'Error al cargar los usuarios.',
+                };
+                this.showAlert = true;
+            },
         });
-      }
+    }
+
 
 
     public createUser(): void {
@@ -115,6 +118,16 @@ export class UserComponent implements OnInit, OnDestroy {
             }
         });
     }
+
+    public onPageChanged(event: ChangePaginationModel): void {
+        const data = this.responsePagination?.data ?? [];
+        const start = event.pageIndex * event.pageSize;
+        const end = start + event.pageSize;
+        const paginated = data.slice(start, end);
+
+        this.data$.next(paginated);
+    }
+
 
     public editUser(user: UserModel): void {
         const dialogRef = this.matDialog.open(UpdateUserModalComponent, {

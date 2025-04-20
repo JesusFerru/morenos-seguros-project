@@ -35,9 +35,9 @@ export class UpdateUserModalComponent {
     form: FormGroup;
 
     roles = [
-        { value: 1, label: 'Administrador' },
-        { value: 2, label: 'Colaborador' }
-    ];
+        { value: 'Admin', label: 'Administrador' },
+        { value: 'Collaborator', label: 'Colaborador' }
+      ];
 
     status = [
         { value: 'Activo', label: 'Activo' },
@@ -63,15 +63,10 @@ export class UpdateUserModalComponent {
                 Validators.required,
             ],
             fullName: [data.user.fullName, Validators.required],
-            role: [this.mapRoleLabelToValue(data.user.role), Validators.required],
+            role: [data.user.role, Validators.required],
             status: [data.user.status, Validators.required],
             password: [data.user.password, Validators.required],
         });
-    }
-
-    mapRoleLabelToValue(roleLabel: string): number {
-        const role = this.roles.find(r => r.label === roleLabel);
-        return role?.value ?? null;
     }
 
     close(): void {
@@ -81,14 +76,20 @@ export class UpdateUserModalComponent {
     save(): void {
         if (this.form.valid) {
             this.isSaving = true;
+            const [firstName, lastName] = this.form.get('fullName')?.value?.split(' ') ?? ['',''];
+
             const updatedUser = {
-                ...this.data.user,
-                ...this.form.getRawValue(),
-                status: this.mapStatus(this.form.value.status),
+                id: this.data.user.id,
+                username: this.form.get('username')?.value,
+                firstName,
+                lastName,
+                dni: this.form.get('dni')?.value,
+                password: this.form.get('password')?.value,
+                role: this.form.get('role')?.value,
+                status: this.mapStatus(this.form.get('status')?.value),
             };
 
-
-            this.userService.update(this.data.user.id, updatedUser).subscribe({
+            this.userService.update(this.data.user.dni, updatedUser).subscribe({
                 next: () => {
                     this.alert = {
                         type: 'success',
