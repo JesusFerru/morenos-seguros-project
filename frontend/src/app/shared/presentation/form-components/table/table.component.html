@@ -41,6 +41,17 @@
                     {{ row[column.columnDef] | date: 'dd/MM/yyyy HH:mm:ss' }}
                 </ng-container>
 
+                <!-- Column Type: Toggle -->
+                <ng-container *ngIf="column.type === 'toggle'">
+                    <mat-slide-toggle
+                        [checked]="row[column.columnDef] === 'Activo'"
+                        (change)="onToggleStatus(row)"
+                        color="primary"
+                        [matTooltip]="row[column.columnDef] === 'Activo' ? 'Desactivar usuario' : 'Activar usuario'">
+                    </mat-slide-toggle>
+                </ng-container>
+
+
                 <!-- Column Type: Edit -->
                 <ng-container *ngIf="column.type === 'edit'">
                     <mat-icon

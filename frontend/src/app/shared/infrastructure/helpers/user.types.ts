@@ -1,7 +1,8 @@
 export interface User
 {
     expiration: Date;
-    fullName: string;
+    firstName?: string;
+    lastName?: string;
     rolUser?: string;
     userName?: string;
 }

@@ -61,7 +61,8 @@ public class UpdateUser : EndpointBaseAsync
 
         var result = new GetUserResult(
             user.Dni,
-            $"{user.FirstName} {user.LastName}",
+            user.FirstName,
+            user.LastName,
             user.Email,
             user.PhoneNumber,
             user.Role.Name,

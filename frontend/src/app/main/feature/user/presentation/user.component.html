@@ -1,7 +1,5 @@
 <!-- Body -->
-<div
-    class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent bg-customgray"
->
+<div class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent bg-customgray">
     <!-- Alert -->
     <fuse-alert
         class="mt-8"
@@ -15,9 +13,7 @@
     </fuse-alert>
 
     <!-- Header -->
-    <div
-        class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8"
-    >
+    <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8">
         <ms-view-header [title]="'USUARIOS'"></ms-view-header>
 
         <!-- Actions -->
@@ -44,15 +40,14 @@
 
     <!-- Main -->
     <div class="flex flex-auto overflow-hidden">
-        <div
-            class="flex flex-col flex-auto sm:mb-18 overflow-hidden overflow-x-auto sm:overflow-y-auto"
-        >
+        <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden overflow-x-auto sm:overflow-y-auto">
             <ms-table
                 [data]="data$ | async"
                 [columns]="columns"
                 [total]="responsePagination?.totalRecords"
                 (edit)="editUser($event)"
                 (changePaginator)="onPageChanged($event)"
+                (toggleStatus)="toggleUserStatus($event)"
             ></ms-table>
         </div>
     </div>

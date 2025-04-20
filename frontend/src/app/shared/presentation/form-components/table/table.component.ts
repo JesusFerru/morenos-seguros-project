@@ -17,6 +17,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ChangePaginationModel } from 'app/shared/domain/models/ChangePaginationModel';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @Component({
     selector: 'ms-table',
@@ -28,6 +29,7 @@ import { ChangePaginationModel } from 'app/shared/domain/models/ChangePagination
         MatSortModule,
         MatTooltipModule,
         MatIconModule,
+        MatSlideToggleModule
     ],
     templateUrl: './table.component.html',
     styleUrls: ['./table.component.scss'],
@@ -46,6 +48,7 @@ export class TableComponent implements OnInit, OnChanges {
 
     @Output() edit = new EventEmitter<any>();
     @Output() changePaginator = new EventEmitter<ChangePaginationModel>();
+    @Output() toggleStatus = new EventEmitter<any>();
 
     public paginatedData: Array<any> = [];
     public displayedColumns: string[] = [];
@@ -68,6 +71,10 @@ export class TableComponent implements OnInit, OnChanges {
 
     public onEdit(row: any): void {
         this.edit.emit(row);
+    }
+
+    public onToggleStatus(row: any): void {
+        this.toggleStatus.emit(row);
     }
 
     public changePage(event: ChangePaginationModel): void {
