@@ -34,62 +34,33 @@ export class NavigationService {
         });
 
         menu.push({
-            id: '444',
-            title: 'Eventos',
+            id: '111',
+            title: 'Opciones de Deducible',
             role: 'All',
             meta: [''],
             type: 'basic',
-            icon: 'heroicons_outline:calendar-days',
-            link: 'event',
+            icon: 'heroicons_outline:queue-list',
+            link: 'deducibles',
         });
 
         menu.push({
             id: '444',
-            title: 'Orígenes',
+            title: 'Planes de Seguro',
             role: 'All',
             meta: [''],
             type: 'basic',
-            icon: 'heroicons_outline:link',
-            link: 'origin',
+            icon: 'heroicons_outline:shield-check',
+            link: 'planes',
         });
 
         menu.push({
             id: '444',
-            title: 'Stands',
+            title: 'Compañías Aseguradoras',
             role: 'All',
             meta: [''],
             type: 'basic',
-            icon: 'heroicons_outline:building-storefront',
-            link: 'stand',
-        });
-
-        menu.push({
-            id: '555',
-            role: 'All',
-            title: 'Reportería',
-            type: 'collapsable',
-            meta: [''],
-            icon: 'heroicons_outline:presentation-chart-bar',
-            children: [
-                {
-                    id: 'apps..netbase-form',
-                    role: 'All',
-                    title: 'BD Madre',
-                    type: 'basic',
-                    meta: [],
-                    icon: 'heroicons_outline:circle-stack',
-                    link: '/reportery/netbase-form',
-                },
-                {
-                    id: 'apps..customer-event',
-                    role: 'All',
-                    title: 'Clientes por Evento',
-                    type: 'basic',
-                    meta: [],
-                    icon: 'heroicons_outline:chart-pie',
-                    link: '/reportery/customer-event',
-                },
-            ],
+            icon: 'heroicons_outline:building-office-2',
+            link: 'compañias',
         });
 
         menu.push({
@@ -99,7 +70,7 @@ export class NavigationService {
             meta: [''],
             type: 'basic',
             icon: 'heroicons_outline:user',
-            link: 'user',
+            link: 'usuarios',
         });
 
         this._navigation.compact = menu;

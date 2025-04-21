@@ -7,6 +7,7 @@ public class GetActiveDeductibleOptionsSpec : Specification<DeductibleOption>
     public GetActiveDeductibleOptionsSpec()
     {
         Query.Where(x => x.IsActive)
-             .OrderByDescending(x => x.CreatedAt);
+             .OrderByDescending(x => x.CreatedAt)
+             .Include(x => x.InsurancePlan);
     }
 }

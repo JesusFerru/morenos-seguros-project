@@ -6,8 +6,8 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { LuxonDateAdapter } from '@angular/material-luxon-adapter';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { provideFuse } from '@fuse';
-import { provideTransloco, TranslocoService } from '@ngneat/transloco';
-import { firstValueFrom } from 'rxjs';
+import { provideTransloco, TranslocoService } from '@jsverse/transloco';
+import { catchError, firstValueFrom, of } from 'rxjs';
 import { TranslocoHttpLoader } from './shared/infrastructure/helpers/transloco/transloco.http-loader';
 import { provideIcons } from './shared/infrastructure/helpers/icons/icons.provider';
 import { provideAuth } from './shared/infrastructure/interceptors/auth.provider';
@@ -66,14 +66,17 @@ export const appConfig: ApplicationConfig = {
           // Preload the default language before the app starts to prevent empty/jumping content
           provide   : APP_INITIALIZER,
           // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-          useFactory: () =>
-          {
-              const translocoService = inject(TranslocoService);
-              const defaultLang = translocoService.getDefaultLang();
-              translocoService.setActiveLang(defaultLang);
+          useFactory: () => {
+            const translocoService = inject(TranslocoService);
+            const defaultLang = translocoService.getDefaultLang();
+            translocoService.setActiveLang(defaultLang);
 
-              return () => firstValueFrom(translocoService.load(defaultLang));
-          },
+            return () =>
+                firstValueFrom(translocoService.load(defaultLang), {
+                    defaultValue: null
+                });
+
+        },
           multi     : true,
       },
 

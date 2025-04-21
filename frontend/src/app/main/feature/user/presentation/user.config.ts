@@ -1,15 +1,21 @@
+import { getTranslatedRole } from "app/shared/infrastructure/helpers/user.utils";
+
 export interface TableColumn {
     columnDef: string;
     header: string;
     type: string;
+    displayFn?: (value: any, row?: any) => string;
 }
 
 export const userTableConfig: TableColumn[] = [
     { columnDef: 'dni', header: 'NRO. DE CARNET', type: 'text' },
     { columnDef: 'username', header: 'USUARIO', type: 'text' },
-    { columnDef: 'fullName', header: 'NOMBRE COMPLETO', type: 'text' },
-    { columnDef: 'role', header: 'ROL', type: 'text' },
+    { columnDef: 'firstName', header: 'NOMBRE', type: 'text' },
+    { columnDef: 'lastName', header: 'APELLIDO', type: 'text' },
+    { columnDef: 'role', header: 'ROL', type: 'text', displayFn: (value)  => getTranslatedRole(value) },
     { columnDef: 'createdAt', header: 'FECHA DE CREACIÓN', type: 'datetime' },
-    { columnDef: 'status', header: 'ESTADO', type: 'text' },
+    { columnDef: 'isActive', header: 'ESTADO', type: 'toggle' },
     { columnDef: 'edit', header: 'EDITAR', type: 'edit' },
 ];
+
+

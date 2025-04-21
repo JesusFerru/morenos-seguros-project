@@ -89,7 +89,7 @@ export class DenseLayoutComponent implements OnInit, OnDestroy {
             .subscribe((user: User) => {
                 this.user = user;
                 const navigation = this._navigationService.get();
-                this.hasPermissionTransaction(navigation,this.user.rolUser!,this.user.userName!)
+                this.hasPermissionTransaction(navigation,this.user.roleUser!,this.user.username!)
                 this._changeDetectorRef.markForCheck();
             });
     }

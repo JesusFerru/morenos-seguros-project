@@ -3,5 +3,6 @@ export interface ChangePaginationModel {
     take: number;
     previousPageIndex?: number;
     length?: number;
+    pageIndex?: number;
+    pageSize?: number;
   }
-  

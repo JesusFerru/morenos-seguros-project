@@ -17,10 +17,10 @@ export class AuthService extends HttpServiceMoreno {
 
 
     getToken(): string {
-        const tokenInLocalStorage: string | null =
-            localStorage.getItem(AUTH_TOKEN);
-        return tokenInLocalStorage;
+        const token = localStorage.getItem(AUTH_TOKEN);
+        return token && token !== 'undefined' ? token : '';
     }
+
 
     public authenticateSuccess(token: string): void {
         localStorage.removeItem(AUTH_TOKEN);

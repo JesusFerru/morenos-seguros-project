@@ -14,6 +14,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { FuseAlertComponent } from '@fuse/components/alert';
 
 import { UserService } from '../../infrastructure/services/user.service';
+import { getRoleOptions } from 'app/shared/infrastructure/helpers/user.utils';
 
 @Component({
     selector: 'create-user-modal',
@@ -33,14 +34,7 @@ import { UserService } from '../../infrastructure/services/user.service';
 })
 export class CreateUserModalComponent {
     form: FormGroup;
-    roles = [
-        { value: 'Administrador', label: 'Administrador' },
-        { value: 'Collaborator', label: 'Colaborador' }
-    ];
-    isActive = [
-        { value: 0, label: 'Activo' },
-        { value: 1, label: 'Inactivo' },
-    ];
+    roles = getRoleOptions();
 
     alert: { type: 'success' | 'error'; message: string } | null = null;
     isSaving = false;

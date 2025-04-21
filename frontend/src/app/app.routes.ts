@@ -65,7 +65,7 @@ export const appRoutes: Route[] = [
                     ),
             },
             {
-                path: 'user',
+                path: 'usuarios',
                 loadChildren: () =>
                     import(
                         'app/main/feature/user/user.routes'
@@ -73,56 +73,28 @@ export const appRoutes: Route[] = [
             },
 
             {
-                path: 'origin',
+                path: 'compañias',
                 loadChildren: () =>
                     import(
-                        'app/main/feature/origin/origin.routes'
+                        'app/main/feature/insurance-company/insurance-company.routes'
                     ).then(m => m.CONTENT_ROUTES),
             },
 
             {
-                path: 'stand',
+                path: 'planes',
                 loadChildren: () =>
                     import(
-                        'app/main/feature/stand/stand.routes'
+                        'app/main/feature/insurance-plan/insurance-plan.routes'
                     ).then(m => m.CONTENT_ROUTES),
             },
 
             {
-                path: 'event',
+                path: 'deducibles',
                 loadChildren: () =>
                     import(
-                        'app/main/feature/event/event.routes'
+                        'app/main/feature/deductible-option/deductible-option.routes'
                     ).then(m => m.CONTENT_ROUTES),
-            },
-
-            {
-                path: 'netbase-form',
-                loadChildren: () =>
-                    import('app/main/feature/netbase/netbase.routes').then(
-                        m => m.CONTENT_ROUTES,
-                    ),
-            },
-
-            {
-                path: 'reportery',
-                children: [
-                    {
-                        path: 'netbase-form',
-                        loadChildren: () =>
-                            import(
-                                'app/main/feature/netbase/netbase.routes'
-                            ).then(m => m.CONTENT_ROUTES),
-                    },
-                    {
-                        path: 'customer-event',
-                        loadChildren: () =>
-                            import(
-                                'app/main/feature/customer-event/customer-event.routes'
-                            ).then(m => m.CONTENT_ROUTES),
-                    },
-                ],
-            },
+            }
         ],
     },
 ];

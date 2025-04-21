@@ -6,6 +6,7 @@ public class GetAllDeductibleOptionsSpec : Specification<DeductibleOption>
 {
     public GetAllDeductibleOptionsSpec()
     {
-        Query.OrderByDescending(x => x.CreatedAt);
+        Query.OrderByDescending(x => x.CreatedAt)
+            .Include(x => x.InsurancePlan);
     }
 }

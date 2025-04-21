@@ -74,7 +74,7 @@
             mat-raised-button
             color="warn"
             (click)="close()"
-            class="px-6 py-2 font-semibold rounded-lg"
+            class="warn"
             [disabled]="isSaving"
         >
             Cancelar
@@ -84,8 +84,8 @@
             mat-raised-button
             (click)="save()"
             [disabled]="!form.valid || isSaving"
-            [ngClass]="{ 'bg-blue-900 text-white': form.valid && !isSaving }"
-            class="px-6 py-2 font-semibold rounded-lg shadow-md transition-shadow duration-300 hover:shadow-[0px_2px_4px_-1px_rgba(0,0,0,0.2),_0px_4px_5px_0px_rgba(0,0,0,0.14),_0px_1px_10px_0px_rgba(0,0,0,0.12)]"
+            color="primary"
+            [ngClass]="{ 'text-white': form.valid && !isSaving }"
         >
             Guardar
         </button>

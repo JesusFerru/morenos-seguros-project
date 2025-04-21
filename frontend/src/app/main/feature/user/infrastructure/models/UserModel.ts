@@ -1,8 +1,7 @@
 export class UserModel {
     dni?: string;
-    fullName?: string;
-    email?: string;
-    phoneNumber?: string;
+    firstName?: string;
+    lastName?: string;
     username?: string;
     isActive?: boolean;
     role?: string;

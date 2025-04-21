@@ -38,7 +38,7 @@ namespace MorenoSeguros.Api.Endpoints.UsersEndpoints
             var user = await _repository.FirstOrDefaultAsync(spec, cancellationToken)
                 ?? throw new NotFoundException(ErrorMessages.GetMessage(nameof(NotFoundException), nameof(User)));
 
-            var result = new GetUserResult(user.Dni, $"{user.FirstName} {user.LastName}", user.Email, user.PhoneNumber, user.Role.Name, user.Username,
+            var result = new GetUserResult(user.Dni, user.FirstName, user.LastName, user.Email, user.PhoneNumber, user.Role.Name, user.Username,
             user.IsActive,
             user.CreatedAt,
             user.UpdatedAt);

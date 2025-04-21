@@ -14,7 +14,7 @@ RUN npm run build-production
 FROM nginx:alpine
 
 COPY --from=build /app/default.conf.template /etc/nginx/templates/default.conf.template
-COPY --from=build /app/dist/tso /usr/share/nginx/html/netbase
+COPY --from=build /app/dist/moreno-seguros /usr/share/nginx/html/netbase
 
 # Expose the default nginx port
 EXPOSE 80

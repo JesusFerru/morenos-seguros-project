@@ -11,7 +11,6 @@
             </th>
 
             <td mat-cell *matCellDef="let row; let i = index">
-
                 <!-- Column Type: Index -->
                 <ng-container *ngIf="column.type === 'index'">
                     {{ i + 1 }}
@@ -19,17 +18,14 @@
 
                 <!-- Column Type: Text -->
                 <ng-container *ngIf="column.type === 'text'">
-                    <p [ngClass]="[column.classColor ?? '']">{{ row[column.columnDef] }}</p>
+                    <p [ngClass]="[column.classColor ?? '']">
+                        {{
+                        column.displayFn
+                        ? column.displayFn(row[column.columnDef], row)
+                        : row[column.columnDef]
+                        }}
+                    </p>
                 </ng-container>
-
-                <!-- Column Type: Date -->
-                <ng-container *ngIf="column.type === 'date'">
-                    {{ row[column.columnDef] | date: 'dd/MM/yyyy' }}
-                </ng-container>
-
-                <ng-container *ngIf="column.type === 'datetime'">
-                    {{ row[column.columnDef] | date:'dd/MM/yyyy HH:mm:ss' }}
-                  </ng-container>
 
                 <!-- Column Type: Number -->
                 <ng-container *ngIf="column.type === 'number'">
@@ -41,228 +37,32 @@
                     <p>{{ row[column.columnDef] | number:"1.2-2" }}</p>
                 </ng-container>
 
-                <!-- Column Type: Retry -->
-                <ng-container *ngIf="column.type === 'retry'">
-                    <ng-container *ngIf="row['details'] === 'Cód. SAP incorrecto.' || row['details'] === 'Asesor no encontrado en TSO.'">
-                        <mat-icon
-                            class="icon-size-5 text-yellow-500 cursor-pointer"
-                            [matTooltip]="'Revisar Advertencia'"
-                            (click)="onWarning(row)"
-                        >
-                            warning
-                        </mat-icon>
-                    </ng-container>
-
-                    <ng-container
-                        *ngIf="row['status'] === 'Error' &&
-                                            (row['details'] === 'Error de conexión con TSO.' || row['details'] === 'Error de conexión con SAP.' || row['details'] === 'Error inesperado.')">
-                        <mat-icon class="icon-size-5 text-blue-500 cursor-pointer" [matTooltip]="'Reintentar Integración'"
-                            *ngIf="!row.isRetrying; else loadingRetry" (click)="onRetry(row)">
-                            refresh
-                        </mat-icon>
-                        <ng-template #loadingRetry>
-                            <mat-icon class="icon-size-5 text-gray-500 animate-spin" [matTooltip]="'Procesando...'"></mat-icon>
-                        </ng-template>
-                    </ng-container>
-                    <!-- <ng-container *ngIf="row['collectionNote'] !== null">
-                        <mat-icon
-                          class="icon-size-5 text-blue-500 cursor-pointer"
-                          [matTooltip]="'Ver Nota de Cobranza'"
-                          (click)="onCollectionNotes(row)"
-                          svgIcon="heroicons_outline:clipboard-document-check"
-                        >
-                        </mat-icon>
-                      </ng-container> -->
-
+                <!-- Column Type: Date -->
+                <ng-container *ngIf="column.type === 'date'">
+                    {{ row[column.columnDef] | date: 'dd/MM/yyyy' }}
                 </ng-container>
 
-                <ng-container *ngIf="column.type === 'view'">
-                    <ng-container *ngIf="row['status'] === 'No Pagado' || row['status'] === 'Pagado en Boa'">
-                        <mat-icon
-                            class="icon-size-5 text-yellow-500 cursor-pointer"
-                            [matTooltip]="'Ver detalles del error'"
-                            (click)="onViewDetails(row)"
-                        >
-                            error
-                        </mat-icon>
-                    </ng-container>
-                    <ng-container *ngIf="row['status'] === 'Pagado'">
-                        <mat-icon
-                            class="icon-size-5 text-green-600"
-                            [matTooltip]="'Estado correcto'"
-                        >
-                            check_circle
-                        </mat-icon>
-                    </ng-container>
+                <!-- Column Type: Datetime -->
+                <ng-container *ngIf="column.type === 'datetime'">
+                    {{ row[column.columnDef] | date: 'dd/MM/yyyy HH:mm:ss' }}
                 </ng-container>
 
-                <ng-container *ngIf="column.type === 'cancel'">
-                    <ng-container *ngIf="row['status'] === 'Pagado'|| row['status'] === 'Pagado en Boa'">
-                        <ng-container *ngIf="isToday(row['paymentDate']); else disabledIcon">
-                            <mat-icon
-                                class="icon-size-5 text-red-500 cursor-pointer"
-                                [matTooltip]="'Anular pago'"
-                                (click)="onCancel(row)"
-                            >
-                                cancel
-                            </mat-icon>
-                        </ng-container>
-                        <ng-template #disabledIcon>
-                            <mat-icon
-                                class="icon-size-5 text-gray-400 cursor-not-allowed"
-                                [matTooltip]="'No se puede anular, fuera del rango permitido'"
-                            >
-                                cancel
-                            </mat-icon>
-                        </ng-template>
-                    </ng-container>
+                <!-- Column Type: Toggle -->
+                <ng-container *ngIf="column.type === 'toggle'">
+                    <mat-slide-toggle [checked]="row[column.columnDef]" (change)="onToggleStatus(row)"
+                        [matTooltip]="row[column.columnDef] ? 'Desactivar' : 'Activar'"
+                        color="primary"></mat-slide-toggle>
                 </ng-container>
 
+                <!-- Column Type: Edit -->
                 <ng-container *ngIf="column.type === 'edit'">
-                    <mat-icon
-                        class="icon-size-5 text-blue-900 cursor-pointer"
-                        [matTooltip]="'Editar'"
-                        (click)="onEdit(row)"
-                    >
+                    <mat-icon class="icon-size-5 text-blue-900 cursor-pointer" [matTooltip]="'Editar'"
+                        (click)="onEdit(row)">
                         edit
                     </mat-icon>
                 </ng-container>
-
-                <ng-container *ngIf="column.type === 'assign'">
-                    <mat-icon
-                        class="icon-size-5 text-green-700 cursor-pointer"
-                        [matTooltip]="'Asignar Stands'"
-                        (click)="onAssign(row)">
-                        assignment
-                    </mat-icon>
-                  </ng-container>
-                  
-
-                <ng-container *ngIf="column.type === 'delete'">
-                    <mat-icon
-                        class="icon-size-5 text-red-500 cursor-pointer"
-                        [matTooltip]="'Eliminar'"
-                        (click)="onDelete(row)"
-                    >
-                        delete
-                    </mat-icon>
-                </ng-container>
-
-
-                <ng-container *ngIf="column.type === 'toggle'">
-                    <mat-slide-toggle
-                        [checked]="row['status'] === 'Activa'"
-                        (change)="onToggleStatus(row)"
-                        color="primary"
-                        [matTooltip]="row['status'] === 'Activa' ? 'Desactivar tarjeta' : 'Activar tarjeta'"
-                    >
-                    </mat-slide-toggle>
-                </ng-container>
-
-                <ng-container *ngIf="column.type === 'toggleUtil'">
-                    <mat-slide-toggle
-                        [checked]="row['status'] === 'Activo'"
-                        (change)="onToggleUtilStatus(row)"
-                        color="primary"
-                        [matTooltip]="row['status'] === 'Activo' ? 'Desactivar' : 'Activar'"
-                    >
-                    </mat-slide-toggle>
-                </ng-container>
-
-                <!-- Column Type: Cost -->
-                <ng-container *ngIf="column.type === 'cost'">
-                    <p>
-                        {{ row[column.columnDef] | currency : "USD " }}
-                    </p>
-                </ng-container>
-
-                <!-- Column Type: CostBs -->
-                <ng-container *ngIf="column.type === 'costBs'">
-                    <p>
-                        {{ row[column.columnDef] | currency : "BS " }}
-                    </p>
-                </ng-container>
-
-                <!-- Column Type: Boolean -->
-                <ng-container *ngIf="column.type === 'boolean'">
-                    <ng-container *ngIf="row[column.columnDef]">
-                        <mat-icon [ngClass]="['icon-size-5', 'text-green-600']"
-                            [svgIcon]="'heroicons_solid:check-circle'">
-                        </mat-icon>
-                    </ng-container>
-                    <ng-container *ngIf="!row[column.columnDef]">
-                        <mat-icon [ngClass]="['icon-size-5', 'text-red-500']" [svgIcon]="'heroicons_solid:x-circle'">
-                        </mat-icon>
-                    </ng-container>
-                </ng-container>
-
-                <!-- Column Type: Actions -->
-                <ng-container *ngIf="column.type === 'actions'">
-                    <ng-container *ngFor="let action of column.actionsList">
-
-                        <ng-container *ngIf="action.typeAction === 'multipleAction'">
-
-                            <ng-container *ngIf="row[action.isViewVisible] === null">
-                                <mat-icon [ngClass]="['icon-size-5', action.actionsList[0].classColor ?? '']"
-                                    (click)="onAction(action.actionsList[0].type, row)"
-                                    [svgIcon]="action.actionsList[0].icon"
-                                    [matTooltip]="action.actionsList[0].tooltipText">
-                                </mat-icon>
-                            </ng-container>
-
-                            <ng-container *ngIf="row[action.isViewVisible] !== null">
-                                <mat-icon [ngClass]="['icon-size-5', action.actionsList[1].classColor ?? '']"
-                                    (click)="onAction(action.actionsList[1].type, row)"
-                                    [svgIcon]="action.actionsList[1].icon"
-                                    [matTooltip]="action.actionsList[1].tooltipText">
-                                </mat-icon>
-                            </ng-container>
-
-                        </ng-container>
-
-                        <ng-container *ngIf="action.typeAction === 'multipleActionUniversalAssistance'">
-                            <ng-container *ngFor="let actionChild of action.actionsList">
-                                <ng-container *ngIf="row[action.status] === actionChild.status">
-                                    <mat-icon [ngClass]="['icon-size-5', actionChild.classColor ?? '', actionChild.classAnimate ?? '']"
-                                        (click)="onAction(actionChild.type, row)" [svgIcon]="actionChild.icon"
-                                        [matTooltip]="actionChild.tooltipText">
-                                    </mat-icon>
-                                </ng-container>
-                            </ng-container>
-                        </ng-container>
-
-                        <ng-container *ngIf="action.typeAction === 'multipleActionWeTravel'">
-                            <ng-container *ngFor="let actionChild of action.actionsList">
-                                <ng-container *ngIf="row[action.status] === actionChild.status">
-                                    <mat-icon [ngClass]="['icon-size-5', actionChild.classColor ?? '', actionChild.classAnimate ?? '']"
-                                        (click)="onAction(actionChild.type, row)" [svgIcon]="actionChild.icon"
-                                        [matTooltip]="actionChild.tooltipText">
-                                    </mat-icon>
-                                </ng-container>
-                            </ng-container>
-                        </ng-container>
-
-                        <ng-container *ngIf="action.typeAction === 'action'">
-                            <mat-icon [ngClass]="['icon-size-5', action.classColor ?? '']"
-                                (click)="onAction(action.type, row)" [svgIcon]="action.icon"
-                                [matTooltip]="action.tooltipText">
-                            </mat-icon>
-                        </ng-container>
-
-                    </ng-container>
-                </ng-container>
-
-                <!-- Column Type: Error -->
-                <ng-container *ngIf="
-                        column.type === 'error' &&
-                        row['clientErrorMessage'] !== null
-                    ">
-                    <mat-icon [ngClass]="['icon-size-5', column.classColor ?? '']"
-                        (click)="onAction(column.actionType, row)" [svgIcon]="column.icon"
-                        [matTooltip]="column.tooltipText">
-                    </mat-icon>
-                </ng-container>
             </td>
+
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"
             class="example-element-row border-b dark:border-neutral-500"></tr>

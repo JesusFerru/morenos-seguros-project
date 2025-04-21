@@ -6,6 +6,7 @@ public class GetAllInsurancePlansSpec : Specification<InsurancePlan>
 {
     public GetAllInsurancePlansSpec()
     {
-        Query.OrderByDescending(p => p.CreatedAt);
+        Query.OrderByDescending(p => p.CreatedAt)
+            .Include(p => p.InsuranceCompany);
     }
 }

@@ -1,20 +1,21 @@
 ﻿using Ardalis.ApiEndpoints;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MorenoSeguros.Core.Entities.UserAggregate;
 using MorenoSeguros.Core.Entities.UserAggregate.Specification;
 using MorenoSeguros.Core.Entities.UserAggregate.ValueObjects;
-using MorenoSeguros.Core.Entities.UserAggregate;
 using MorenoSeguros.Core.Exceptions;
 using MorenoSeguros.Core.Interfaces;
 using MorenoSeguros.Core.SharedKernel.Constants;
 using MorenoSeguros.Core.SharedKernel.Interfaces;
 using Swashbuckle.AspNetCore.Annotations;
-using System.Net.Mime;
 using System.Net;
+using System.Net.Mime;
 
 namespace MorenoSeguros.Api.Endpoints.UsersEndpoints;
 
 [AllowAnonymous]
+[Route(RouteConstants.Route_V1 + "/users")]
 public class UpdateUser : EndpointBaseAsync
     .WithRequest<UpdateUserCommand>
     .WithActionResult<GetUserResult>
@@ -28,7 +29,7 @@ public class UpdateUser : EndpointBaseAsync
         _authService = authService;
     }
 
-    [HttpPut($"{RouteConstants.Route_V1}/user/{{Dni}}")]
+    [HttpPut("{dni}")]
     [SwaggerOperation(
         OperationId = nameof(UpdateUser),
         Tags = [SwaggerConstants.UserTagSwagger]
@@ -60,7 +61,8 @@ public class UpdateUser : EndpointBaseAsync
 
         var result = new GetUserResult(
             user.Dni,
-            $"{user.FirstName} {user.LastName}",
+            user.FirstName,
+            user.LastName,
             user.Email,
             user.PhoneNumber,
             user.Role.Name,

@@ -1,0 +1,48 @@
+<div class="p-6" style="max-height: 90vh; overflow-y: auto;">
+    <h1 class="text-2xl text-center font-bold mb-6 text-gray-800">
+        Editar Opción de Deducible
+    </h1>
+
+    <fuse-alert *ngIf="alert" [type]="alert.type" class="mb-4">
+        {{ alert.message }}
+    </fuse-alert>
+
+    <form [formGroup]="form" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Deducible Individual</mat-label>
+            <input matInput type="number" formControlName="deductibleIndividual" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Deducible Familiar</mat-label>
+            <input matInput type="number" formControlName="deductibleFamily" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Moneda</mat-label>
+            <mat-select formControlName="currency">
+                <mat-option *ngFor="let currency of currencies" [value]="currency.value">
+                    {{ currency.label }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Plan de Seguro</mat-label>
+            <mat-select formControlName="insurancePlanId">
+                <mat-option *ngFor="let plan of plans" [value]="plan.id">
+                    {{ plan.name }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
+
+    <div class="flex justify-end mt-6 gap-4">
+        <button mat-raised-button color="warn" (click)="close()" [disabled]="isSaving">
+            Cancelar
+        </button>
+        <button mat-raised-button color="primary" (click)="save()" [disabled]="form.invalid || isSaving">
+            Guardar
+        </button>
+    </div>
+</div>

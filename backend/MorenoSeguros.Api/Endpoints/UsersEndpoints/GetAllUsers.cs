@@ -36,7 +36,8 @@ public class GetAllUsers : EndpointBaseAsync
 
         var result = users.Select(u => new GetUserResult(
             u.Dni,
-            $"{u.FirstName} {u.LastName}",
+            u.FirstName,
+            u.LastName,
             u.Email,
             u.PhoneNumber,
             u.Role.Name,

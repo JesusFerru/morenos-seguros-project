@@ -52,7 +52,6 @@ export class LoginComponent implements OnInit {
     _activatedRoute = inject(ActivatedRoute);
     _router = inject(Router);
     _whiteList = inject(WhiteListService);
-    isSandboxEnvironment: boolean = false;
 
     @ViewChild('signInNgForm') signInNgForm: NgForm;
 
