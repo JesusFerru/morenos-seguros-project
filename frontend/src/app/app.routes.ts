@@ -86,6 +86,14 @@ export const appRoutes: Route[] = [
                     import(
                         'app/main/feature/insurance-plan/insurance-plan.routes'
                     ).then(m => m.CONTENT_ROUTES),
+            },
+
+            {
+                path: 'deducibles',
+                loadChildren: () =>
+                    import(
+                        'app/main/feature/deductible-option/deductible-option.routes'
+                    ).then(m => m.CONTENT_ROUTES),
             }
         ],
     },

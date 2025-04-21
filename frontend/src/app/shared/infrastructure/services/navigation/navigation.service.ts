@@ -34,6 +34,16 @@ export class NavigationService {
         });
 
         menu.push({
+            id: '111',
+            title: 'Opciones de Deducible',
+            role: 'All',
+            meta: [''],
+            type: 'basic',
+            icon: 'heroicons_outline:queue-list',
+            link: 'deducibles',
+        });
+
+        menu.push({
             id: '444',
             title: 'Planes de Seguro',
             role: 'All',
