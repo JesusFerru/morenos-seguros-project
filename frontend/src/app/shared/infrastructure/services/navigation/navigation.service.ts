@@ -35,7 +35,17 @@ export class NavigationService {
 
         menu.push({
             id: '444',
-            title: 'Compañías de Seguro',
+            title: 'Planes de Seguro',
+            role: 'All',
+            meta: [''],
+            type: 'basic',
+            icon: 'heroicons_outline:shield-check',
+            link: 'planes',
+        });
+
+        menu.push({
+            id: '444',
+            title: 'Compañías Aseguradoras',
             role: 'All',
             meta: [''],
             type: 'basic',
