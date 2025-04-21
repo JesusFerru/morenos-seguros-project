@@ -18,7 +18,13 @@
 
                 <!-- Column Type: Text -->
                 <ng-container *ngIf="column.type === 'text'">
-                    <p [ngClass]="[column.classColor ?? '']">{{ row[column.columnDef] }}</p>
+                    <p [ngClass]="[column.classColor ?? '']">
+                        {{
+                        column.displayFn
+                        ? column.displayFn(row[column.columnDef], row)
+                        : row[column.columnDef]
+                        }}
+                    </p>
                 </ng-container>
 
                 <!-- Column Type: Number -->
@@ -43,20 +49,14 @@
 
                 <!-- Column Type: Toggle -->
                 <ng-container *ngIf="column.type === 'toggle'">
-                    <mat-slide-toggle
-                        [checked]="row[column.columnDef] === 'Activo'"
-                        (change)="onToggleStatus(row)"
-                        color="primary"
-                        [matTooltip]="row[column.columnDef] === 'Activo' ? 'Desactivar usuario' : 'Activar usuario'">
-                    </mat-slide-toggle>
+                    <mat-slide-toggle [checked]="row[column.columnDef]" (change)="onToggleStatus(row)"
+                        [matTooltip]="row[column.columnDef] ? 'Desactivar' : 'Activar'"
+                        color="primary"></mat-slide-toggle>
                 </ng-container>
-
 
                 <!-- Column Type: Edit -->
                 <ng-container *ngIf="column.type === 'edit'">
-                    <mat-icon
-                        class="icon-size-5 text-blue-900 cursor-pointer"
-                        [matTooltip]="'Editar'"
+                    <mat-icon class="icon-size-5 text-blue-900 cursor-pointer" [matTooltip]="'Editar'"
                         (click)="onEdit(row)">
                         edit
                     </mat-icon>

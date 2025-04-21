@@ -1,10 +1,7 @@
 export interface InsuranceCompanyModel {
     id: number;
     name: string;
-    nit: string;
-    email: string;
-    phone: string;
-    address: string;
+    description: string;
     createdAt: string;
     updatedAt: string;
     isActive: boolean;

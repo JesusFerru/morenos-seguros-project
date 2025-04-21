@@ -16,7 +16,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { getTranslatedRole } from 'app/shared/infrastructure/helpers/user.utils';
 
 @Component({
     selector: 'ms-users',
@@ -58,12 +57,11 @@ export class UserComponent implements OnInit, OnDestroy {
             next: (users: UserModel[]) => {
                 const mapped = users.map(u => ({
                     ...u,
-                    role: getTranslatedRole(u.role),
                 }));
 
                 this.responsePagination = {
                     totalRecords: mapped.length,
-                    data: mapped,
+                    data: users,
                     pageNumber: 1,
                     pageSize: mapped.length,
                     totalPages: 1,
@@ -111,9 +109,13 @@ export class UserComponent implements OnInit, OnDestroy {
         this.data$.next(data.slice(start, end));
     }
 
-    public toggleUserStatus(user: UserModel): void {
+    public toggleStatus(user: UserModel): void {
         const updated = {
-            ...user,
+            dni: user.dni,
+            role: user.role,
+            username: user.username,
+            firstName: user.firstName,
+            lastName: user.lastName,
             isActive: !user.isActive,
         };
 
@@ -128,4 +130,5 @@ export class UserComponent implements OnInit, OnDestroy {
             },
         });
     }
+
 }

@@ -65,7 +65,7 @@ export const appRoutes: Route[] = [
                     ),
             },
             {
-                path: 'user',
+                path: 'usuarios',
                 loadChildren: () =>
                     import(
                         'app/main/feature/user/user.routes'
@@ -73,7 +73,7 @@ export const appRoutes: Route[] = [
             },
 
             {
-                path: 'insurance-company',
+                path: 'compañias',
                 loadChildren: () =>
                     import(
                         'app/main/feature/insurance-company/insurance-company.routes'

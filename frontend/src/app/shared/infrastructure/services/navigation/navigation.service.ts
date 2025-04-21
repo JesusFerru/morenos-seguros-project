@@ -39,8 +39,8 @@ export class NavigationService {
             role: 'All',
             meta: [''],
             type: 'basic',
-            icon: 'heroicons_outline:calendar-days',
-            link: 'insurance-company',
+            icon: 'heroicons_outline:building-office-2',
+            link: 'compañias',
         });
 
         menu.push({
@@ -50,7 +50,7 @@ export class NavigationService {
             meta: [''],
             type: 'basic',
             icon: 'heroicons_outline:user',
-            link: 'user',
+            link: 'usuarios',
         });
 
         this._navigation.compact = menu;

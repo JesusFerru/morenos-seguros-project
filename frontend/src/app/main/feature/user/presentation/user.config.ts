@@ -1,7 +1,10 @@
+import { getTranslatedRole } from "app/shared/infrastructure/helpers/user.utils";
+
 export interface TableColumn {
     columnDef: string;
     header: string;
     type: string;
+    displayFn?: (value: any, row?: any) => string;
 }
 
 export const userTableConfig: TableColumn[] = [
@@ -9,9 +12,9 @@ export const userTableConfig: TableColumn[] = [
     { columnDef: 'username', header: 'USUARIO', type: 'text' },
     { columnDef: 'firstName', header: 'NOMBRE', type: 'text' },
     { columnDef: 'lastName', header: 'APELLIDO', type: 'text' },
-    { columnDef: 'role', header: 'ROL', type: 'text' },
+    { columnDef: 'role', header: 'ROL', type: 'text', displayFn: (value)  => getTranslatedRole(value) },
     { columnDef: 'createdAt', header: 'FECHA DE CREACIÓN', type: 'datetime' },
-    { columnDef: 'status', header: 'ESTADO', type: 'toggle' },
+    { columnDef: 'isActive', header: 'ESTADO', type: 'toggle' },
     { columnDef: 'edit', header: 'EDITAR', type: 'edit' },
 ];
 

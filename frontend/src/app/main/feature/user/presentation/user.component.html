@@ -1,19 +1,16 @@
 <!-- Body -->
-<div class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent bg-customgray">
+<div
+    class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent bg-customgray">
     <!-- Alert -->
-    <fuse-alert
-        class="mt-8"
-        *ngIf="showAlert"
-        [appearance]="'outline'"
-        [showIcon]="false"
-        [type]="alert.type"
-        [@shake]="alert.type === 'error'"
-    >
+    <fuse-alert class="mt-8" *ngIf="showAlert" [appearance]="'outline'"
+        [showIcon]="false" [type]="alert.type"
+        [@shake]="alert.type === 'error'">
         {{ alert.message }}
     </fuse-alert>
 
     <!-- Header -->
-    <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8">
+    <div
+        class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8">
         <ms-view-header [title]="'USUARIOS'"></ms-view-header>
 
         <!-- Actions -->
@@ -21,17 +18,11 @@
             <!-- Crear Usuario -->
             <div
                 class="shadow-lg rounded-lg px-4 py-2 flex items-center space-x-2 bg-blue-900 bg-opacity-90 cursor-pointer"
-                matTooltip="Nuevo Usuario"
-            >
-                <button
-                    mat-button
-                    (click)="createUser()"
-                    class="text-white flex items-center"
-                >
-                    <mat-icon
-                        class="icon-size-5 text-white"
-                        [svgIcon]="'heroicons_solid:user'"
-                    ></mat-icon>
+                matTooltip="Nuevo Usuario">
+                <button mat-button (click)="createUser()"
+                    class="text-white flex items-center">
+                    <mat-icon class="icon-size-5 text-white"
+                        [svgIcon]="'heroicons_solid:user'"></mat-icon>
                     <span class="ml-1">Crear Usuario</span>
                 </button>
             </div>
@@ -40,15 +31,14 @@
 
     <!-- Main -->
     <div class="flex flex-auto overflow-hidden">
-        <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden overflow-x-auto sm:overflow-y-auto">
-            <ms-table
-                [data]="data$ | async"
-                [columns]="columns"
+        <div
+            class="flex flex-col flex-auto sm:mb-18 overflow-hidden overflow-x-auto sm:overflow-y-auto">
+            <ms-table [data]="data$ | async" [columns]="columns"
                 [total]="responsePagination?.totalRecords"
                 (edit)="editUser($event)"
                 (changePaginator)="onPageChanged($event)"
-                (toggleStatus)="toggleUserStatus($event)"
-            ></ms-table>
+                (toggleStatus)="toggleStatus($event)">
+            </ms-table>
         </div>
     </div>
 </div>

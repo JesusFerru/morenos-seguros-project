@@ -6,11 +6,8 @@ export interface TableColumn {
 
 export const insuranceCompanyTableConfig: TableColumn[] = [
   { columnDef: 'name', header: 'NOMBRE', type: 'text' },
-  { columnDef: 'nit', header: 'NIT', type: 'text' },
-  { columnDef: 'email', header: 'EMAIL', type: 'text' },
-  { columnDef: 'phone', header: 'TELÉFONO', type: 'text' },
-  { columnDef: 'address', header: 'DIRECCIÓN', type: 'text' },
+  { columnDef: 'description', header: 'DESCRIPCIÓN', type: 'text' },
   { columnDef: 'createdAt', header: 'FECHA DE CREACIÓN', type: 'datetime' },
-  { columnDef: 'isActive', header: 'ESTADO', type: 'status' },
+  { columnDef: 'isActive', header: 'ESTADO', type: 'toggle' },
   { columnDef: 'edit', header: 'EDITAR', type: 'edit' }
 ];

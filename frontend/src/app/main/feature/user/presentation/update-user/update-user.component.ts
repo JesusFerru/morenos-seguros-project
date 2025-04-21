@@ -63,6 +63,7 @@ export class UpdateUserModalComponent {
             role: this.form.get('role')?.value,
             firstName: this.data.user.firstName,
             lastName: this.data.user.lastName,
+            isActive: this.data.user.isActive,
         };
 
         this.userService.update(this.data.user.dni, updatedUser).subscribe({
