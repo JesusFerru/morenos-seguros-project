@@ -7,5 +7,7 @@ public static class SwaggerConstants
     public const string InsurancePlanTagSwagger = "Insurance Plans";
     public const string DeductibleOptionTagSwagger = "Deductible Options";
     public const string ClientsTagSwagger = "Clients";
+    public const string PoliciesTagSwagger = "Policies";
+
 
 }
