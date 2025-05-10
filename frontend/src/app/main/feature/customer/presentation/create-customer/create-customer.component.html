@@ -1,0 +1,98 @@
+<div style="overflow-y: auto; max-height: 90vh; padding: 10px">
+    <h1 class="text-2xl text-center font-bold mb-6 text-gray-800">Crear Cliente</h1>
+
+    <fuse-alert *ngIf="alert" [type]="alert.type" class="mb-4">
+        {{ alert.message }}
+    </fuse-alert>
+
+    <form [formGroup]="form" autocomplete="off" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Nombres</mat-label>
+            <input matInput formControlName="firstName" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Apellidos</mat-label>
+            <input matInput formControlName="lastName" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>NIT</mat-label>
+            <input matInput formControlName="nit" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Razón Social</mat-label>
+            <input matInput formControlName="businessName" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Nro. Documento</mat-label>
+            <input matInput formControlName="documentNumber" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Teléfono</mat-label>
+            <input matInput formControlName="phoneNumber" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Correo Electrónico</mat-label>
+            <input matInput formControlName="email" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Ciudad</mat-label>
+            <input matInput formControlName="city" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Dirección</mat-label>
+            <input matInput formControlName="address" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Origen de Fondos</mat-label>
+            <input matInput formControlName="fundOrigin" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Rango de Ingresos</mat-label>
+            <input matInput formControlName="incomeRange" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Fecha de Nacimiento</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="birthDate" />
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        
+
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Estado Empleador</mat-label>
+            <mat-select formControlName="employmentStatus">
+                <mat-option [value]="true">Activo</mat-option>
+                <mat-option [value]="false">Inactivo</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Estado</mat-label>
+            <mat-select formControlName="isActive">
+                <mat-option [value]="true">Activo</mat-option>
+                <mat-option [value]="false">Inactivo</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
+
+    <div class="flex justify-end mt-4 space-x-4">
+        <button mat-raised-button color="warn" (click)="close()" [disabled]="isSaving">
+            Cancelar
+        </button>
+        <button mat-raised-button (click)="save()" [disabled]="!form.valid || isSaving"
+            [ngClass]="{ 'bg-blue-900 text-white': form.valid && !isSaving }">
+            Guardar
+        </button>
+    </div>
+</div>

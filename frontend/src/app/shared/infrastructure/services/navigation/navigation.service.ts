@@ -35,6 +35,16 @@ export class NavigationService {
 
         menu.push({
             id: '111',
+            title: 'Clientes',
+            role: 'All',
+            meta: [''],
+            type: 'basic',
+            icon: 'heroicons_outline:user-group',
+            link: 'clientes',
+        });
+
+        menu.push({
+            id: '111',
             title: 'Opciones de Deducible',
             role: 'All',
             meta: [''],

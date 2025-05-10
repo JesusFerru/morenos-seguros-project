@@ -94,6 +94,13 @@ export const appRoutes: Route[] = [
                     import(
                         'app/main/feature/deductible-option/deductible-option.routes'
                     ).then(m => m.CONTENT_ROUTES),
+            },
+            {
+                path: 'clientes',
+                loadChildren: () =>
+                    import(
+                        'app/main/feature/customer/customer.routes'
+                    ).then(m => m.CONTENT_ROUTES),
             }
         ],
     },

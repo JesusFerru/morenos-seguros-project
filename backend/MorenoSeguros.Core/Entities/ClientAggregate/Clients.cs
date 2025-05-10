@@ -14,7 +14,7 @@ public class Clients : BaseEntity, IAggregateRoot
     public string? BusinessName { get; set; } // Just for Invoicing
     public string? Email { get; set; }
     public required string PhoneNumber { get; set; }
-    public DocumentType DocumentType { get; set; } = DocumentType.Ci;
+    public DocumentType DocumentType { get; set; } = DocumentType.CI;
     public required string DocumentNumber { get; set; }
     public string? City { get; set; }
     public string? Address { get; set; }
