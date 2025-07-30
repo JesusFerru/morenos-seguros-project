@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MorenoSeguros.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Add_business_domain_logic_complete : Migration
+    public partial class Inicialmigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -59,6 +59,93 @@ namespace MorenoSeguros.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "InsuranceCompany",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    LogoUrl = table.Column<string>(type: "text", nullable: true),
+                    WebsiteUrl = table.Column<string>(type: "text", nullable: true),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_InsuranceCompany", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "User",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    FirstName = table.Column<string>(type: "text", nullable: false),
+                    LastName = table.Column<string>(type: "text", nullable: false),
+                    Dni = table.Column<string>(type: "text", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "text", nullable: true),
+                    Username = table.Column<string>(type: "text", nullable: false),
+                    Email = table.Column<string>(type: "text", nullable: true),
+                    Password = table.Column<string>(type: "text", nullable: false),
+                    Role = table.Column<string>(type: "text", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_User", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "InsurancePlan",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    InsuranceCompanyId = table.Column<Guid>(type: "uuid", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_InsurancePlan", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_InsurancePlan_InsuranceCompany_InsuranceCompanyId",
+                        column: x => x.InsuranceCompanyId,
+                        principalTable: "InsuranceCompany",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DeductibleOption",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Deductible1 = table.Column<decimal>(type: "numeric", nullable: false),
+                    Deductible2 = table.Column<decimal>(type: "numeric", nullable: false),
+                    Currency = table.Column<string>(type: "text", nullable: false),
+                    InsurancePlanId = table.Column<Guid>(type: "uuid", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DeductibleOption", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DeductibleOption_InsurancePlan_InsurancePlanId",
+                        column: x => x.InsurancePlanId,
+                        principalTable: "InsurancePlan",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Policy",
                 columns: table => new
                 {
@@ -69,11 +156,9 @@ namespace MorenoSeguros.Infrastructure.Migrations
                     AgentId = table.Column<Guid>(type: "uuid", nullable: true),
                     StartDate = table.Column<DateOnly>(type: "date", nullable: false),
                     EndDate = table.Column<DateOnly>(type: "date", nullable: false),
+                    DeductibleOptionId = table.Column<Guid>(type: "uuid", nullable: false),
                     Status = table.Column<string>(type: "text", nullable: false),
-                    InsurancePlanId = table.Column<Guid>(type: "uuid", nullable: true),
-                    DeductibleOptionId = table.Column<Guid>(type: "uuid", nullable: true),
                     BankAccountId = table.Column<Guid>(type: "uuid", nullable: true),
-                    DeductibleOptionId1 = table.Column<Guid>(type: "uuid", nullable: true),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
@@ -97,17 +182,8 @@ namespace MorenoSeguros.Infrastructure.Migrations
                         name: "FK_Policy_DeductibleOption_DeductibleOptionId",
                         column: x => x.DeductibleOptionId,
                         principalTable: "DeductibleOption",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Policy_DeductibleOption_DeductibleOptionId1",
-                        column: x => x.DeductibleOptionId1,
-                        principalTable: "DeductibleOption",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Policy_InsurancePlan_InsurancePlanId",
-                        column: x => x.InsurancePlanId,
-                        principalTable: "InsurancePlan",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Policy_Policy_PreviousPolicyNumber",
                         column: x => x.PreviousPolicyNumber,
@@ -178,6 +254,16 @@ namespace MorenoSeguros.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_DeductibleOption_InsurancePlanId",
+                table: "DeductibleOption",
+                column: "InsurancePlanId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InsurancePlan_InsuranceCompanyId",
+                table: "InsurancePlan",
+                column: "InsuranceCompanyId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Payments_PolicyNumber",
                 table: "Payments",
                 column: "PolicyNumber");
@@ -196,16 +282,6 @@ namespace MorenoSeguros.Infrastructure.Migrations
                 name: "IX_Policy_DeductibleOptionId",
                 table: "Policy",
                 column: "DeductibleOptionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Policy_DeductibleOptionId1",
-                table: "Policy",
-                column: "DeductibleOptionId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Policy_InsurancePlanId",
-                table: "Policy",
-                column: "InsurancePlanId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Policy_PreviousPolicyNumber",
@@ -245,6 +321,18 @@ namespace MorenoSeguros.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Clients");
+
+            migrationBuilder.DropTable(
+                name: "DeductibleOption");
+
+            migrationBuilder.DropTable(
+                name: "User");
+
+            migrationBuilder.DropTable(
+                name: "InsurancePlan");
+
+            migrationBuilder.DropTable(
+                name: "InsuranceCompany");
         }
     }
 }

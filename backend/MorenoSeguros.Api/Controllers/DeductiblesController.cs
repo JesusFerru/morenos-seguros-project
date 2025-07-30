@@ -83,7 +83,7 @@ public class DeductibleOptionsController : ControllerBase
         _validator.ValidateRequiredForeignKeysAsync<DeductibleOption>(new() { { nameof(request.InsurancePlanId), request.InsurancePlanId } });
         await _validator.ValidateIsActiveAsync(request.InsurancePlanId, _planRepository, nameof(InsurancePlan));
 
-        var entity = new DeductibleOption(request.DeductibleIndividual, request.DeductibleFamily, request.Currency)
+        var entity = new DeductibleOption(request.Deductible1, request.Deductible2, request.Currency)
         {
             InsurancePlanId = request.InsurancePlanId
         };
@@ -104,7 +104,7 @@ public class DeductibleOptionsController : ControllerBase
         _validator.ValidateRequiredForeignKeysAsync<DeductibleOption>(new() { { nameof(request.InsurancePlanId), request.InsurancePlanId } });
         await _validator.ValidateIsActiveAsync(request.InsurancePlanId, _planRepository, nameof(InsurancePlan));
 
-        entity.Update(request.DeductibleIndividual, request.DeductibleFamily, request.Currency, request.IsActive);
+        entity.Update(request.Deductible1, request.Deductible2, request.Currency, request.IsActive);
         entity.InsurancePlanId = request.InsurancePlanId;
 
         await _repository.UpdateAsync(entity);
