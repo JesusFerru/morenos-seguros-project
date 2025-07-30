@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MorenoSeguros.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250405220224_Fix_Policy_Table")]
-    partial class Fix_Policy_Table
+    [Migration("20250730042323_Inicial migration")]
+    partial class Inicialmigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -138,13 +138,13 @@ namespace MorenoSeguros.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<decimal>("DeductibleFamily")
+                    b.Property<decimal>("Deductible1")
                         .HasColumnType("numeric");
 
-                    b.Property<decimal>("DeductibleIndividual")
+                    b.Property<decimal>("Deductible2")
                         .HasColumnType("numeric");
 
-                    b.Property<Guid?>("InsurancePlanId")
+                    b.Property<Guid>("InsurancePlanId")
                         .HasColumnType("uuid");
 
                     b.Property<bool>("IsActive")
@@ -172,7 +172,7 @@ namespace MorenoSeguros.Infrastructure.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("InsuranceCompanyId")
+                    b.Property<Guid>("InsuranceCompanyId")
                         .HasColumnType("uuid");
 
                     b.Property<bool>("IsActive")
@@ -433,7 +433,9 @@ namespace MorenoSeguros.Infrastructure.Migrations
                 {
                     b.HasOne("MorenoSeguros.Core.Entities.InsuranceCompanyAggregate.InsurancePlan", "InsurancePlan")
                         .WithMany("DeductibleOptions")
-                        .HasForeignKey("InsurancePlanId");
+                        .HasForeignKey("InsurancePlanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("InsurancePlan");
                 });
@@ -442,7 +444,9 @@ namespace MorenoSeguros.Infrastructure.Migrations
                 {
                     b.HasOne("MorenoSeguros.Core.Entities.CompanyAggregate.InsuranceCompany", "InsuranceCompany")
                         .WithMany("Plans")
-                        .HasForeignKey("InsuranceCompanyId");
+                        .HasForeignKey("InsuranceCompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("InsuranceCompany");
                 });

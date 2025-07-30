@@ -7,8 +7,8 @@ namespace MorenoSeguros.Core.Entities.InsuranceCompanyAggregate;
 
 public class DeductibleOption : BaseEntity, IAggregateRoot
 {
-    public decimal DeductibleIndividual { get; set; } = 0m;
-    public decimal DeductibleFamily { get; set; } = 0m;
+    public decimal Deductible1 { get; set; } = 0m;
+    public decimal Deductible2 { get; set; } = 0m;
     public string Currency { get; set; } = CurrencyConstants.Bolivians;
 
     // Navigation
@@ -17,17 +17,17 @@ public class DeductibleOption : BaseEntity, IAggregateRoot
 
     public ICollection<Policy> Policies { get; set; } = [];
 
-    public DeductibleOption(decimal deductibleIndividual, decimal deductibleFamily, string currency)
+    public DeductibleOption(decimal deductible1, decimal deductible2, string currency)
     {
-        DeductibleIndividual = deductibleIndividual;
-        DeductibleFamily = deductibleFamily;
+        Deductible1 = deductible1;
+        Deductible2 = deductible2;
         Currency = currency;
     }
 
-    public void Update(decimal deductibleIndividual, decimal deductibleFamily, string currency, bool isActive)
+    public void Update(decimal deductible1, decimal deductible2, string currency, bool isActive)
     {
-        DeductibleIndividual = deductibleIndividual;
-        DeductibleFamily = deductibleFamily;
+        Deductible1 = deductible1;
+        Deductible2 = deductible2;
         Currency = currency;
         IsActive = isActive;
     }
