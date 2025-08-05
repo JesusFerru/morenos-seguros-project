@@ -10,4 +10,5 @@ public static class SwaggerConstants
     public const string PoliciesTagSwagger = "Policies";
     public const string PolicyMembersTagSwagger = "Policy Members";
     public const string BankAccountsTagSwagger = "Bank Account";
+    public const string PaymentsTagSwagger = "Payments";
 }
