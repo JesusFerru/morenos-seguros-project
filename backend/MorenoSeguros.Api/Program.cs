@@ -1,25 +1,27 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using MorenoSeguros.Api.Common;
 using MorenoSeguros.Api.Middleware;
 using MorenoSeguros.Infrastructure;
-using MorenoSeguros.Migration;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-#region Service Configuration
+// ------------------------
+// Configure Kestrel for Railway
+// ------------------------
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(8080);
+});
 
-// Add Aspire service defaults .
-builder.AddServiceDefaults();
-
-// Add Swagger generation for API documentation.
-
-
+// ------------------------
+// Service Configuration
+// ------------------------
 builder.Services.AddInfrastructureServices(builder.Configuration);
 
+// Problem details + custom handler
 builder.Services.AddProblemDetails(option =>
 {
     option.CustomizeProblemDetails = context =>
@@ -30,40 +32,36 @@ builder.Services.AddProblemDetails(option =>
 });
 builder.Services.AddExceptionHandler<HandleException>();
 
-// Enable endpoint API explorer for Swagger/OpenAPI documentation.
-builder.Services.AddEndpointsApiExplorer();
-
-builder.Services.AddControllers();
-
-string landingPageDomain = string.Empty;
-if (SystemEnvironment.IsDevelopment())
+builder.Services.AddHttpLogging(logging =>
 {
-    landingPageDomain = "http://localhost:4200";
-
-}
-else if (SystemEnvironment.IsProduction())
-{
-    landingPageDomain = "https://moreno-seguros.com";
-}
-
-//if (string.IsNullOrEmpty(landingPageDomain))
-//{
-//    throw new ArgumentException("Landing page domain can't be null");
-//}
-
-// Add CORS
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowLocalhost4200",
-        builder => builder
-            .WithOrigins("http://localhost:4200")
-            .AllowAnyMethod()
-            .AllowAnyHeader());
+    logging.LoggingFields = Microsoft.AspNetCore.HttpLogging.HttpLoggingFields.All;
 });
 
-using var loggerFactory = LoggerFactory.Create(b => b.SetMinimumLevel(LogLevel.Error).AddConsole());
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddControllers();
 
-var secret = builder.Configuration["JWT:Secret"] ?? throw new InvalidOperationException("Secret not configured");
+// ------------------------
+// CORS config (dynamic from env)
+// ------------------------
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        var allowedOrigin = Environment.GetEnvironmentVariable("FRONTEND_URL")
+                            ?? "http://localhost:4200";
+
+        policy.WithOrigins(allowedOrigin)
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
+// ------------------------
+// JWT Authentication
+// ------------------------
+var secret = builder.Configuration["JWT:Secret"]
+             ?? Environment.GetEnvironmentVariable("JWT__Secret")
+             ?? throw new InvalidOperationException("JWT Secret not configured");
 
 builder.Services.AddAuthentication(options =>
 {
@@ -73,11 +71,10 @@ builder.Services.AddAuthentication(options =>
 })
 .AddJwtBearer(options =>
 {
-
     options.TokenValidationParameters = new TokenValidationParameters
     {
-        ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
-        ValidAudience = builder.Configuration["JWT:ValidAudience"],
+        ValidIssuer = builder.Configuration["JWT:ValidIssuer"] ?? Environment.GetEnvironmentVariable("JWT__ValidIssuer"),
+        ValidAudience = builder.Configuration["JWT:ValidAudience"] ?? Environment.GetEnvironmentVariable("JWT__ValidAudience"),
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret))
     };
     options.Events = new JwtBearerEvents
@@ -89,11 +86,9 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization();
 
-
-#endregion
-
-#region Swagger Configuration
-
+// ------------------------
+// Swagger Configuration
+// ------------------------
 var securitySchema = new OpenApiSecurityScheme
 {
     Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
@@ -114,47 +109,30 @@ builder.Services.AddSwaggerGen(options =>
     {
         Version = "v1",
         Title = "Moreno Seguros API",
-        Description = "Services Moreno Seguros",
-        TermsOfService = new Uri("https://example.com/terms"),
-        Contact = new OpenApiContact
-        {
-            Name = "Moreno Seguros",
-            Url = new Uri("https://example.com/contact")
-        },
-        License = new OpenApiLicense
-        {
-            Name = "Moreno Seguros",
-            Url = new Uri("https://example.com/license")
-        }
+        Description = "Services Moreno Seguros"
     });
 
     options.AddSecurityDefinition("Bearer", securitySchema);
 
     var securityRequirement = new OpenApiSecurityRequirement
-                {
-                    { securitySchema, new[] { "Bearer" } }
-                };
+    {
+        { securitySchema, new[] { "Bearer" } }
+    };
 
     options.AddSecurityRequirement(securityRequirement);
     options.EnableAnnotations();
 });
-#endregion
 
-// Add services to the container.
-
+// ------------------------
+// Build app
+// ------------------------
 var app = builder.Build();
+
 app.UseHttpLogging();
 app.UseExceptionHandler();
-app.UseCors("AllowLocalhost4200");
+app.UseCors("AllowFrontend");
 
-// Configure the HTTP request pipeline.
-//if (!app.Environment.IsDevelopment())
-//{
-//    app.UseExceptionHandler("/Error");
-//    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-//    app.UseHsts();
-//}
-
+// Swagger always enabled (can limit to Dev if needed)
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
@@ -163,30 +141,30 @@ app.UseSwaggerUI(c =>
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Moreno-Seguros API V1");
 });
 
-
-// Map default endpoints provided by your application.
-#region Endpoint Registration
-
-app.MapDefaultControllerRoute();
-app.MapDefaultEndpoints();
-
-app.MapControllers();
-#endregion
-
-app.UseHttpsRedirection();
+// Avoid HTTPS redirection on Railway (proxy already handles TLS)
+if (app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapStaticAssets();
+app.MapDefaultControllerRoute();
+app.MapControllers();
 
+// Serve static assets (if you later copy Angular build here)
+app.MapStaticAssets();
 
 app.Run();
 
-
+// ------------------------
+// Helper: JWT log attempts
+// ------------------------
 Task LogAttempt(IHeaderDictionary headers, string eventType)
 {
+    using var loggerFactory = LoggerFactory.Create(b => b.SetMinimumLevel(LogLevel.Information).AddConsole());
     var logger = loggerFactory.CreateLogger<Program>();
 
     var authorizationHeader = headers.Authorization.FirstOrDefault();
@@ -196,7 +174,6 @@ Task LogAttempt(IHeaderDictionary headers, string eventType)
     else
     {
         string jwtString = authorizationHeader["Bearer ".Length..];
-
         var jwt = new JwtSecurityToken(jwtString);
 
         logger.LogInformation($"{eventType}. Expiration: {jwt.ValidTo.ToLongTimeString()}. System time: {DateTime.UtcNow.ToLongTimeString()}");
