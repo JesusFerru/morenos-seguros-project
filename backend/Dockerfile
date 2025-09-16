@@ -1,33 +1,32 @@
 # ================================
-# STAGE 1: Build
+# STAGE 1: Build (SDK 9.0)
 # ================================
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
-# Copiar archivos de proyecto (.csproj) para restaurar dependencias
-COPY backend/MorenoSeguros.Api/MorenoSeguros.Api.csproj backend/MorenoSeguros.Api/
-COPY backend/MorenoSeguros.Infrastructure/MorenoSeguros.Infrastructure.csproj backend/MorenoSeguros.Infrastructure/
-COPY backend/MorenoSeguros.Migration/MorenoSeguros.Migration.csproj backend/MorenoSeguros.Migration/
+# Copia csproj de cada proyecto
+COPY MorenoSeguros.Api/MorenoSeguros.Api.csproj MorenoSeguros.Api/
+COPY MorenoSeguros.Infrastructure/MorenoSeguros.Infrastructure.csproj MorenoSeguros.Infrastructure/
+COPY MorenoSeguros.Core/MorenoSeguros.Core.csproj MorenoSeguros.Core/
+# Si tienes Migration, agrega también:
+# COPY MorenoSeguros.Migration/MorenoSeguros.Migration.csproj MorenoSeguros.Migration/
 
-# Restaurar dependencias
-WORKDIR /src/backend/MorenoSeguros.Api
+# Restaura dependencias desde la carpeta del Api
+WORKDIR /src/MorenoSeguros.Api
 RUN dotnet restore
 
-# Copiar todo el código y compilar
+# Copia todo el código fuente y publica en Release
 COPY . .
-RUN dotnet publish -c Release -o /app
+RUN dotnet publish "MorenoSeguros.Api/MorenoSeguros.Api.csproj" -c Release -o /app
 
 # ================================
-# STAGE 2: Runtime
+# STAGE 2: Runtime (ASP.NET 9.0)
 # ================================
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
-
-# Copiar build desde la etapa anterior
 COPY --from=build /app .
 
-# Configurar puerto para Railway
+# Railway escucha en 8080
 ENV ASPNETCORE_URLS=http://+:8080
 
-# Iniciar aplicación
 ENTRYPOINT ["dotnet", "MorenoSeguros.Api.dll"]
