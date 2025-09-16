@@ -14,7 +14,7 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 
 ### Create New Migration from Infrastructure
 ```
-dotnet ef --startup-project ..\MorenoSeguros.Api\ -v migrations add "Fix_Policy_Table"
+dotnet ef --startup-project ..\MorenoSeguros.Api\ -v migrations add "Change_Deductible_Fields_Name"
 ```
 ### Update Db migrations from Infrastructure
 ```
@@ -31,7 +31,7 @@ Para role solo esta permitido "Admin" o "Collaborator", por el momento
   "phoneNumber": "70000000",
   "username": "lferrufino",
   "email": "easyway.scz@gmail.com",
-  "password": "Pirata123",
+  "password": "lferrufino123",
   "role": "Admin"
 }
 ```

@@ -20,6 +20,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{EB9D98AE-2
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MorenoSeguros.Migration", "MorenoSeguros.Migration\MorenoSeguros.Migration.csproj", "{53A9354D-0AC7-4928-A010-78C73E02F82F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos de la solución", "Elementos de la solución", "{CAA92825-2EB2-450F-B407-58E1BBE23361}"
+	ProjectSection(SolutionItems) = preProject
+		Dockerfile = Dockerfile
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

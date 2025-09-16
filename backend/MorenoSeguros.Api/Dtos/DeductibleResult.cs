@@ -5,8 +5,8 @@ namespace MorenoSeguros.Api.Dtos
     public class DeductibleOptionResult
     {
         public Guid Id { get; set; }
-        public decimal DeductibleIndividual { get; set; }
-        public decimal DeductibleFamily { get; set; }
+        public decimal Deductible1 { get; set; }
+        public decimal Deductible2 { get; set; }
         public string Currency { get; set; } = string.Empty;
         public Guid InsurancePlanId { get; set; }
         public string InsurancePlanName { get; set; }
@@ -17,8 +17,8 @@ namespace MorenoSeguros.Api.Dtos
         public DeductibleOptionResult(DeductibleOption option)
         {
             Id = option.Id;
-            DeductibleIndividual = option.DeductibleIndividual;
-            DeductibleFamily = option.DeductibleFamily;
+            Deductible1 = option.Deductible1;
+            Deductible2 = option.Deductible2;
             Currency = option.Currency;
             InsurancePlanId = option.InsurancePlanId;
             InsurancePlanName = option.InsurancePlan?.Name ?? string.Empty;
