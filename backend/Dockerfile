@@ -13,7 +13,7 @@ COPY MorenoSeguros.Core/MorenoSeguros.Core.csproj MorenoSeguros.Core/
 
 # Restaura dependencias desde la carpeta del Api
 WORKDIR /src/MorenoSeguros.Api
-RUN dotnet restore
+RUN dotnet restore "MorenoSeguros.Api/MorenoSeguros.Api.csproj"
 
 # Copia todo el código fuente y publica en Release
 COPY . .
