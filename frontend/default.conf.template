@@ -6,7 +6,8 @@ server {
     access_log  /var/log/nginx/server.access.log  main;
 
     location / {
-        root /usr/share/nginx/html;
+        root   /usr/share/nginx/html;
+        index  index.html;
         try_files $uri $uri/ /index.html;
     }
 }
