@@ -28,7 +28,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MorenoSeguros.Infrastructure\MorenoSeguros.Infrastructure.csproj" />
-    <ProjectReference Include="..\MorenoSeguros.Migration\MorenoSeguros.Migration.csproj" />
   </ItemGroup>
 
 </Project>
