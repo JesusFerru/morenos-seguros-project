@@ -24,7 +24,7 @@ RUN dotnet publish MorenoSeguros.Api.csproj -c Release -o /publish --no-restore
 # ---------------------------
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final
 WORKDIR /app
-COPY --from=build /app/out ./
+COPY --from=build /publish ./
 
 # .NET 8/9 usa 8080 por defecto dentro del contenedor
 EXPOSE 8080
