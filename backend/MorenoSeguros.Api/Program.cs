@@ -8,13 +8,15 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ------------------------
-// Configure Kestrel for Railway
-// ------------------------
-builder.WebHost.ConfigureKestrel(options =>
+// Solo forzar puerto 8080 en producción (Railway)
+if (builder.Environment.IsProduction())
 {
-    options.ListenAnyIP(8080);
-});
+    var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+    builder.WebHost.ConfigureKestrel(options =>
+    {
+        options.ListenAnyIP(int.Parse(port));
+    });
+}
 
 // ------------------------
 // Service Configuration
@@ -49,8 +51,7 @@ builder.Services.AddCors(options =>
     {
         var allowedOrigin = Environment.GetEnvironmentVariable("FRONTEND_URL")
                             ?? "http://localhost:4200";
-
-        policy.WithOrigins(allowedOrigin)
+        policy.WithOrigins(allowedOrigin, "http://localhost:8080")
               .AllowAnyMethod()
               .AllowAnyHeader();
     });
