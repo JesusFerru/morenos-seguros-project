@@ -5,18 +5,18 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
 # Copiamos csproj por proyecto (mejora cache y evita el MSB1003)
-COPY MorenoSeguros.Api/MorenoSeguros.Api.csproj backend/MorenoSeguros.Api/
-COPY MorenoSeguros.Core/MorenoSeguros.Core.csproj backend/MorenoSeguros.Core/
-COPY MorenoSeguros.Infrastructure/MorenoSeguros.Infrastructure.csproj backend/MorenoSeguros.Infrastructure/
+COPY MorenoSeguros.Api/MorenoSeguros.Api.csproj MorenoSeguros.Api/
+COPY MorenoSeguros.Core/MorenoSeguros.Core.csproj MorenoSeguros.Core/
+COPY MorenoSeguros.Infrastructure/MorenoSeguros.Infrastructure.csproj MorenoSeguros.Infrastructure/
 
 # Restaura usando el csproj del API (resolverá referencias a Core/Infra)
-RUN dotnet restore backend/MorenoSeguros.Api/MorenoSeguros.Api.csproj
+RUN dotnet restore MorenoSeguros.Api/MorenoSeguros.Api.csproj
 
 # Copia del resto del código
 COPY . .
 
 # Publica en Release
-WORKDIR /src/backend/MorenoSeguros.Api
+WORKDIR /MorenoSeguros.Api
 RUN dotnet publish -c Release -o /app/out --no-restore
 
 # ---------------------------
