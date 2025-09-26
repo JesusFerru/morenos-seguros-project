@@ -16,8 +16,8 @@ RUN dotnet restore MorenoSeguros.Api/MorenoSeguros.Api.csproj
 COPY . .
 
 # Publica en Release
-WORKDIR /MorenoSeguros.Api
-RUN dotnet publish -c Release -o /app/out --no-restore
+WORKDIR /src/MorenoSeguros.Api
+RUN dotnet publish MorenoSeguros.Api.csproj -c Release -o /publish --no-restore
 
 # ---------------------------
 # runtime stage
