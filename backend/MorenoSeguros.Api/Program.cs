@@ -47,14 +47,14 @@ builder.Services.AddControllers();
 // ------------------------
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowFrontend", policy =>
-    {
-        var allowedOrigin = Environment.GetEnvironmentVariable("FRONTEND_URL")
-                            ?? "http://localhost:4200";
-        policy.WithOrigins(allowedOrigin, "http://localhost:8080")
-              .AllowAnyMethod()
-              .AllowAnyHeader();
-    });
+    options.AddPolicy(name: "frontend_clauses",
+        policy =>
+        {
+            policy
+                .WithOrigins("https://morenos-seguros-project-production.up.railway.app")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
 });
 
 // ------------------------
@@ -131,7 +131,8 @@ var app = builder.Build();
 
 app.UseHttpLogging();
 app.UseExceptionHandler();
-app.UseCors("AllowFrontend");
+
+app.UseCors("frontend_clauses");
 
 // Swagger always enabled (can limit to Dev if needed)
 app.UseSwagger();
