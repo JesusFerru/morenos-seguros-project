@@ -1,4 +1,4 @@
-const baseApi = 'https://api.moreno-seguros.com';
+const baseApi = 'https://morenos-seguros-project-production.up.railway.app';
 
 export const environment = {
   production: true,
