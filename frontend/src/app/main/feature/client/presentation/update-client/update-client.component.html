@@ -1,0 +1,119 @@
+<div style="overflow-y: auto; max-height: 90vh; padding: 10px">
+    <h1 class="text-2xl text-center font-bold mb-6 text-gray-800">Editar Cliente</h1>
+
+    <fuse-alert *ngIf="alert" [type]="alert.type" class="mb-4">
+      {{ alert.message }}
+    </fuse-alert>
+
+    <form [formGroup]="form" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- Personal Information -->
+      <div class="md:col-span-2">
+        <h3 class="text-lg font-semibold mb-3 text-gray-700">Información Personal</h3>
+      </div>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="firstName" placeholder="Nombre del cliente" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Apellido</mat-label>
+        <input matInput formControlName="lastName" placeholder="Apellido del cliente" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Fecha de Nacimiento</mat-label>
+        <input matInput type="date" formControlName="birthDate" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" placeholder="email@ejemplo.com" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Teléfono</mat-label>
+        <input matInput formControlName="phoneNumber" placeholder="Número de teléfono" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Tipo de Documento</mat-label>
+        <mat-select formControlName="documentType">
+          <mat-option *ngFor="let type of documentTypes" [value]="type.value">
+            {{ type.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Número de Documento</mat-label>
+        <input matInput formControlName="documentNumber" placeholder="Número de documento" />
+      </mat-form-field>
+
+      <!-- Business Information -->
+      <div class="md:col-span-2 mt-4">
+        <h3 class="text-lg font-semibold mb-3 text-gray-700">Información Empresarial</h3>
+      </div>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>NIT</mat-label>
+        <input matInput formControlName="nit" placeholder="Número de NIT" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Nombre de la Empresa</mat-label>
+        <input matInput formControlName="businessName" placeholder="Nombre de la empresa" />
+      </mat-form-field>
+
+      <!-- Location Information -->
+      <div class="md:col-span-2 mt-4">
+        <h3 class="text-lg font-semibold mb-3 text-gray-700">Información de Ubicación</h3>
+      </div>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Ciudad</mat-label>
+        <mat-select formControlName="city">
+          <mat-option *ngFor="let city of cities" [value]="city.value">
+            {{ city.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full md:col-span-2">
+        <mat-label>Dirección</mat-label>
+        <textarea matInput formControlName="address" rows="2" placeholder="Dirección completa"></textarea>
+      </mat-form-field>
+
+      <!-- Financial Information -->
+      <div class="md:col-span-2 mt-4">
+        <h3 class="text-lg font-semibold mb-3 text-gray-700">Información Financiera</h3>
+      </div>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Origen de Fondos</mat-label>
+        <mat-select formControlName="fundOrigin">
+          <mat-option *ngFor="let origin of fundOrigins" [value]="origin.value">
+            {{ origin.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Rango de Ingresos</mat-label>
+        <mat-select formControlName="incomeRange">
+          <mat-option *ngFor="let range of incomeRanges" [value]="range.value">
+            {{ range.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+
+    <div class="flex justify-end mt-6 space-x-4">
+      <button mat-raised-button color="warn" (click)="close()" [disabled]="isSaving">
+        Cancelar
+      </button>
+      <button mat-raised-button color="primary" (click)="save()" [disabled]="!form.valid || isSaving">
+        Guardar
+      </button>
+    </div>
+  </div>

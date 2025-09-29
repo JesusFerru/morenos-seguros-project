@@ -102,6 +102,14 @@ export const appRoutes: Route[] = [
                     import(
                         'app/main/feature/bank/bank.routes'
                     ).then(m => m.CONTENT_ROUTES),
+            },
+
+            {
+                path: 'clientes',
+                loadChildren: () =>
+                    import(
+                        'app/main/feature/client/client.routes'
+                    ).then(m => m.CONTENT_ROUTES),
             }
         ],
     },

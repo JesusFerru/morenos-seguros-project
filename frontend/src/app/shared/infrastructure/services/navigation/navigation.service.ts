@@ -75,6 +75,16 @@ export class NavigationService {
 
         menu.push({
             id: '666',
+            title: 'Clientes',
+            role: 'All',
+            meta: [''],
+            type: 'basic',
+            icon: 'heroicons_outline:users',
+            link: 'clientes',
+        });
+
+        menu.push({
+            id: '777',
             title: 'Usuarios',
             role: 'All',
             meta: [''],
