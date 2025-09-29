@@ -1,22 +1,15 @@
-FROM node:20 as build
+# ---------- Build de Angular ----------
+FROM node:20-alpine AS build
 WORKDIR /app
-
-# Copiar dependencias e instalarlas
 COPY package*.json ./
-RUN npm install -g @angular/cli && npm install
-
-# Copiar el resto del código y compilar en modo producción
+RUN npm install --legacy-peer-deps
 COPY . .
-RUN npm run build-production
+RUN npm run build -- --configuration production
+# o tu script: RUN npm run build-production
 
-# Etapa Nginx para servir los archivos estáticos
-FROM nginx:alpine
-
-# Configuración SPA (Angular router necesita fallback a index.html)
-COPY --from=build /app/default.conf.template /etc/nginx/templates/default.conf.template
-
-# Copiar el build Angular directo a la raíz del servidor web
-COPY --from=build /app/dist/moreno-seguros /usr/share/nginx/html
-
+# ---------- Servir con NGINX ----------
+FROM nginx:1.27-alpine
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /app/dist/moreno-seguros/browser /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
