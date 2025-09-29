@@ -51,7 +51,7 @@ builder.Services.AddCors(options =>
         policy =>
         {
             policy
-                .WithOrigins("https://morenos-seguros-project-production.up.railway.app")
+                .WithOrigins("https://morenoseguros.up.railway.app")
                 .AllowAnyHeader()
                 .AllowAnyMethod();
         });
