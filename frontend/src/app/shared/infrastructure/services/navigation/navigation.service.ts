@@ -85,6 +85,16 @@ export class NavigationService {
 
         menu.push({
             id: '777',
+            title: 'Miembros de Póliza',
+            role: 'All',
+            meta: [''],
+            type: 'basic',
+            icon: 'heroicons_outline:user-group',
+            link: 'miembros-poliza',
+        });
+
+        menu.push({
+            id: '888',
             title: 'Usuarios',
             role: 'All',
             meta: [''],

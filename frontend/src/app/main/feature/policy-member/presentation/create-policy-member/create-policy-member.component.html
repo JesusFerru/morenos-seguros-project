@@ -1,0 +1,74 @@
+<div style="overflow-y: auto; max-height: 90vh; padding: 10px">
+    <h1 class="text-2xl text-center font-bold mb-6 text-gray-800">Crear Miembro de Póliza</h1>
+
+    <fuse-alert *ngIf="alert" [type]="alert.type" class="mb-4">
+      {{ alert.message }}
+    </fuse-alert>
+
+    <form [formGroup]="form" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- Client and Policy Information -->
+      <div class="md:col-span-2">
+        <h3 class="text-lg font-semibold mb-3 text-gray-700">Información de Cliente y Póliza</h3>
+      </div>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Cliente</mat-label>
+        <mat-select formControlName="clientId">
+          <mat-option *ngFor="let client of clients" [value]="client.id">
+            {{ client.firstName }} {{ client.lastName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Póliza</mat-label>
+        <mat-select formControlName="policyId">
+          <mat-option *ngFor="let policy of policies" [value]="policy.id">
+            {{ policy.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Member Information -->
+      <div class="md:col-span-2 mt-4">
+        <h3 class="text-lg font-semibold mb-3 text-gray-700">Información del Miembro</h3>
+      </div>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Tipo de Miembro</mat-label>
+        <mat-select formControlName="memberType">
+          <mat-option *ngFor="let type of memberTypes" [value]="type.value">
+            {{ type.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Estado</mat-label>
+        <mat-select formControlName="status">
+          <mat-option *ngFor="let status of statuses" [value]="status.value">
+            {{ status.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Fecha de Ingreso</mat-label>
+        <input matInput type="date" formControlName="entryDate" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full md:col-span-2">
+        <mat-label>Exclusiones</mat-label>
+        <textarea matInput formControlName="exclusions" rows="3" placeholder="Descripción de exclusiones (opcional)"></textarea>
+      </mat-form-field>
+    </form>
+
+    <div class="flex justify-end mt-6 space-x-4">
+      <button mat-raised-button color="warn" (click)="close()" [disabled]="isSaving">
+        Cancelar
+      </button>
+      <button mat-raised-button color="primary" (click)="save()" [disabled]="!form.valid || isSaving">
+        Guardar
+      </button>
+    </div>
+  </div>
