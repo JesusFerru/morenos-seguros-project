@@ -1,33 +1,34 @@
-# ================================
-# STAGE 1: Build
-# ================================
+# ---------------------------
+# build stage
+# ---------------------------
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
-# Copiar archivos de proyecto (.csproj) para restaurar dependencias
-COPY backend/MorenoSeguros.Api/MorenoSeguros.Api.csproj backend/MorenoSeguros.Api/
-COPY backend/MorenoSeguros.Infrastructure/MorenoSeguros.Infrastructure.csproj backend/MorenoSeguros.Infrastructure/
-COPY backend/MorenoSeguros.Migration/MorenoSeguros.Migration.csproj backend/MorenoSeguros.Migration/
+# Copiamos csproj por proyecto (mejora cache y evita el MSB1003)
+COPY MorenoSeguros.Api/MorenoSeguros.Api.csproj MorenoSeguros.Api/
+COPY MorenoSeguros.Core/MorenoSeguros.Core.csproj MorenoSeguros.Core/
+COPY MorenoSeguros.Infrastructure/MorenoSeguros.Infrastructure.csproj MorenoSeguros.Infrastructure/
 
-# Restaurar dependencias
-WORKDIR /src/backend/MorenoSeguros.Api
-RUN dotnet restore
+# Restaura usando el csproj del API (resolver√° referencias a Core/Infra)
+RUN dotnet restore MorenoSeguros.Api/MorenoSeguros.Api.csproj
 
-# Copiar todo el cÛdigo y compilar
+# Copia del resto del c√≥digo
 COPY . .
-RUN dotnet publish -c Release -o /app
 
-# ================================
-# STAGE 2: Runtime
-# ================================
-FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
+# Publica en Release
+WORKDIR /src/MorenoSeguros.Api
+RUN dotnet publish MorenoSeguros.Api.csproj -c Release -o /publish --no-restore
+
+# ---------------------------
+# runtime stage
+# ---------------------------
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final
 WORKDIR /app
+COPY --from=build /publish ./
 
-# Copiar build desde la etapa anterior
-COPY --from=build /app .
+# .NET 8/9 usa 8080 por defecto dentro del contenedor
+EXPOSE 8080
 
-# Configurar puerto para Railway
-ENV ASPNETCORE_URLS=http://+:8080
-
-# Iniciar aplicaciÛn
-ENTRYPOINT ["dotnet", "MorenoSeguros.Api.dll"]
+# Importante: PORT es din√°mico en Railway. Usamos sh -c para expandirlo en runtime.
+# Si Railway no provee PORT, cae por defecto a 8080.
+CMD ["sh", "-c", "ASPNETCORE_URLS=http://0.0.0.0:${PORT:-8080} dotnet MorenoSeguros.Api.dll"]

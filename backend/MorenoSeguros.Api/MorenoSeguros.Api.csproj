@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
 	<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <ImplicitUsings>enable</ImplicitUsings>
+    <OutputType>Exe</OutputType>
 	<NoWarn>$(NoWarn);1591</NoWarn>
     <NugetAuditMode>Direct</NugetAuditMode>
   </PropertyGroup>
@@ -28,7 +29,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MorenoSeguros.Infrastructure\MorenoSeguros.Infrastructure.csproj" />
-    <ProjectReference Include="..\MorenoSeguros.Migration\MorenoSeguros.Migration.csproj" />
   </ItemGroup>
 
 </Project>
