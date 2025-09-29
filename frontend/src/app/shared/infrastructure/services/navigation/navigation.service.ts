@@ -95,6 +95,16 @@ export class NavigationService {
 
         menu.push({
             id: '888',
+            title: 'Pagos',
+            role: 'All',
+            meta: [''],
+            type: 'basic',
+            icon: 'heroicons_outline:currency-dollar',
+            link: 'pagos',
+        });
+
+        menu.push({
+            id: '999',
             title: 'Usuarios',
             role: 'All',
             meta: [''],

@@ -118,6 +118,14 @@ export const appRoutes: Route[] = [
                     import(
                         'app/main/feature/policy-member/policy-member.routes'
                     ).then(m => m.CONTENT_ROUTES),
+            },
+
+            {
+                path: 'pagos',
+                loadChildren: () =>
+                    import(
+                        'app/main/feature/payment/payment.routes'
+                    ).then(m => m.CONTENT_ROUTES),
             }
         ],
     },

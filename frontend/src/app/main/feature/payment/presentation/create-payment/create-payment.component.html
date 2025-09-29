@@ -1,0 +1,61 @@
+<div style="overflow-y: auto; max-height: 90vh; padding: 10px">
+    <h1 class="text-2xl text-center font-bold mb-6 text-gray-800">Crear Pago</h1>
+
+    <fuse-alert *ngIf="alert" [type]="alert.type" class="mb-4">
+      {{ alert.message }}
+    </fuse-alert>
+
+    <form [formGroup]="form" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- Payment Information -->
+      <div class="md:col-span-2">
+        <h3 class="text-lg font-semibold mb-3 text-gray-700">Información del Pago</h3>
+      </div>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Número de Póliza</mat-label>
+        <input matInput formControlName="policyNumber" placeholder="Número de póliza" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Fecha de Pago</mat-label>
+        <input matInput type="date" formControlName="paymentDate" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Período</mat-label>
+        <mat-select formControlName="period">
+          <mat-option *ngFor="let period of periods" [value]="period.value">
+            {{ period.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Método de Pago</mat-label>
+        <mat-select formControlName="paymentMethod">
+          <mat-option *ngFor="let method of paymentMethods" [value]="method.value">
+            {{ method.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Monto</mat-label>
+        <input matInput type="number" formControlName="amount" placeholder="0.00" min="0.01" step="0.01" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full md:col-span-2">
+        <mat-label>URL del Recibo</mat-label>
+        <input matInput formControlName="receiptUrl" placeholder="URL del recibo (opcional)" />
+      </mat-form-field>
+    </form>
+
+    <div class="flex justify-end mt-6 space-x-4">
+      <button mat-raised-button color="warn" (click)="close()" [disabled]="isSaving">
+        Cancelar
+      </button>
+      <button mat-raised-button color="primary" (click)="save()" [disabled]="!form.valid || isSaving">
+        Guardar
+      </button>
+    </div>
+  </div>
