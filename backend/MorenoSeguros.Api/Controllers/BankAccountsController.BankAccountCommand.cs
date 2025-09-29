@@ -9,6 +9,7 @@ namespace MorenoSeguros.Api.Controllers
         public string AccountNumber { get; set; } = string.Empty;
         public string Currency { get; set; } = CurrencyConstants.Bolivians;
         public string HolderName { get; set; } = string.Empty;
+        public bool IsActive { get; set; } = true;
 
     }
 }

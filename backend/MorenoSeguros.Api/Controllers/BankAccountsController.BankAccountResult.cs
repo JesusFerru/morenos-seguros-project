@@ -10,6 +10,9 @@ namespace MorenoSeguros.Api.Controllers
         public string AccountNumber { get; set; }
         public string Currency { get; set; }
         public string HolderName { get; set; }
+        public bool IsActive { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
 
         public BankAccountResult(BankAccount bankAccount)
         {
@@ -19,6 +22,9 @@ namespace MorenoSeguros.Api.Controllers
             AccountNumber = bankAccount.AccountNumber;
             Currency = bankAccount.Currency;
             HolderName = bankAccount.HolderName;
+            IsActive = bankAccount.IsActive;
+            CreatedAt = bankAccount.CreatedAt;
+            UpdatedAt = bankAccount.UpdatedAt;
         }
     }
 }

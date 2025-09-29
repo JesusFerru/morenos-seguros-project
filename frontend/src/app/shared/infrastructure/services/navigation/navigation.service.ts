@@ -64,7 +64,17 @@ export class NavigationService {
         });
 
         menu.push({
-            id: '444',
+            id: '555',
+            title: 'Cuentas Bancarias',
+            role: 'All',
+            meta: [''],
+            type: 'basic',
+            icon: 'heroicons_outline:credit-card',
+            link: 'bancos',
+        });
+
+        menu.push({
+            id: '666',
             title: 'Usuarios',
             role: 'All',
             meta: [''],

@@ -51,7 +51,7 @@ builder.Services.AddCors(options =>
         policy =>
         {
             policy
-                .WithOrigins("https://morenoseguros.up.railway.app")
+                .WithOrigins("https://morenoseguros.up.railway.app", "http://localhost:4200")
                 .AllowAnyHeader()
                 .AllowAnyMethod();
         });

@@ -79,6 +79,7 @@ namespace MorenoSeguros.Api.Controllers
             bank.AccountNumber = request.AccountNumber;
             bank.Currency = request.Currency;
             bank.HolderName = request.HolderName;
+            bank.IsActive = request.IsActive;
 
             await _repository.UpdateAsync(bank);
             await _repository.SaveChangesAsync();
