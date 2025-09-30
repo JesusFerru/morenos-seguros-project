@@ -41,7 +41,7 @@
             <mat-form-field appearance="outline">
                 <mat-label>Agente</mat-label>
                 <mat-select formControlName="agentId">
-                    <mat-option *ngFor="let agent of agents" [value]="agent.id">
+                    <mat-option *ngFor="let agent of agents" [value]="agent.id ?? ''">
                         {{ agent.firstName }} {{ agent.lastName }}
                     </mat-option>
                 </mat-select>

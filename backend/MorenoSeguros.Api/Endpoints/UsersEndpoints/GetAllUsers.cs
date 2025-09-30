@@ -35,6 +35,7 @@ public class GetAllUsers : EndpointBaseAsync
         var users = await _repository.ListAsync(spec, cancellationToken);
 
         var result = users.Select(u => new GetUserResult(
+            u.Id,
             u.Dni,
             u.FirstName,
             u.LastName,

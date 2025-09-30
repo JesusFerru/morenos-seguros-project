@@ -60,6 +60,7 @@ public class UpdateUser : EndpointBaseAsync
         await _repository.SaveChangesAsync(cancellationToken);
 
         var result = new GetUserResult(
+            user.Id,
             user.Dni,
             user.FirstName,
             user.LastName,

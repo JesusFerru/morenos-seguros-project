@@ -51,10 +51,12 @@ export class CreatePolicyComponent implements OnInit {
 
   // Predefined options for selects
   statusOptions = [
-    { value: 'Activa', label: 'Activa' },
-    { value: 'Inactiva', label: 'Inactiva' },
-    { value: 'Vencida', label: 'Vencida' },
-    { value: 'Cancelada', label: 'Cancelada' },
+    { value: 0, label: 'Borrador' },           // Draft
+    { value: 1, label: 'Activa' },             // Active
+    { value: 2, label: 'Pendiente de Pago' },  // PendingPayment
+    { value: 3, label: 'Cancelada' },          // Cancelled
+    { value: 4, label: 'Vencida' },            // Expired
+    { value: 5, label: 'Suspendida' }          // Suspended
   ];
 
   ngOnInit(): void {
@@ -94,6 +96,7 @@ export class CreatePolicyComponent implements OnInit {
       next: (res) => {
         this.agents = res.filter(user => user.role === 'Agent' || user.role === 'Admin');
       },
+
       error: () => {
         this.alert = {
           type: 'error',

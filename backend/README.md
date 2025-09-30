@@ -14,7 +14,7 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 
 ### Create New Migration from Infrastructure
 ```
-dotnet ef --startup-project ..\MorenoSeguros.Api\ -v migrations add "Change_Deductible_Fields_Name"
+dotnet ef --startup-project ..\MorenoSeguros.Api\ -v migrations add "ChangePolicyStatusToEnum"
 ```
 ### Update Db migrations from Infrastructure
 ```

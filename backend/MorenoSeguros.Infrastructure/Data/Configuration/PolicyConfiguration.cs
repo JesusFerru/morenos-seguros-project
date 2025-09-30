@@ -12,10 +12,7 @@ public class PolicyConfiguration : IEntityTypeConfiguration<Policy>
         builder.HasKey(p => p.Id);
 
         builder.Property(p => p.Status)
-                .HasConversion(
-                policyStatus => policyStatus.Name,           // Convert from UserRole to string
-                name => PolicyStatus.FromName(name, false) // Convert from string to UserRole
-            )
+            .HasConversion<string>()   
             .IsRequired();
 
         // Foreign key: Titular Client
