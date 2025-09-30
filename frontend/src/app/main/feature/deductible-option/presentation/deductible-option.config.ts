@@ -6,8 +6,8 @@ export interface TableColumn {
 
 export const deductibleOptionTableConfig: TableColumn[] = [
     { columnDef: 'insurancePlanName', header: 'NOMBRE DEL PLAN', type: 'text' },
-    { columnDef: 'deductibleIndividual', header: 'DEDUCIBLE INDIVIDUAL', type: 'amount' },
-    { columnDef: 'deductibleFamily', header: 'DEDUCIBLE FAMILIAR', type: 'amount' },
+    { columnDef: 'deductible1', header: 'DEDUCIBLE 1', type: 'amount' },
+    { columnDef: 'deductible2', header: 'DEDUCIBLE 2', type: 'amount' },
     { columnDef: 'currency', header: 'MONEDA', type: 'text' },
     { columnDef: 'isActive', header: 'ACTIVO', type: 'toggle' },
     { columnDef: 'createdAt', header: 'FECHA DE CREACIÓN', type: 'datetime' },

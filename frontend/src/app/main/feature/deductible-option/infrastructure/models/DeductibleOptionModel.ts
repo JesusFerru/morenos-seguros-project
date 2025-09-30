@@ -1,7 +1,7 @@
 export interface DeductibleOptionModel {
     id: string;
-    deductibleIndividual: number;
-    deductibleFamily: number;
+    deductible1: number;
+    deductible2 : number;
     currency: string;
     insurancePlanId: string;
     isActive: boolean;

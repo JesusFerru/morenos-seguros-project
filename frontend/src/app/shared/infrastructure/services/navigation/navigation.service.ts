@@ -84,6 +84,16 @@ export class NavigationService {
         });
 
         menu.push({
+            id: '666.5',
+            title: 'Pólizas',
+            role: 'All',
+            meta: [''],
+            type: 'basic',
+            icon: 'heroicons_outline:document-text',
+            link: 'polizas',
+        });
+
+        menu.push({
             id: '777',
             title: 'Miembros de Póliza',
             role: 'All',

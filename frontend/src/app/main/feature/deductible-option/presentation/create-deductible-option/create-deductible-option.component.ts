@@ -43,8 +43,8 @@ export class CreateDeductibleOptionComponent {
         private planService: InsurancePlanService
     ) {
         this.form = this.fb.group({
-            deductibleIndividual: [null, [Validators.required, Validators.min(0)]],
-            deductibleFamily: [null, [Validators.required, Validators.min(0)]],
+            deductible1: [null, [Validators.required, Validators.min(0)]],
+            deductible2: [null, [Validators.required, Validators.min(0)]],
             currency: [null, Validators.required],
             insurancePlanId: [null, Validators.required]
         });

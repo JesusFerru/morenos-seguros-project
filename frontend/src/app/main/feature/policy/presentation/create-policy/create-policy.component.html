@@ -1,0 +1,113 @@
+<div class="p-6">
+    <h2 class="text-xl font-semibold mb-4">Crear Nueva Póliza</h2>
+
+    <ms-alert
+        *ngIf="alert"
+        [type]="alert.type"
+        [message]="alert.message">
+    </ms-alert>
+
+    <form [formGroup]="form" (ngSubmit)="save()" class="space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Policy Number -->
+            <mat-form-field appearance="outline">
+                <mat-label>Número de Póliza</mat-label>
+                <input matInput formControlName="policyNumber" placeholder="Ingrese el número de póliza">
+                <mat-error *ngIf="form.get('policyNumber')?.hasError('required')">
+                    El número de póliza es requerido
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Previous Policy Number -->
+            <mat-form-field appearance="outline">
+                <mat-label>Póliza Anterior</mat-label>
+                <input matInput formControlName="previousPolicyNumber" placeholder="Ingrese la póliza anterior (opcional)">
+            </mat-form-field>
+
+            <!-- Titular Client -->
+            <mat-form-field appearance="outline">
+                <mat-label>Cliente Titular</mat-label>
+                <mat-select formControlName="titularClientId">
+                    <mat-option *ngFor="let client of clients" [value]="client.id">
+                        {{ client.firstName }} {{ client.lastName }} - {{ client.nit }}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="form.get('titularClientId')?.hasError('required')">
+                    El cliente titular es requerido
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Agent -->
+            <mat-form-field appearance="outline">
+                <mat-label>Agente</mat-label>
+                <mat-select formControlName="agentId">
+                    <mat-option *ngFor="let agent of agents" [value]="agent.id">
+                        {{ agent.firstName }} {{ agent.lastName }}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="form.get('agentId')?.hasError('required')">
+                    El agente es requerido
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Start Date -->
+            <mat-form-field appearance="outline">
+                <mat-label>Fecha de Inicio</mat-label>
+                <input matInput [matDatepicker]="startPicker" formControlName="startDate">
+                <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                <mat-datepicker #startPicker></mat-datepicker>
+                <mat-error *ngIf="form.get('startDate')?.hasError('required')">
+                    La fecha de inicio es requerida
+                </mat-error>
+            </mat-form-field>
+
+            <!-- End Date -->
+            <mat-form-field appearance="outline">
+                <mat-label>Fecha de Fin</mat-label>
+                <input matInput [matDatepicker]="endPicker" formControlName="endDate">
+                <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+                <mat-datepicker #endPicker></mat-datepicker>
+                <mat-error *ngIf="form.get('endDate')?.hasError('required')">
+                    La fecha de fin es requerida
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Deductible Option -->
+            <mat-form-field appearance="outline">
+                <mat-label>Opción de Deducible</mat-label>
+                <mat-select formControlName="deductibleOptionId">
+                    <mat-option *ngFor="let option of deductibleOptions" [value]="option.id">
+                        {{ option.insurancePlanName }} - Individual: {{ option.deductible1 }} | Familiar: {{ option.deductible2 }} ({{ option.currency }})
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="form.get('deductibleOptionId')?.hasError('required')">
+                    La opción de deducible es requerida
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Status -->
+            <mat-form-field appearance="outline">
+                <mat-label>Estado</mat-label>
+                <mat-select formControlName="status">
+                    <mat-option *ngFor="let status of statusOptions" [value]="status.value">
+                        {{ status.label }}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="form.get('status')?.hasError('required')">
+                    El estado es requerido
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex justify-end space-x-2 pt-4">
+            <button mat-button type="button" (click)="close()" [disabled]="isSaving">
+                Cancelar
+            </button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || isSaving">
+                <span *ngIf="isSaving">Guardando...</span>
+                <span *ngIf="!isSaving">Guardar</span>
+            </button>
+        </div>
+    </form>
+</div>

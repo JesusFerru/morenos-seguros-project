@@ -46,8 +46,8 @@ export class UpdateDeductibleOptionComponent {
         private planService: InsurancePlanService
     ) {
         this.form = this.fb.group({
-            deductibleIndividual: [data.deductible.deductibleIndividual, [Validators.required, Validators.min(0)]],
-            deductibleFamily: [data.deductible.deductibleFamily, [Validators.required, Validators.min(0)]],
+            deductible1: [data.deductible.deductible1, [Validators.required, Validators.min(0)]],
+            deductible2: [data.deductible.deductible2, [Validators.required, Validators.min(0)]],
             currency: [data.deductible.currency, Validators.required],
             insurancePlanId: [data.deductible.insurancePlanId, Validators.required]
         });

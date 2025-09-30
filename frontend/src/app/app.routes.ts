@@ -113,6 +113,14 @@ export const appRoutes: Route[] = [
             },
 
             {
+                path: 'polizas',
+                loadChildren: () =>
+                    import(
+                        'app/main/feature/policy/policy.routes'
+                    ).then(m => m.CONTENT_ROUTES),
+            },
+
+            {
                 path: 'miembros-poliza',
                 loadChildren: () =>
                     import(
