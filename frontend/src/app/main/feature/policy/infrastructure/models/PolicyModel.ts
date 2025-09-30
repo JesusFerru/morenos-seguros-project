@@ -1,9 +1,9 @@
 export interface PolicyModel {
     id: string;
     policyNumber: string;
-    previousPolicyNumber: string;
+    previousPolicyNumber?: string;
     titularClientId: string;
-    agentId: string;
+    agentId?: string;
     startDate: string;
     endDate: string;
     deductibleOptionId: string;
@@ -11,8 +11,9 @@ export interface PolicyModel {
     isActive: boolean;
     createdAt: string;
     updatedAt: string;
-    // Optional fields for display
+    
+    // Optional fields for display purposes - will be populated by the frontend
     titularClientName?: string;
     agentName?: string;
-    deductibleOptionName?: string;
+    deductible1?: number;
 }

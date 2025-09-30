@@ -5,6 +5,9 @@ public class GetAllPoliciesSpec : Specification<Policy>
 {
     public GetAllPoliciesSpec()
     {
-        Query.OrderByDescending(p => p.CreatedAt);
+        Query.OrderByDescending(p => p.CreatedAt)
+            .Include(p => p.Agent)
+            .Include(p => p.TitularClient)
+            .Include(p => p.DeductibleOption);
     }
 }

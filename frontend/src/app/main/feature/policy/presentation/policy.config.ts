@@ -36,9 +36,9 @@ export const policyTableConfig: TableColumn[] = [
     type: 'date'
   },
   {
-    columnDef: 'deductibleOptionName',
-    header: 'Opción Deducible',
-    type: 'text'
+    columnDef: 'deductible1',
+    header: 'Monto Deducible',
+    type: 'amount'
   },
   {
     columnDef: 'status',

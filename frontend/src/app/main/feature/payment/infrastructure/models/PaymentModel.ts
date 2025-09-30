@@ -9,4 +9,8 @@ export interface PaymentModel {
     isActive: boolean;
     createdAt: string;
     updatedAt: string;
+    
+    // Optional fields for display purposes - can be populated from policy data
+    policyStatus?: string;
+    titularClientName?: string;
 }
