@@ -33,7 +33,9 @@ namespace MorenoSeguros.Infrastructure.Services
             var user = await _repository.SingleOrDefaultAsync(spec)
                 ?? throw new NotFoundException(GetMessage(nameof(NotFoundException), nameof(username)));
 
-            if (!VerifyPassword(user, password)) throw new UnauthorizedException(GetMessage(nameof(UnauthorizedException), nameof(password)));
+            if (!VerifyPassword(user, password))
+                throw new BadRequestException(GetMessage(nameof(UnauthorizedException), nameof(password)));
+
 
             // VerifyPassword is succesfull
             var token = GenerateJwtToken(user);

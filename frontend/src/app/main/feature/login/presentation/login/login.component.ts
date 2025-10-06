@@ -24,7 +24,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertComponent, FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from '../../../../../shared/infrastructure/services/auth.service';
-import { WhiteListService } from '../../infrastructure/models/white-list.service';
 
 @Component({
     selector: 'ms-login',
@@ -33,17 +32,17 @@ import { WhiteListService } from '../../infrastructure/models/white-list.service
     animations: fuseAnimations,
     standalone: true,
     imports: [
-    FuseAlertComponent,
-    NgIf,
-    FormsModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatIconModule,
-    MatCheckboxModule,
-    MatProgressSpinnerModule
-],
+        FuseAlertComponent,
+        NgIf,
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatIconModule,
+        MatCheckboxModule,
+        MatProgressSpinnerModule,
+    ],
 })
 export class LoginComponent implements OnInit {
     //Inject
@@ -51,7 +50,6 @@ export class LoginComponent implements OnInit {
     _formBuilder = inject(UntypedFormBuilder);
     _activatedRoute = inject(ActivatedRoute);
     _router = inject(Router);
-    _whiteList = inject(WhiteListService);
 
     @ViewChild('signInNgForm') signInNgForm: NgForm;
 
@@ -67,12 +65,9 @@ export class LoginComponent implements OnInit {
         // Create the form
         this.signInForm = this._formBuilder.group({
             username: ['', [Validators.required]],
-            password: ['', Validators.required]
+            password: ['', Validators.required],
         });
-
-
     }
-
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
@@ -95,22 +90,6 @@ export class LoginComponent implements OnInit {
 
         const value = this.signInForm.value;
 
-        // Validate User White List
-        if (!this._whiteList.isTSOUser(value.user)) {
-            this.signInForm.enable();
-
-            // Set the alert
-            this.alert = {
-                type: 'error',
-                message: 'El Usuario no se encuentra habilitado.',
-            };
-
-            // Show the alert
-            this.showAlert = true;
-
-            return;
-        }
-
         // Sign in
         this._authService.login(value).subscribe({
             next: () => {
@@ -119,11 +98,15 @@ export class LoginComponent implements OnInit {
             error: (error) => {
                 this.signInForm.enable();
                 this.signInNgForm.resetForm();
+                
+                const payload = error?.error ?? error;
+    const message =
+        payload?.message ||      // for simple JSON with "message"
+        payload?.detail  ||      // <- ProblemDetails field
+        payload?.title   ||      // fallback if only title is set
+        error?.message   ||
+        'Ocurrió un error inesperado. Por favor, intente de nuevo.';
 
-                const message =
-                    error?.error?.message ||
-                    error?.message ||
-                    'Ocurrió un error inesperado. Por favor, intente de nuevo.';
 
                 this.alert = {
                     type: 'error',
@@ -131,8 +114,7 @@ export class LoginComponent implements OnInit {
                 };
 
                 this.showAlert = true;
-            }
-
+            },
         });
     }
 
