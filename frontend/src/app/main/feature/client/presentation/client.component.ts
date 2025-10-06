@@ -9,11 +9,13 @@ import { PaginationResponseModel } from 'app/shared/domain/models/PaginationResp
 import { ChangePaginationModel } from 'app/shared/domain/models/ChangePaginationModel';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatButtonModule } from '@angular/material/button';
 import { ClientService } from '../infrastructure/services/client.service';
 import { ClientModel } from '../infrastructure/models/ClientModel';
 import { CreateClientComponent } from './create-client/create-client.component';
 import { clientTableConfig } from './client.config';
 import { UpdateClientComponent } from './update-client/update-client.component';
+import { ExcelExportService } from 'app/shared/infrastructure/services/excel-export.service';
 
 interface Alert {
     type: 'success' | 'error';
@@ -29,13 +31,15 @@ interface Alert {
         ViewHeaderComponent,
         FuseAlertComponent,
         MatIconModule,
-        MatSlideToggleModule
+        MatSlideToggleModule,
+        MatButtonModule
     ],
     templateUrl: './client.component.html',
 })
 export class ClientComponent implements OnInit, OnDestroy {
     private service = inject(ClientService);
     private dialog = inject(MatDialog);
+    private excelExportService = inject(ExcelExportService);
 
     public columns = clientTableConfig;
     public data$ = new BehaviorSubject<ClientModel[]>([]);
@@ -137,5 +141,59 @@ export class ClientComponent implements OnInit, OnDestroy {
         const end = start + event.pageSize;
         const paginated = data.slice(start, end);
         this.data$.next(paginated);
+    }
+
+    exportToExcel(): void {
+        try {
+            const data = this.responsePagination?.data ?? [];
+            if (data.length === 0) {
+                this.alert = {
+                    type: 'error',
+                    message: 'No hay datos para exportar.',
+                };
+                this.showAlert = true;
+                return;
+            }
+
+            const columnMapping = {
+                firstName: 'Nombre',
+                lastName: 'Apellido',
+                email: 'Email',
+                phoneNumber: 'Teléfono',
+                documentType: 'Tipo Documento',
+                documentNumber: 'Número Documento',
+                birthDate: 'Fecha Nacimiento',
+                nit: 'NIT',
+                businessName: 'Empresa',
+                city: 'Ciudad',
+                address: 'Dirección',
+                employmentStatus: 'Estado Empleo',
+                fundOrigin: 'Origen Fondos',
+                incomeRange: 'Rango Ingresos',
+                isActive: 'Activo',
+                createdAt: 'Fecha Creación',
+                updatedAt: 'Última Actualización'
+            };
+
+            this.excelExportService.exportToExcelWithMapping(
+                data,
+                'clientes',
+                columnMapping,
+                'Clientes'
+            );
+
+            this.alert = {
+                type: 'success',
+                message: 'Archivo Excel exportado exitosamente.',
+            };
+            this.showAlert = true;
+
+        } catch (error) {
+            this.alert = {
+                type: 'error',
+                message: 'Error al exportar el archivo Excel.',
+            };
+            this.showAlert = true;
+        }
     }
 }

@@ -16,6 +16,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatButtonModule } from '@angular/material/button';
+import { ExcelExportService } from 'app/shared/infrastructure/services/excel-export.service';
 
 @Component({
     selector: 'ms-users',
@@ -29,12 +31,14 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         MatIconModule,
         MatInputModule,
         MatTooltipModule,
-        MatSlideToggleModule
+        MatSlideToggleModule,
+        MatButtonModule
     ],
 })
 export class UserComponent implements OnInit, OnDestroy {
     private userService = inject(UserService);
     private matDialog = inject(MatDialog);
+    private excelExportService = inject(ExcelExportService);
     private destroy$ = new Subject<boolean>();
 
     public columns = userTableConfig;
@@ -129,6 +133,51 @@ export class UserComponent implements OnInit, OnDestroy {
                 this.showAlert = true;
             },
         });
+    }
+
+    public exportToExcel(): void {
+        try {
+            const data = this.responsePagination?.data ?? [];
+            if (data.length === 0) {
+                this.alert = {
+                    type: 'error',
+                    message: 'No hay datos para exportar.',
+                };
+                this.showAlert = true;
+                return;
+            }
+
+            const columnMapping = {
+                dni: 'DNI',
+                username: 'Usuario',
+                firstName: 'Nombre',
+                lastName: 'Apellido',
+                role: 'Rol',
+                isActive: 'Activo',
+                createdAt: 'Fecha Creación',
+                updatedAt: 'Última Actualización'
+            };
+
+            this.excelExportService.exportToExcelWithMapping(
+                data,
+                'usuarios',
+                columnMapping,
+                'Usuarios'
+            );
+
+            this.alert = {
+                type: 'success',
+                message: 'Archivo Excel exportado exitosamente.',
+            };
+            this.showAlert = true;
+
+        } catch (error) {
+            this.alert = {
+                type: 'error',
+                message: 'Error al exportar el archivo Excel.',
+            };
+            this.showAlert = true;
+        }
     }
 
 }

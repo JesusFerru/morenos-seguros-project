@@ -9,11 +9,14 @@ import { PaginationResponseModel } from 'app/shared/domain/models/PaginationResp
 import { ChangePaginationModel } from 'app/shared/domain/models/ChangePaginationModel';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatButtonModule } from '@angular/material/button';
 import { PolicyService } from '../infrastructure/services/policy.service';
 import { PolicyModel } from '../infrastructure/models/PolicyModel';
 import { CreatePolicyComponent } from './create-policy/create-policy.component';
 import { policyTableConfig } from './policy.config';
 import { UpdatePolicyComponent } from './update-policy/update-policy.component';
+import { ExcelExportService } from 'app/shared/infrastructure/services/excel-export.service';
+import { ExcelExportUtility } from 'app/shared/infrastructure/utils/excel-export.utility';
 
 interface Alert {
     type: 'success' | 'error';
@@ -29,13 +32,15 @@ interface Alert {
         ViewHeaderComponent,
         FuseAlertComponent,
         MatIconModule,
-        MatSlideToggleModule
+        MatSlideToggleModule,
+        MatButtonModule
     ],
     templateUrl: './policy.component.html',
 })
 export class PolicyComponent implements OnInit, OnDestroy {
     private service = inject(PolicyService);
     private dialog = inject(MatDialog);
+    private excelExportService = inject(ExcelExportService);
 
     public columns = policyTableConfig;
     public data$ = new BehaviorSubject<PolicyModel[]>([]);
@@ -142,5 +147,24 @@ export class PolicyComponent implements OnInit, OnDestroy {
     onPaginationChange(event: ChangePaginationModel): void {
         // Implement pagination if needed
         this.loadData();
+    }
+
+    exportToExcel(): void {
+        const data = this.responsePagination?.data ?? [];
+        
+        ExcelExportUtility.exportToExcel(
+            data,
+            'polizas',
+            ExcelExportUtility.COLUMN_MAPPINGS.policies,
+            this.excelExportService,
+            (message: string) => {
+                this.alert = { type: 'success', message };
+                this.showAlert = true;
+            },
+            (message: string) => {
+                this.alert = { type: 'error', message };
+                this.showAlert = true;
+            }
+        );
     }
 }

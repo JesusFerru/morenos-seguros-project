@@ -14,6 +14,9 @@ import { CreateInsuranceCompanyComponent } from './create-insurance-company/crea
 import { UpdateInsuranceCompanyComponent } from './update-insurance-company/update-insurance-company/update-insurance-company.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatButtonModule } from '@angular/material/button';
+import { ExcelExportService } from 'app/shared/infrastructure/services/excel-export.service';
+import { ExcelExportUtility } from 'app/shared/infrastructure/utils/excel-export.utility';
 
 interface Alert {
     type: 'success' | 'error';
