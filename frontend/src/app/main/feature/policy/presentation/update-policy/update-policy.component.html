@@ -1,5 +1,5 @@
-<div class="p-6">
-    <h2 class="text-xl font-semibold mb-4">Actualizar Póliza</h2>
+<div class="p-4 sm:p-6 lg:p-8">
+    <h2 class="text-lg sm:text-xl font-semibold mb-4 sm:mb-6">Actualizar Póliza</h2>
 
     <ms-alert
         *ngIf="alert"
@@ -7,10 +7,10 @@
         [message]="alert.message">
     </ms-alert>
 
-    <form [formGroup]="form" (ngSubmit)="save()" class="space-y-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <form [formGroup]="form" (ngSubmit)="save()" class="space-y-4 sm:space-y-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
             <!-- Policy Number -->
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="outline" class="w-full">
                 <mat-label>Número de Póliza</mat-label>
                 <input matInput formControlName="policyNumber" placeholder="Ingrese el número de póliza">
                 <mat-error *ngIf="form.get('policyNumber')?.hasError('required')">
@@ -19,17 +19,17 @@
             </mat-form-field>
 
             <!-- Previous Policy Number -->
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="outline" class="w-full">
                 <mat-label>Póliza Anterior</mat-label>
                 <input matInput formControlName="previousPolicyNumber" placeholder="Ingrese la póliza anterior (opcional)">
             </mat-form-field>
 
             <!-- Titular Client -->
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="outline" class="w-full">
                 <mat-label>Cliente Titular</mat-label>
                 <mat-select formControlName="titularClientId">
                     <mat-option *ngFor="let client of clients" [value]="client.id">
-                        {{ client.firstName }} {{ client.lastName }} - {{ client.nit }}
+                        <span class="block truncate">{{ client.firstName }} {{ client.lastName }} - {{ client.nit }}</span>
                     </mat-option>
                 </mat-select>
                 <mat-error *ngIf="form.get('titularClientId')?.hasError('required')">
@@ -38,11 +38,11 @@
             </mat-form-field>
 
             <!-- Agent -->
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="outline" class="w-full">
                 <mat-label>Agente</mat-label>
                 <mat-select formControlName="agentId">
                     <mat-option *ngFor="let agent of agents" [value]="agent.id">
-                        {{ agent.firstName }} {{ agent.lastName }}
+                        <span class="block truncate">{{ agent.firstName }} {{ agent.lastName }}</span>
                     </mat-option>
                 </mat-select>
                 <mat-error *ngIf="form.get('agentId')?.hasError('required')">
@@ -51,7 +51,7 @@
             </mat-form-field>
 
             <!-- Start Date -->
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="outline" class="w-full">
                 <mat-label>Fecha de Inicio</mat-label>
                 <input matInput [matDatepicker]="startPicker" formControlName="startDate">
                 <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
@@ -62,7 +62,7 @@
             </mat-form-field>
 
             <!-- End Date -->
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="outline" class="w-full">
                 <mat-label>Fecha de Fin</mat-label>
                 <input matInput [matDatepicker]="endPicker" formControlName="endDate">
                 <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
@@ -73,11 +73,17 @@
             </mat-form-field>
 
             <!-- Deductible Option -->
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="outline" class="w-full lg:col-span-2">
                 <mat-label>Opción de Deducible</mat-label>
                 <mat-select formControlName="deductibleOptionId">
                     <mat-option *ngFor="let option of deductibleOptions" [value]="option.id">
-                        {{ option.insurancePlanName }} - 1: {{ option.deductible1 }} | 2: {{ option.deductible2 }} ({{ option.currency }})
+                        <span class="block">
+                            <span class="font-medium">{{ option.insurancePlanName }}</span>
+                            <br class="sm:hidden">
+                            <span class="text-sm text-gray-600">
+                                1: {{ option.deductible1 }} | 2: {{ option.deductible2 }} ({{ option.currency }})
+                            </span>
+                        </span>
                     </mat-option>
                 </mat-select>
                 <mat-error *ngIf="form.get('deductibleOptionId')?.hasError('required')">
@@ -86,7 +92,7 @@
             </mat-form-field>
 
             <!-- Status -->
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="outline" class="w-full lg:col-span-2">
                 <mat-label>Estado</mat-label>
                 <mat-select formControlName="status">
                     <mat-option *ngFor="let status of statusOptions" [value]="status.value">
@@ -100,11 +106,21 @@
         </div>
 
         <!-- Action Buttons -->
-        <div class="flex justify-end space-x-2 pt-4">
-            <button mat-button type="button" (click)="close()" [disabled]="isSaving">
+        <div class="flex flex-col sm:flex-row justify-end gap-3 sm:gap-2 pt-6 sm:pt-4 border-t mt-6">
+            <button 
+                mat-button 
+                type="button" 
+                (click)="close()" 
+                [disabled]="isSaving"
+                class="w-full sm:w-auto order-2 sm:order-1">
                 Cancelar
             </button>
-            <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || isSaving">
+            <button 
+                mat-raised-button 
+                color="primary" 
+                type="submit" 
+                [disabled]="form.invalid || isSaving"
+                class="w-full sm:w-auto order-1 sm:order-2">
                 <span *ngIf="isSaving">Actualizando...</span>
                 <span *ngIf="!isSaving">Actualizar</span>
             </button>

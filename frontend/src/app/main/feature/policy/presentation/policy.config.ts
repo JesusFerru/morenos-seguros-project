@@ -7,52 +7,52 @@ export interface TableColumn {
 export const policyTableConfig: TableColumn[] = [
   {
     columnDef: 'policyNumber',
-    header: 'Número de Póliza',
+    header: 'NRO. DE PÓLIZA',
     type: 'text'
   },
   {
     columnDef: 'previousPolicyNumber',
-    header: 'Póliza Anterior',
+    header: 'PÓLIZA ANTERIOR',
     type: 'text'
   },
   {
     columnDef: 'titularClientName',
-    header: 'Cliente Titular',
+    header: 'CLIENTE TITULAR',
     type: 'text'
   },
   {
     columnDef: 'agentName',
-    header: 'Agente',
+    header: 'AGENTE',
     type: 'text'
   },
   {
     columnDef: 'startDate',
-    header: 'Fecha Inicio',
+    header: 'FECHA INICIO',
     type: 'date'
   },
   {
     columnDef: 'endDate',
-    header: 'Fecha Fin',
+    header: 'FECHA FIN',
     type: 'date'
   },
   {
     columnDef: 'deductible1',
-    header: 'Monto Deducible',
+    header: 'MONTO DEDUCIBLE 1',
     type: 'amount'
   },
   {
     columnDef: 'status',
-    header: 'Estado',
+    header: 'ESTADO',
     type: 'text'
   },
   {
     columnDef: 'isActive',
-    header: 'Activo',
+    header: 'ACTIVO',
     type: 'toggle'
   },
   {
     columnDef: 'edit',
-    header: 'Editar',
+    header: 'EDITAR',
     type: 'edit'
   }
 ];
