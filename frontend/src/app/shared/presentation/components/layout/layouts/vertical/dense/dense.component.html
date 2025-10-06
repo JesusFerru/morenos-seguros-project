@@ -37,7 +37,17 @@
         <div class="flex items-center pr-2 space-x-2">
             <!-- Navigation toggle button -->
             <button mat-icon-button (click)="openFunction('mainNavigation')">
-                <mat-icon [svgIcon]="'heroicons_outline:bars-3'"></mat-icon>
+                <mat-icon [svgIcon]="'heroicons_outline:bars-3'" class="text-blue-900"></mat-icon>
+            </button>
+            
+            <!-- Home button -->
+            <button 
+                mat-icon-button 
+                (click)="navigateToHome()"
+                class="ml-2"
+                matTooltip="Ir al inicio"
+                matTooltipPosition="below">
+                <mat-icon [svgIcon]="'heroicons_solid:home'" class="text-blue-900"></mat-icon>
             </button>
         </div>
 

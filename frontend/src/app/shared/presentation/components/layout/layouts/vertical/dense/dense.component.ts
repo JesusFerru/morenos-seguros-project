@@ -2,6 +2,7 @@ import { NgIf } from '@angular/common';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router, RouterOutlet } from '@angular/router';
 import { FuseLoadingBarComponent } from '@fuse/components/loading-bar';
 import {
@@ -27,6 +28,7 @@ import { Subject, takeUntil } from 'rxjs';
         FuseVerticalNavigationComponent,
         MatButtonModule,
         MatIconModule,
+        MatTooltipModule,
         NgIf,
         RouterOutlet
     ],
@@ -180,6 +182,12 @@ export class DenseLayoutComponent implements OnInit, OnDestroy {
             this.navigationAppearance === 'default' ? 'dense' : 'default';
     }
 
+    /**
+     * Navigate to home page
+     */
+    navigateToHome(): void {
+        this._router.navigate(['/home']);
+    }
 
     signOut(): void {
         this._router.navigate(['/sign-out']);

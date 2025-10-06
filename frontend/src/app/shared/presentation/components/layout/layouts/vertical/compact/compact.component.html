@@ -32,6 +32,16 @@
             (click)="toggleNavigation('mainNavigation')">
             <mat-icon [svgIcon]="'heroicons_outline:bars-3'"></mat-icon>
         </button>
+        
+        <!-- Home button -->
+        <button 
+            mat-icon-button 
+            (click)="navigateToHome()"
+            class="ml-2"
+            matTooltip="Ir al inicio"
+            matTooltipPosition="below">
+            <mat-icon [svgIcon]="'heroicons_outline:home'" class="text-blue-900"></mat-icon>
+        </button>
 
     </div>
 

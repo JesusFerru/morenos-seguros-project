@@ -2,6 +2,7 @@ import { NgIf } from '@angular/common';
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { FuseLoadingBarComponent } from '@fuse/components/loading-bar';
 import { FuseNavigationService, FuseVerticalNavigationComponent } from '@fuse/components/navigation';
@@ -17,7 +18,7 @@ import { SearchComponent } from '../../../common/search/search.component';
     templateUrl  : './compact.component.html',
     encapsulation: ViewEncapsulation.None,
     standalone   : true,
-    imports      : [FuseLoadingBarComponent, MatButtonModule, MatIconModule, LanguagesComponent,
+    imports      : [FuseLoadingBarComponent, MatButtonModule, MatIconModule, MatTooltipModule, LanguagesComponent,
         SearchComponent, NgIf, RouterOutlet, FuseVerticalNavigationComponent],
 })
 export class CompactLayoutComponent implements OnInit, OnDestroy
@@ -101,5 +102,12 @@ this.navigation = this._navigationService.get();
             // Toggle the opened status
             navigation.toggle();
         }
+    }
+
+    /**
+     * Navigate to home page
+     */
+    navigateToHome(): void {
+        this._router.navigate(['/home']);
     }
 }
