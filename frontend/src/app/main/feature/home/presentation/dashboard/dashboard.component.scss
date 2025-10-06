@@ -1,0 +1,118 @@
+/* Dashboard Component Styles */
+
+/* Responsive adjustments for very small screens */
+@media (max-width: 475px) {
+    .stats-overview {
+        .grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+        }
+    }
+    
+    .quick-actions {
+        .grid {
+            grid-template-columns: 1fr;
+            gap: 0.75rem;
+        }
+    }
+}
+
+/* Text overflow handling */
+.action-title,
+.action-subtitle {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-height: 1.2;
+}
+
+.action-subtitle {
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+}
+
+/* Card hover effects */
+.stats-card,
+.action-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    &:hover {
+        transform: translateY(-2px) scale(1.02);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+}
+
+/* Loading state */
+.loading-container {
+    min-height: 200px;
+}
+
+/* Better spacing for mobile */
+@media (max-width: 600px) {
+    .mobile-spacing {
+        padding: 0.75rem;
+    }
+    
+    .mobile-text-sm {
+        font-size: 0.75rem;
+    }
+    
+    .mobile-text-xs {
+        font-size: 0.625rem;
+    }
+}
+
+/* Ensure proper aspect ratios for cards */
+.stats-card {
+    min-height: 80px;
+}
+
+.action-card {
+    .action-header {
+        aspect-ratio: 2 / 1;
+        min-height: 60px;
+    }
+}
+
+/* Smooth transitions for all interactive elements */
+.dashboard-container {
+    * {
+        transition-property: color, background-color, border-color, transform, box-shadow;
+        transition-duration: 0.3s;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+}
+
+/* Focus states for accessibility */
+.stats-card:focus,
+.action-card:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .stats-card,
+    .action-card {
+        border: 2px solid currentColor;
+    }
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    .stats-card,
+    .action-card {
+        transition: none;
+        
+        &:hover {
+            transform: none;
+        }
+    }
+    
+    .loading-spinner {
+        animation: none;
+    }
+}

@@ -72,6 +72,7 @@ const config = {
             '10xl': '8rem'
         },
         screens: {
+            xs: '475px',
             max600: { max: '599px' },
             sm: '600px',
             md: '960px',

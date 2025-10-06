@@ -1,23 +1,23 @@
-<div class="flex flex-col min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
+<div class="dashboard-container absolute inset-0 flex flex-col bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 overflow-auto">
     <!-- Header Section -->
-    <div class="relative overflow-hidden bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white">
+    <div class="relative overflow-hidden bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white flex-shrink-0">
         <div class="absolute inset-0 bg-black opacity-10"></div>
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
-            <div class="flex flex-col lg:flex-row items-center justify-between">
+        <div class="relative w-full px-3 sm:px-4 lg:px-6 xl:px-8 py-4 sm:py-6 lg:py-8">
+            <div class="flex flex-col xl:flex-row items-center justify-between w-full gap-4">
                 <!-- Welcome Section -->
-                <div class="text-center lg:text-left mb-8 lg:mb-0">
-                    <div class="flex flex-col lg:flex-row items-center lg:items-start space-y-4 lg:space-y-0 lg:space-x-6">
+                <div class="text-center xl:text-left flex-1 w-full xl:w-auto">
+                    <div class="flex flex-col sm:flex-row items-center justify-center xl:justify-start xl:items-start space-y-3 sm:space-y-0 sm:space-x-4">
                         <img src="assets/images/logo/logo-moreno-seguros.png" 
                              alt="Logo Moreno Seguros"
-                             class="w-16 h-16 lg:w-20 lg:h-20 object-contain bg-white rounded-full p-2 shadow-lg">
-                        <div>
-                            <h1 class="text-2xl lg:text-4xl font-bold mb-2">
+                             class="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 object-contain bg-white rounded-full p-1.5 sm:p-2 shadow-lg">
+                        <div class="text-center sm:text-left">
+                            <h1 class="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold mb-1">
                                 {{ getGreeting() }}, {{ user?.fullName }}
                             </h1>
-                            <p class="text-lg lg:text-xl text-blue-100 mb-1">
+                            <p class="text-sm sm:text-base lg:text-lg text-blue-100 mb-1">
                                 Rol: {{ transform(user?.roleUser) }}
                             </p>
-                            <p class="text-sm lg:text-base text-blue-200">
+                            <p class="text-xs sm:text-sm text-blue-200">
                                 Panel de Control - Sistema de Gestión de Seguros
                             </p>
                         </div>
@@ -25,22 +25,22 @@
                 </div>
 
                 <!-- Quick Stats Preview -->
-                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 text-center" *ngIf="!isLoading && dashboardStats">
-                    <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg p-3">
-                        <div class="text-2xl font-bold">{{ dashboardStats.totalClients }}</div>
-                        <div class="text-sm text-blue-100">Clientes</div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 text-center w-full xl:w-auto" *ngIf="!isLoading && dashboardStats">
+                    <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg p-2 sm:p-3 min-w-[70px] sm:min-w-[80px]">
+                        <div class="text-lg sm:text-xl font-bold">{{ dashboardStats.totalClients }}</div>
+                        <div class="text-xs text-blue-100">Clientes</div>
                     </div>
-                    <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg p-3">
-                        <div class="text-2xl font-bold">{{ dashboardStats.activePolicies }}</div>
-                        <div class="text-sm text-blue-100">Pólizas Activas</div>
+                    <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg p-2 sm:p-3 min-w-[70px] sm:min-w-[80px]">
+                        <div class="text-lg sm:text-xl font-bold">{{ dashboardStats.activePolicies }}</div>
+                        <div class="text-xs text-blue-100">Pólizas Activas</div>
                     </div>
-                    <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg p-3">
-                        <div class="text-2xl font-bold">{{ dashboardStats.totalCompanies }}</div>
-                        <div class="text-sm text-blue-100">Compañías</div>
+                    <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg p-2 sm:p-3 min-w-[70px] sm:min-w-[80px]">
+                        <div class="text-lg sm:text-xl font-bold">{{ dashboardStats.totalCompanies }}</div>
+                        <div class="text-xs text-blue-100">Compañías</div>
                     </div>
-                    <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg p-3">
-                        <div class="text-2xl font-bold">{{ dashboardStats.recentPayments }}</div>
-                        <div class="text-sm text-blue-100">Pagos (30d)</div>
+                    <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg p-2 sm:p-3 min-w-[70px] sm:min-w-[80px]">
+                        <div class="text-lg sm:text-xl font-bold">{{ dashboardStats.recentPayments }}</div>
+                        <div class="text-xs text-blue-100">Pagos (30d)</div>
                     </div>
                 </div>
             </div>
@@ -48,48 +48,54 @@
     </div>
 
     <!-- Main Dashboard Content -->
-    <div class="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+    <div class="flex-1 w-full px-3 sm:px-4 lg:px-6 xl:px-8 py-4 sm:py-6 overflow-auto">
         
         <!-- Loading State -->
-        <div *ngIf="isLoading" class="flex items-center justify-center py-20">
-            <mat-spinner diameter="50"></mat-spinner>
+        <div *ngIf="isLoading" class="loading-container flex items-center justify-center py-16 sm:py-20">
+            <mat-spinner class="loading-spinner" [diameter]="30"></mat-spinner>
         </div>
 
         <!-- Dashboard Content -->
-        <div *ngIf="!isLoading" class="space-y-8">
+        <div *ngIf="!isLoading" class="space-y-4 sm:space-y-6 w-full max-w-full">
             
             <!-- Statistics Cards -->
-            <section class="mb-12">
-                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Resumen General</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
+            <section class="stats-overview w-full">
+                <h2 class="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">Resumen General</h2>
+                <div class="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4 w-full">
                     
                     <!-- Total Clients Card -->
-                    <mat-card class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900 dark:to-blue-800 border-l-4 border-blue-500 hover:shadow-lg transition-all duration-300 cursor-pointer transform hover:scale-105"
-                              (click)="navigateTo('/clientes')">
-                        <mat-card-content class="p-6">
+                    <mat-card class="stats-card bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900 dark:to-blue-800 border-l-4 border-blue-500 cursor-pointer"
+                              (click)="navigateTo('/clientes')"
+                              tabindex="0"
+                              role="button"
+                              [attr.aria-label]="'Navegar a gestión de clientes. Total: ' + dashboardStats.totalClients">
+                        <mat-card-content class="mobile-spacing p-3 sm:p-4">
                             <div class="flex items-center justify-between">
-                                <div>
-                                    <p class="text-sm font-medium text-blue-600 dark:text-blue-300">Total Clientes</p>
-                                    <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ dashboardStats.totalClients }}</p>
+                                <div class="min-w-0 flex-1">
+                                    <p class="text-xs font-medium text-blue-600 dark:text-blue-300 truncate">Total Clientes</p>
+                                    <p class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">{{ dashboardStats.totalClients }}</p>
                                 </div>
-                                <div class="p-3 bg-blue-500 bg-opacity-20 rounded-full">
-                                    <mat-icon class="text-blue-600 dark:text-blue-300" svgIcon="heroicons_outline:users"></mat-icon>
+                                <div class="p-1.5 sm:p-2 bg-blue-500 bg-opacity-20 rounded-full flex-shrink-0 ml-2">
+                                    <mat-icon class="text-blue-600 dark:text-blue-300 !text-base sm:!text-lg" svgIcon="heroicons_outline:users"></mat-icon>
                                 </div>
                             </div>
                         </mat-card-content>
                     </mat-card>
 
                     <!-- Total Policies Card -->
-                    <mat-card class="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900 dark:to-green-800 border-l-4 border-green-500 hover:shadow-lg transition-all duration-300 cursor-pointer transform hover:scale-105"
-                              (click)="navigateTo('/polizas')">
-                        <mat-card-content class="p-6">
+                    <mat-card class="stats-card bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900 dark:to-green-800 border-l-4 border-green-500 cursor-pointer"
+                              (click)="navigateTo('/polizas')"
+                              tabindex="0"
+                              role="button"
+                              [attr.aria-label]="'Navegar a gestión de pólizas. Total: ' + dashboardStats.totalPolicies">
+                        <mat-card-content class="mobile-spacing p-3 sm:p-4">
                             <div class="flex items-center justify-between">
-                                <div>
-                                    <p class="text-sm font-medium text-green-600 dark:text-green-300">Total Pólizas</p>
-                                    <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ dashboardStats.totalPolicies }}</p>
+                                <div class="min-w-0 flex-1">
+                                    <p class="text-xs font-medium text-green-600 dark:text-green-300 truncate">Total Pólizas</p>
+                                    <p class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">{{ dashboardStats.totalPolicies }}</p>
                                 </div>
-                                <div class="p-3 bg-green-500 bg-opacity-20 rounded-full">
-                                    <mat-icon class="text-green-600 dark:text-green-300" svgIcon="heroicons_outline:document-text"></mat-icon>
+                                <div class="p-1.5 sm:p-2 bg-green-500 bg-opacity-20 rounded-full flex-shrink-0 ml-2">
+                                    <mat-icon class="text-green-600 dark:text-green-300 !text-base sm:!text-lg" svgIcon="heroicons_outline:document-text"></mat-icon>
                                 </div>
                             </div>
                         </mat-card-content>
@@ -98,14 +104,14 @@
                     <!-- Active Policies Card -->
                     <mat-card class="bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-900 dark:to-emerald-800 border-l-4 border-emerald-500 hover:shadow-lg transition-all duration-300 cursor-pointer transform hover:scale-105"
                               (click)="navigateTo('/polizas')">
-                        <mat-card-content class="p-6">
+                        <mat-card-content class="p-3 sm:p-4">
                             <div class="flex items-center justify-between">
-                                <div>
-                                    <p class="text-sm font-medium text-emerald-600 dark:text-emerald-300">Pólizas Activas</p>
-                                    <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ dashboardStats.activePolicies }}</p>
+                                <div class="min-w-0 flex-1">
+                                    <p class="text-xs font-medium text-emerald-600 dark:text-emerald-300 truncate">Pólizas Activas</p>
+                                    <p class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">{{ dashboardStats.activePolicies }}</p>
                                 </div>
-                                <div class="p-3 bg-emerald-500 bg-opacity-20 rounded-full">
-                                    <mat-icon class="text-emerald-600 dark:text-emerald-300" svgIcon="heroicons_outline:check-circle"></mat-icon>
+                                <div class="p-1.5 sm:p-2 bg-emerald-500 bg-opacity-20 rounded-full flex-shrink-0 ml-2">
+                                    <mat-icon class="text-emerald-600 dark:text-emerald-300 !text-base sm:!text-lg" svgIcon="heroicons_outline:check-circle"></mat-icon>
                                 </div>
                             </div>
                         </mat-card-content>
@@ -114,14 +120,14 @@
                     <!-- Insurance Companies Card -->
                     <mat-card class="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900 dark:to-purple-800 border-l-4 border-purple-500 hover:shadow-lg transition-all duration-300 cursor-pointer transform hover:scale-105"
                               (click)="navigateTo('/compañias')">
-                        <mat-card-content class="p-6">
+                        <mat-card-content class="p-3 sm:p-4">
                             <div class="flex items-center justify-between">
-                                <div>
-                                    <p class="text-sm font-medium text-purple-600 dark:text-purple-300">Compañías</p>
-                                    <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ dashboardStats.totalCompanies }}</p>
+                                <div class="min-w-0 flex-1">
+                                    <p class="text-xs font-medium text-purple-600 dark:text-purple-300 truncate">Compañías</p>
+                                    <p class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">{{ dashboardStats.totalCompanies }}</p>
                                 </div>
-                                <div class="p-3 bg-purple-500 bg-opacity-20 rounded-full">
-                                    <mat-icon class="text-purple-600 dark:text-purple-300" svgIcon="heroicons_outline:building-office"></mat-icon>
+                                <div class="p-1.5 sm:p-2 bg-purple-500 bg-opacity-20 rounded-full flex-shrink-0 ml-2">
+                                    <mat-icon class="text-purple-600 dark:text-purple-300 !text-base sm:!text-lg" svgIcon="heroicons_outline:building-office"></mat-icon>
                                 </div>
                             </div>
                         </mat-card-content>
@@ -130,14 +136,14 @@
                     <!-- Total Payments Card -->
                     <mat-card class="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900 dark:to-orange-800 border-l-4 border-orange-500 hover:shadow-lg transition-all duration-300 cursor-pointer transform hover:scale-105"
                               (click)="navigateTo('/pagos')">
-                        <mat-card-content class="p-6">
+                        <mat-card-content class="p-3 sm:p-4">
                             <div class="flex items-center justify-between">
-                                <div>
-                                    <p class="text-sm font-medium text-orange-600 dark:text-orange-300">Total Pagos</p>
-                                    <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ dashboardStats.totalPayments }}</p>
+                                <div class="min-w-0 flex-1">
+                                    <p class="text-xs font-medium text-orange-600 dark:text-orange-300 truncate">Total Pagos</p>
+                                    <p class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">{{ dashboardStats.totalPayments }}</p>
                                 </div>
-                                <div class="p-3 bg-orange-500 bg-opacity-20 rounded-full">
-                                    <mat-icon class="text-orange-600 dark:text-orange-300" svgIcon="heroicons_outline:credit-card"></mat-icon>
+                                <div class="p-1.5 sm:p-2 bg-orange-500 bg-opacity-20 rounded-full flex-shrink-0 ml-2">
+                                    <mat-icon class="text-orange-600 dark:text-orange-300 !text-base sm:!text-lg" svgIcon="heroicons_outline:credit-card"></mat-icon>
                                 </div>
                             </div>
                         </mat-card-content>
@@ -146,14 +152,14 @@
                     <!-- Recent Payments Card -->
                     <mat-card class="bg-gradient-to-br from-teal-50 to-teal-100 dark:from-teal-900 dark:to-teal-800 border-l-4 border-teal-500 hover:shadow-lg transition-all duration-300 cursor-pointer transform hover:scale-105"
                               (click)="navigateTo('/pagos')">
-                        <mat-card-content class="p-6">
+                        <mat-card-content class="p-3 sm:p-4">
                             <div class="flex items-center justify-between">
-                                <div>
-                                    <p class="text-sm font-medium text-teal-600 dark:text-teal-300">Pagos (30d)</p>
-                                    <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ dashboardStats.recentPayments }}</p>
+                                <div class="min-w-0 flex-1">
+                                    <p class="text-xs font-medium text-teal-600 dark:text-teal-300 truncate">Pagos (30d)</p>
+                                    <p class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">{{ dashboardStats.recentPayments }}</p>
                                 </div>
-                                <div class="p-3 bg-teal-500 bg-opacity-20 rounded-full">
-                                    <mat-icon class="text-teal-600 dark:text-teal-300" svgIcon="heroicons_outline:chart-bar"></mat-icon>
+                                <div class="p-1.5 sm:p-2 bg-teal-500 bg-opacity-20 rounded-full flex-shrink-0 ml-2">
+                                    <mat-icon class="text-teal-600 dark:text-teal-300 !text-base sm:!text-lg" svgIcon="heroicons_outline:chart-bar"></mat-icon>
                                 </div>
                             </div>
                         </mat-card-content>
@@ -162,37 +168,40 @@
             </section>
 
             <!-- Quick Actions Grid -->
-            <section>
-                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Accesos Rápidos</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <section class="quick-actions w-full">
+                <h2 class="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">Accesos Rápidos</h2>
+                <div class="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 w-full">
                     <mat-card *ngFor="let action of quickActions; let i = index" 
-                              class="group hover:shadow-xl transform hover:scale-105 transition-all duration-300 cursor-pointer border-0 overflow-hidden"
-                              (click)="navigateTo(action.route)">
-                        <div class="relative h-32 bg-gradient-to-r" [ngClass]="'from-' + action.color.split('-')[1] + '-400 to-' + action.color.split('-')[1] + '-600'">
+                              class="action-card group cursor-pointer border-0 overflow-hidden w-full"
+                              (click)="navigateTo(action.route)"
+                              tabindex="0"
+                              role="button"
+                              [attr.aria-label]="'Navegar a ' + action.title">
+                        <div class="action-header relative h-16 sm:h-20 bg-gradient-to-r" [ngClass]="'from-' + action.color.split('-')[1] + '-400 to-' + action.color.split('-')[1] + '-600'">
                             <div class="absolute inset-0 bg-black bg-opacity-10"></div>
                             <div class="relative h-full flex items-center justify-center">
                                 <mat-icon [svgIcon]="action.icon" 
-                                         class="text-white text-5xl drop-shadow-lg group-hover:scale-110 transition-transform duration-300">
+                                         class="text-white !text-2xl sm:!text-3xl drop-shadow-lg group-hover:scale-110 transition-transform duration-300">
                                 </mat-icon>
                             </div>
                         </div>
-                        <mat-card-content class="p-6">
-                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 transition-colors duration-300">
+                        <mat-card-content class="mobile-spacing p-2 sm:p-3">
+                            <h3 class="action-title text-xs sm:text-sm font-semibold text-gray-900 dark:text-white mb-1 group-hover:text-blue-600 transition-colors duration-300">
                                 {{ action.title }}
                             </h3>
-                            <p class="text-sm text-gray-600 dark:text-gray-300">{{ action.subtitle }}</p>
+                            <p class="action-subtitle mobile-text-xs text-xs text-gray-600 dark:text-gray-300">{{ action.subtitle }}</p>
                         </mat-card-content>
                     </mat-card>
                 </div>
             </section>
 
             <!-- Footer Info -->
-            <section class="mt-12 text-center">
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-8">
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+            <section class="w-full">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4 sm:p-6 text-center">
+                    <h3 class="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">
                         Sistema de Gestión de Seguros - Moreno Seguros
                     </h3>
-                    <p class="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                    <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
                         Plataforma integral para la gestión de pólizas, clientes, pagos y compañías aseguradoras. 
                         Accede rápidamente a todas las funcionalidades desde este panel principal.
                     </p>

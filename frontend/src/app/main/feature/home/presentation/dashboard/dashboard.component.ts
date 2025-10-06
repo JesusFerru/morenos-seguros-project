@@ -45,6 +45,7 @@ interface QuickAction {
         MatProgressSpinnerModule
     ],
     templateUrl: './dashboard.component.html',
+    styleUrl: './dashboard.component.scss',
 })
 export class DashboardComponent implements OnInit, OnDestroy {
     private _userService = inject(UserService);
