@@ -45,13 +45,13 @@
                         id="username"
                         matInput
                         [formControlName]="'username'"
-                        placeholder="10348529-1A"
+                        placeholder="Ingrese su nombre de usuario"
                         class="text-lg"
                     />
                     <mat-error
                         *ngIf="signInForm.get('username').hasError('required')"
                     >
-                        El CI es requerido
+                        El nombre de usuario es requerido
                     </mat-error>
                 </mat-form-field>
 
@@ -65,7 +65,7 @@
                         matInput
                         type="password"
                         [formControlName]="'password'"
-                        placeholder="59169201462"
+                        placeholder="Ingrese su contraseña"
                         class="text-lg"
                         #passwordField
                     />
@@ -90,7 +90,7 @@
                             [svgIcon]="'heroicons_solid:eye-slash'"
                         ></mat-icon>
                     </button>
-                    <mat-error> El celular es requerido </mat-error>
+                    <mat-error> La contraseña es requerida</mat-error>
                 </mat-form-field>
 
                 <!-- Submit button -->
