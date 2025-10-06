@@ -77,7 +77,7 @@
                 <mat-label>Opción de Deducible</mat-label>
                 <mat-select formControlName="deductibleOptionId">
                     <mat-option *ngFor="let option of deductibleOptions" [value]="option.id">
-                        {{ option.insurancePlanName }} - Individual: {{ option.deductible1 }} | Familiar: {{ option.deductible2 }} ({{ option.currency }})
+                        {{ option.insurancePlanName }} - 1: {{ option.deductible1 }} | 2: {{ option.deductible2 }} ({{ option.currency }})
                     </mat-option>
                 </mat-select>
                 <mat-error *ngIf="form.get('deductibleOptionId')?.hasError('required')">
