@@ -116,7 +116,7 @@ export class NavigationService {
         menu.push({
             id: '999',
             title: 'Usuarios',
-            role: 'All',
+            role: 'Admin',
             meta: [''],
             type: 'basic',
             icon: 'heroicons_outline:user',

@@ -1,5 +1,6 @@
 import { Route } from '@angular/router';
 import { AuthGuard } from './shared/infrastructure/helpers/guards/auth.guard';
+import { AdminGuard } from './shared/infrastructure/helpers/guards/admin.guard';
 import { NoAuthGuard } from './shared/infrastructure/helpers/guards/noAuth.guard';
 import { LayoutComponent } from './shared/presentation/components/layout/layout.component';
 
@@ -57,6 +58,8 @@ export const appRoutes: Route[] = [
             layout: 'dense',
         },
         children: [
+            // Redirect authenticated users to home
+            { path: '', redirectTo: 'home', pathMatch: 'full' },
             {
                 path: 'home',
                 loadChildren: () =>
@@ -66,6 +69,8 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'usuarios',
+                canActivate: [AdminGuard],
+                canActivateChild: [AdminGuard],
                 loadChildren: () =>
                     import(
                         'app/main/feature/user/user.routes'

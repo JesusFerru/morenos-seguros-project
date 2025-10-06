@@ -8,6 +8,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
 import { User } from 'app/shared/infrastructure/helpers/user.types';
 import { getRoleOptions } from 'app/shared/infrastructure/helpers/user.utils';
+import { UserRoleEnum } from 'app/shared/domain/enums/user.enum';
 import { UserService } from 'app/shared/infrastructure/services/user.service';
 import { ClientService } from 'app/main/feature/client/infrastructure/services/client.service';
 import { PolicyService } from 'app/main/feature/policy/infrastructure/services/policy.service';
@@ -65,12 +66,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
     roles = getRoleOptions();
 
     ngOnInit(): void {
-        this.initializeQuickActions();
-        
         this._userService.user$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((user: User) => {
                 this.user = user;
+                this.initializeQuickActions(); // Initialize actions after getting user data
                 this._changeDetectorRef.markForCheck();
             });
 
@@ -83,7 +83,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
 
     private initializeQuickActions(): void {
-        this.quickActions = [
+        const allActions: QuickAction[] = [
             {
                 title: 'Gestionar Clientes',
                 subtitle: 'Ver y administrar clientes',
@@ -123,16 +123,22 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 route: '/planes',
                 color: 'text-teal-600',
                 gradient: 'from-teal-400 to-teal-600'
-            },
-            {
+            }
+        ];
+
+        // Only add users management for Admin users
+        if (this.user?.roleUser === UserRoleEnum.Admin) {
+            allActions.push({
                 title: 'Gestionar Usuarios',
                 subtitle: 'Administrar usuarios del sistema',
                 icon: 'heroicons_outline:user-group',
                 route: '/usuarios',
                 color: 'text-red-600',
                 gradient: 'from-red-400 to-red-600'
-            }
-        ];
+            });
+        }
+
+        this.quickActions = allActions;
     }
 
     private loadDashboardData(): void {
