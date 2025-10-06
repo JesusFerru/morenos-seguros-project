@@ -11,9 +11,12 @@ import { PaginationResponseModel } from 'app/shared/domain/models/PaginationResp
 import { ChangePaginationModel } from 'app/shared/domain/models/ChangePaginationModel';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatButtonModule } from '@angular/material/button';
 import { deductibleOptionTableConfig } from './deductible-option.config';
 import { CreateDeductibleOptionComponent } from './create-deductible-option/create-deductible-option.component';
 import { UpdateDeductibleOptionComponent } from './update-deductible-option/update-deductible-option.component';
+import { ExcelExportService } from 'app/shared/infrastructure/services/excel-export.service';
+import { ExcelExportUtility } from 'app/shared/infrastructure/utils/excel-export.utility';
 
 @Component({
     selector: 'ms-deductible-options',
@@ -25,12 +28,14 @@ import { UpdateDeductibleOptionComponent } from './update-deductible-option/upda
         FuseAlertComponent,
         MatIconModule,
         MatSlideToggleModule,
+        MatButtonModule,
     ],
     templateUrl: './deductible-option.component.html',
 })
 export class DeductibleOptionComponent implements OnInit, OnDestroy {
     private service = inject(DeductibleOptionService);
     private dialog = inject(MatDialog);
+    private excelExportService = inject(ExcelExportService);
 
     public columns = deductibleOptionTableConfig;
     public data$ = new BehaviorSubject<DeductibleOptionModel[]>([]);
@@ -122,5 +127,24 @@ export class DeductibleOptionComponent implements OnInit, OnDestroy {
         const end = start + event.pageSize;
         const paginated = data.slice(start, end);
         this.data$.next(paginated);
+    }
+
+    exportToExcel(): void {
+        const data = this.responsePagination?.data ?? [];
+        
+        ExcelExportUtility.exportToExcel(
+            data,
+            'opciones-deducible',
+            ExcelExportUtility.COLUMN_MAPPINGS.deductibleOptions,
+            this.excelExportService,
+            (message: string) => {
+                this.alert = { type: 'success', message };
+                this.showAlert = true;
+            },
+            (message: string) => {
+                this.alert = { type: 'error', message };
+                this.showAlert = true;
+            }
+        );
     }
 }

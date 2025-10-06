@@ -32,13 +32,15 @@ interface Alert {
         ViewHeaderComponent,
         FuseAlertComponent,
         MatIconModule,
-        MatSlideToggleModule
+        MatSlideToggleModule,
+        MatButtonModule
     ],
     templateUrl: './insurance-company.component.html',
 })
 export class InsuranceCompanyComponent implements OnInit, OnDestroy {
     private service = inject(InsuranceCompanyService);
     private dialog = inject(MatDialog);
+    private excelExportService = inject(ExcelExportService);
 
     public columns = insuranceCompanyTableConfig;
     public data$ = new BehaviorSubject<InsuranceCompanyModel[]>([]);
@@ -127,5 +129,24 @@ export class InsuranceCompanyComponent implements OnInit, OnDestroy {
         const end = start + event.pageSize;
         const paginated = data.slice(start, end);
         this.data$.next(paginated);
+    }
+
+    exportToExcel(): void {
+        const data = this.responsePagination?.data ?? [];
+        
+        ExcelExportUtility.exportToExcel(
+            data,
+            'companias-aseguradoras',
+            ExcelExportUtility.COLUMN_MAPPINGS.companies,
+            this.excelExportService,
+            (message: string) => {
+                this.alert = { type: 'success', message };
+                this.showAlert = true;
+            },
+            (message: string) => {
+                this.alert = { type: 'error', message };
+                this.showAlert = true;
+            }
+        );
     }
 }

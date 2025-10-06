@@ -9,11 +9,14 @@ import { PaginationResponseModel } from 'app/shared/domain/models/PaginationResp
 import { ChangePaginationModel } from 'app/shared/domain/models/ChangePaginationModel';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatButtonModule } from '@angular/material/button';
 import { PaymentService } from '../infrastructure/services/payment.service';
 import { PaymentModel } from '../infrastructure/models/PaymentModel';
 import { CreatePaymentComponent } from './create-payment/create-payment.component';
 import { UpdatePaymentComponent } from './update-payment/update-payment.component';
 import { paymentTableConfig } from './payment.config';
+import { ExcelExportService } from 'app/shared/infrastructure/services/excel-export.service';
+import { ExcelExportUtility } from 'app/shared/infrastructure/utils/excel-export.utility';
 
 interface Alert {
     type: 'success' | 'error';
@@ -29,13 +32,15 @@ interface Alert {
         ViewHeaderComponent,
         FuseAlertComponent,
         MatIconModule,
-        MatSlideToggleModule
+        MatSlideToggleModule,
+        MatButtonModule
     ],
     templateUrl: './payment.component.html',
 })
 export class PaymentComponent implements OnInit, OnDestroy {
     private service = inject(PaymentService);
     private dialog = inject(MatDialog);
+    private excelExportService = inject(ExcelExportService);
 
     public columns = paymentTableConfig;
     public data$ = new BehaviorSubject<PaymentModel[]>([]);
@@ -129,5 +134,24 @@ export class PaymentComponent implements OnInit, OnDestroy {
         const end = start + event.pageSize;
         const paginated = data.slice(start, end);
         this.data$.next(paginated);
+    }
+
+    exportToExcel(): void {
+        const data = this.responsePagination?.data ?? [];
+        
+        ExcelExportUtility.exportToExcel(
+            data,
+            'pagos',
+            ExcelExportUtility.COLUMN_MAPPINGS.payments,
+            this.excelExportService,
+            (message: string) => {
+                this.alert = { type: 'success', message };
+                this.showAlert = true;
+            },
+            (message: string) => {
+                this.alert = { type: 'error', message };
+                this.showAlert = true;
+            }
+        );
     }
 }

@@ -86,40 +86,62 @@ export class ExcelExportUtility {
             updatedAt: 'Última Actualización'
         },
         companies: {
-            id: 'ID',
-            name: 'Nombre',
-            nit: 'NIT',
-            email: 'Email',
-            phoneNumber: 'Teléfono',
-            address: 'Dirección',
-            city: 'Ciudad',
-            isActive: 'Activo'
-        },
-        plans: {
-            id: 'ID',
             name: 'Nombre',
             description: 'Descripción',
-            basePremium: 'Prima Base',
-            coverage: 'Cobertura',
-            deductible: 'Deducible',
-            isActive: 'Activo'
+            isActive: 'Activo',
+            createdAt: 'Fecha de Creación',
+            updatedAt: 'Última Actualización'
+        },
+        plans: {
+            name: 'Nombre del Plan',
+            description: 'Descripción',
+            insuranceCompanyName: 'Compañía Aseguradora',
+            isActive: 'Activo',
+            createdAt: 'Fecha de Creación',
+            updatedAt: 'Última Actualización'
         },
         payments: {
-            id: 'ID',
-            policyNumber: 'Número Póliza',
+            policyNumber: 'Número de Póliza',
+            titularClientName: 'Cliente Titular',
+            paymentDate: 'Fecha de Pago',
+            period: 'Período',
+            paymentMethod: 'Método de Pago',
             amount: 'Monto',
-            paymentDate: 'Fecha Pago',
-            paymentMethod: 'Método Pago',
-            status: 'Estado',
-            receiptUrl: 'URL Recibo'
+            receiptUrl: 'URL Recibo',
+            isActive: 'Activo',
+            createdAt: 'Fecha de Creación',
+            updatedAt: 'Última Actualización'
         },
         banks: {
-            id: 'ID',
-            name: 'Nombre',
-            accountNumber: 'Número Cuenta',
-            accountType: 'Tipo Cuenta',
-            swiftCode: 'Código SWIFT',
-            isActive: 'Activo'
+            bank: 'Banco',
+            accountType: 'Tipo de Cuenta',
+            accountNumber: 'Número de Cuenta',
+            currency: 'Moneda',
+            holderName: 'Titular',
+            isActive: 'Activo',
+            createdAt: 'Fecha de Creación',
+            updatedAt: 'Última Actualización'
+        },
+        deductibleOptions: {
+            insurancePlanName: 'Nombre del Plan',
+            deductible1: 'Deducible 1',
+            deductible2: 'Deducible 2',
+            currency: 'Moneda',
+            isActive: 'Activo',
+            createdAt: 'Fecha de Creación',
+            updatedAt: 'Última Actualización'
+        },
+        policyMembers: {
+            clientName: 'Cliente',
+            policyName: 'Póliza',
+            isTitular: 'Es Titular',
+            memberType: 'Tipo de Miembro',
+            status: 'Estado',
+            entryDate: 'Fecha de Ingreso',
+            exclusions: 'Exclusiones',
+            isActive: 'Activo',
+            createdAt: 'Fecha de Creación',
+            updatedAt: 'Última Actualización'
         }
     };
 }

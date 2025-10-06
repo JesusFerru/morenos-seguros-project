@@ -18,6 +18,14 @@
         <!-- Actions -->
         <div class="flex items-center justify-end gap-4">
             <div
+                class="shadow-lg rounded-lg px-4 py-2 flex items-center space-x-2 bg-green-600 bg-opacity-90 cursor-pointer"
+                matTooltip="Exportar a Excel">
+                <button mat-button (click)="exportToExcel()" class="text-white flex items-center">
+                    <mat-icon class="icon-size-5 text-white" [svgIcon]="'heroicons_outline:document-arrow-down'"></mat-icon>
+                    <span class="ml-1">Exportar Excel</span>
+                </button>
+            </div>
+            <div
                 class="shadow-lg rounded-lg px-4 py-2 flex items-center space-x-2 bg-blue-900 bg-opacity-90 cursor-pointer"
                 matTooltip="Nueva Cuenta Bancaria">
                 <button mat-button (click)="create()" class="text-white flex items-center">

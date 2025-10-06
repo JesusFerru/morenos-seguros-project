@@ -9,11 +9,14 @@ import { PaginationResponseModel } from 'app/shared/domain/models/PaginationResp
 import { ChangePaginationModel } from 'app/shared/domain/models/ChangePaginationModel';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatButtonModule } from '@angular/material/button';
 import { BankService } from '../infrastructure/services/bank.service';
 import { BankAccountModel } from '../infrastructure/models/BankAccountModel';
 import { CreateBankComponent } from './create-bank/create-bank.component';
 import { bankTableConfig } from './bank.config';
 import { UpdateBankComponent } from './update-bank/update-bank.component';
+import { ExcelExportService } from 'app/shared/infrastructure/services/excel-export.service';
+import { ExcelExportUtility } from 'app/shared/infrastructure/utils/excel-export.utility';
 
 interface Alert {
     type: 'success' | 'error';
@@ -29,13 +32,15 @@ interface Alert {
         ViewHeaderComponent,
         FuseAlertComponent,
         MatIconModule,
-        MatSlideToggleModule
+        MatSlideToggleModule,
+        MatButtonModule
     ],
     templateUrl: './bank.component.html',
 })
 export class BankComponent implements OnInit, OnDestroy {
     private service = inject(BankService);
     private dialog = inject(MatDialog);
+    private excelExportService = inject(ExcelExportService);
 
     public columns = bankTableConfig;
     public data$ = new BehaviorSubject<BankAccountModel[]>([]);
@@ -128,5 +133,24 @@ export class BankComponent implements OnInit, OnDestroy {
         const end = start + event.pageSize;
         const paginated = data.slice(start, end);
         this.data$.next(paginated);
+    }
+
+    exportToExcel(): void {
+        const data = this.responsePagination?.data ?? [];
+        
+        ExcelExportUtility.exportToExcel(
+            data,
+            'cuentas-bancarias',
+            ExcelExportUtility.COLUMN_MAPPINGS.banks,
+            this.excelExportService,
+            (message: string) => {
+                this.alert = { type: 'success', message };
+                this.showAlert = true;
+            },
+            (message: string) => {
+                this.alert = { type: 'error', message };
+                this.showAlert = true;
+            }
+        );
     }
 }

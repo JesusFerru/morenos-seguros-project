@@ -9,11 +9,14 @@ import { PaginationResponseModel } from 'app/shared/domain/models/PaginationResp
 import { ChangePaginationModel } from 'app/shared/domain/models/ChangePaginationModel';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatButtonModule } from '@angular/material/button';
 import { InsurancePlanService } from '../infrastructure/services/insurance-plan.service';
 import { InsurancePlanModel } from '../infrastructure/models/InsurancePlanModel';
 import { CreateInsurancePlanComponent } from './create-insurance-plan/create-insurance-plan.component';
 import { UpdateInsurancePlanComponent } from './update-insurance-plan/update-insurance-plan.component';
 import { insurancePlanTableConfig } from './insurance-company.config';
+import { ExcelExportService } from 'app/shared/infrastructure/services/excel-export.service';
+import { ExcelExportUtility } from 'app/shared/infrastructure/utils/excel-export.utility';
 
 interface Alert {
     type: 'success' | 'error';
@@ -29,13 +32,15 @@ interface Alert {
         ViewHeaderComponent,
         FuseAlertComponent,
         MatIconModule,
-        MatSlideToggleModule
+        MatSlideToggleModule,
+        MatButtonModule
     ],
     templateUrl: './insurance-plan.component.html',
 })
 export class InsurancePlanComponent implements OnInit, OnDestroy {
     private service = inject(InsurancePlanService);
     private dialog = inject(MatDialog);
+    private excelExportService = inject(ExcelExportService);
 
     public columns = insurancePlanTableConfig;
     public data$ = new BehaviorSubject<InsurancePlanModel[]>([]);
@@ -124,5 +129,24 @@ export class InsurancePlanComponent implements OnInit, OnDestroy {
         const end = start + event.pageSize;
         const paginated = data.slice(start, end);
         this.data$.next(paginated);
+    }
+
+    exportToExcel(): void {
+        const data = this.responsePagination?.data ?? [];
+        
+        ExcelExportUtility.exportToExcel(
+            data,
+            'planes-de-seguro',
+            ExcelExportUtility.COLUMN_MAPPINGS.plans,
+            this.excelExportService,
+            (message: string) => {
+                this.alert = { type: 'success', message };
+                this.showAlert = true;
+            },
+            (message: string) => {
+                this.alert = { type: 'error', message };
+                this.showAlert = true;
+            }
+        );
     }
 }
